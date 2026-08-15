@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <title>RoboCrax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="High-bitrate private Jellyfin streaming, enterprise WordPress hosting, data automations, and open-source infrastructure tools.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            glow: '#818cf8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        code, pre { font-family: 'JetBrains Mono', monospace; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .dark .glass-card {
+            background: rgba(17, 24, 39, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .dark .glass-nav {
+            background: rgba(3, 7, 18, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased selection:bg-brand-500 selection:text-white transition-colors duration-200">
+
+    <!-- Ambient Glow Background -->
+    <div class="fixed inset-0 hero-glow pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" onclick="showView('home')" class="flex items-center gap-3 group">
+                <img src="https://www.robocrax.com/logo.svg" alt="RoboCrax Logo" class="h-8 w-auto dark:invert-0" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%236366f1\'><path d=\'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A7 7 0 1 1 13 16.93zM12 5a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0V6a1 1 0 0 1 1-1z\'/></svg>'">
+                <span class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400">RoboCrax</span>
+            </a>
+            
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/+64204774826?text=Hi,%20I%20have%20an%20inquiry%20regarding%20RoboCrax" target="_blank" rel="noopener" class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition">Direct Support</a>
+                <button onclick="requestAccess()" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-brand-500/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    Request Access
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- ================= HOME VIEW ================= -->
+        <div id="view-home" class="space-y-12">
+            <!-- Header Intro -->
+            <div class="text-center max-w-3xl mx-auto pt-6 pb-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-glow bg-brand-500/10 px-3 py-1 rounded-full">Private Infrastructure & Tools</span>
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mt-4 mb-4">
+                    Reliable media, hosting, & <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-purple-500 dark:from-brand-glow dark:to-purple-400">automation tools.</span>
+                </h1>
+                <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400">
+                    Hand-crafted services and open-source tools built for absolute performance, privacy, and zero bloat.
+                </p>
+            </div>
+
+            <!-- CARDS LIST -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- 1. FEATURED: Jellyfin Service (Full Width) -->
+                <div class="md:col-span-2 glass-card rounded-3xl p-8 border-2 border-brand-500/40 relative overflow-hidden shadow-xl shadow-brand-500/5">
+                    <div class="absolute top-0 right-0 bg-brand-600 text-white text-xs font-black uppercase px-4 py-1.5 rounded-bl-xl tracking-wider">
+                        Flagship Media
+                    </div>
+                    
+                    <div class="flex flex-col lg:flex-row justify-between gap-8">
+                        <div class="max-w-2xl space-y-4">
+                            <div class="inline-flex items-center gap-2 text-brand-600 dark:text-brand-glow font-bold text-sm">
+                                <span>🍿</span> <span>Ultra-HD Streaming</span>
+                            </div>
+                            <h2 class="text-3xl font-extrabold">Private Jellyfin Media Cluster</h2>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
+                                Eliminate fragmented streaming fees and annoying commercial breaks. High-bitrate 4K streaming directly to your Smart TV, phone, or laptop with unified multi-source request management.
+                            </p>
+
+                            <!-- Pricing Badges -->
+                            <div class="grid sm:grid-cols-2 gap-3 pt-2">
+                                <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase font-semibold">Standard Access</div>
+                                    <div class="text-2xl font-black mt-1">$99 <span class="text-xs font-normal text-gray-500">/ year</span></div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Full library, 2 active streams, Mon–Thu & Weekday access.</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-brand-50 dark:bg-brand-950/30 border border-brand-200 dark:border-brand-500/30">
+                                    <div class="text-xs text-brand-600 dark:text-brand-glow uppercase font-semibold">Friday Night Prime Access</div>
+                                    <div class="text-2xl font-black mt-1">$199 <span class="text-xs font-normal text-gray-500">/ year</span></div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Guaranteed dedicated bandwidth slots during Friday evening peaks.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col justify-between items-start lg:items-end gap-4 min-w-[200px]">
+                            <div class="text-left lg:text-right">
+                                <span class="text-xs font-bold text-rose-500 block">Cap Allocation: 129%</span>
+                                <span class="text-xs text-gray-500">Strict household policy</span>
+                            </div>
+                            <div class="w-full space-y-2">
+                                <button onclick="showView('jellyfin')" class="w-full text-center bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-md">
+                                    View Setup & Policy →
+                                </button>
+                                <button onclick="requestAccess()" class="w-full text-center bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 font-semibold py-2 px-6 rounded-xl text-sm transition">
+                                    Request Invite
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. WordPress Hosting -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-brand-500/40 transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-2xl">⚡</span>
+                            <span class="text-xs font-bold text-gray-500 bg-gray-200 dark:bg-gray-800 px-2.5 py-1 rounded-full">$200 / year</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Enterprise WordPress Hosting</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                            Isolated containerized instances configured with automated backups, global edge caching, and zero noisy-neighbor slowdowns.
+                        </p>
+                    </div>
+                    <button onclick="showView('wordpress')" class="text-sm font-bold text-brand-600 dark:text-brand-glow hover:underline flex items-center gap-1">
+                        Read Specifications <span>→</span>
+                    </button>
+                </div>
+
+                <!-- 3. Data Automations -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-brand-500/40 transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-2xl">🔄</span>
+                            <span class="text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 px-2.5 py-1 rounded-full">Custom Workflows</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Data & ETL Automations</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                            Automated synchronization pipelines, data scraping jobs, and webhook orchestration tailored to business processes.
+                        </p>
+                    </div>
+                    <button onclick="showView('automations')" class="text-sm font-bold text-brand-600 dark:text-brand-glow hover:underline flex items-center gap-1">
+                        Learn More <span>→</span>
+                    </button>
+                </div>
+
+                <!-- 4. GitHub: GPMC Daemon -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-brand-500/40 transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-2xl">📸</span>
+                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-full">Open Source</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Google Photos Free Uploader</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                            Background sync daemon that moves media to Google Photos using native compression flags to retain free unlimited cloud storage quotas.
+                        </p>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="showView('gpmc')" class="text-sm font-bold text-brand-600 dark:text-brand-glow hover:underline">
+                            Details →
+                        </button>
+                        <a href="https://github.com/robocrax/gpmc-daemon" target="_blank" rel="noopener" class="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                            GitHub ↗️
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. GitHub: Heartbeats Ping Sidecar -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-brand-500/40 transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-2xl">💓</span>
+                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-full">Open Source</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Heartbeats Ping Sidecar</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                            A lightweight Go/Docker utility that pings critical internal nodes and triggers external health checks (Healthchecks.io/BetterStack) on success.
+                        </p>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="showView('heartbeats')" class="text-sm font-bold text-brand-600 dark:text-brand-glow hover:underline">
+                            Details →
+                        </button>
+                        <a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener" class="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                            GitHub ↗️
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= JELLYFIN PAGE ================= -->
+        <div id="view-jellyfin" class="hidden space-y-10">
+            <button onclick="showView('home')" class="text-sm font-semibold text-brand-600 dark:text-brand-glow flex items-center gap-1 hover:underline">← Back to Overview</button>
+            
+            <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8">
+                <div class="border-b border-gray-200 dark:border-gray-800 pb-6">
+                    <span class="text-xs font-bold uppercase text-brand-600 dark:text-brand-glow tracking-widest">Streaming Infrastructure</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold mt-2">Private Jellyfin Cluster</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Zero-compression personal media center with direct hardware decoding.</p>
+                </div>
+
+                <!-- Pricing Breakdown -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h3 class="text-xl font-bold">Standard Tier</h3>
+                        <div class="text-3xl font-black my-2">$99 <span class="text-sm font-normal text-gray-500">/ year</span></div>
+                        <ul class="text-sm space-y-2 text-gray-600 dark:text-gray-400">
+                            <li>✓ Unlimited 4K/1080p access Sat–Thu</li>
+                            <li>✓ Request engine enabled</li>
+                            <li>✓ Max 2 concurrent household streams</li>
+                            <li>⚠️ Limited streaming bandwidth on Friday nights</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-brand-500/10 border border-brand-500/40">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold">Friday Prime Tier</h3>
+                            <span class="text-xs bg-brand-600 text-white font-bold px-2 py-0.5 rounded">Guaranteed Bandwidth</span>
+                        </div>
+                        <div class="text-3xl font-black my-2">$199 <span class="text-sm font-normal text-gray-500">/ year</span></div>
+                        <ul class="text-sm space-y-2 text-gray-600 dark:text-gray-300">
+                            <li>✓ Everything in Standard Tier</li>
+                            <li>✓ Unthrottled Friday Night high-bitrate streaming</li>
+                            <li>✓ Priority queue on media requests</li>
+                            <li>✓ Dedicated hardware transcode priority</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Connect Instructions -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">TV Quick Connect Guide</h3>
+                    <div class="grid sm:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-sm">
+                            <div class="font-bold text-brand-600 dark:text-brand-glow">1. Install App</div>
+                            <p class="text-xs text-gray-500 mt-1">Get Swiftfin (Apple) or Findroid (Android).</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-sm">
+                            <div class="font-bold text-brand-600 dark:text-brand-glow">2. Set URL</div>
+                            <p class="text-xs text-gray-500 mt-1">Enter <code>app.robocrax.com</code></p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-sm">
+                            <div class="font-bold text-brand-600 dark:text-brand-glow">3. Get Pin</div>
+                            <p class="text-xs text-gray-500 mt-1">TV will display a 6-digit verification code.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-sm">
+                            <div class="font-bold text-brand-600 dark:text-brand-glow">4. Authorize</div>
+                            <p class="text-xs text-gray-500 mt-1">Enter code under Quick Connect settings.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex gap-4">
+                    <button onclick="requestAccess()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl transition">Apply for Membership</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= WORDPRESS PAGE ================= -->
+        <div id="view-wordpress" class="hidden space-y-10">
+            <button onclick="showView('home')" class="text-sm font-semibold text-brand-600 dark:text-brand-glow flex items-center gap-1 hover:underline">← Back to Overview</button>
+            
+            <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8">
+                <div class="border-b border-gray-200 dark:border-gray-800 pb-6">
+                    <span class="text-xs font-bold uppercase text-brand-600 dark:text-brand-glow tracking-widest">Web Infrastructure</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold mt-2">Enterprise WordPress Hosting</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">$200 / year — Fully managed, ultra-fast containerized stack.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-6">
+                    <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h4 class="font-bold mb-1">NVMe Storage</h4>
+                        <p class="text-xs text-gray-500">Dedicated high-IOPS NVMe drive allocation for snappy database transactions.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h4 class="font-bold mb-1">Redis Object Caching</h4>
+                        <p class="text-xs text-gray-500">Pre-configured in-memory key-value store to slash TTFB under 100ms.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h4 class="font-bold mb-1">Automated Backups</h4>
+                        <p class="text-xs text-gray-500">Nightly offsite backups encrypted and distributed to S3 cold storage.</p>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <a href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20Enterprise%20WordPress%20hosting" target="_blank" rel="noopener" class="inline-block bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl transition">Inquire About WordPress Hosting</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= DATA AUTOMATIONS PAGE ================= -->
+        <div id="view-automations" class="hidden space-y-10">
+            <button onclick="showView('home')" class="text-sm font-semibold text-brand-600 dark:text-brand-glow flex items-center gap-1 hover:underline">← Back to Overview</button>
+            
+            <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8">
+                <div class="border-b border-gray-200 dark:border-gray-800 pb-6">
+                    <span class="text-xs font-bold uppercase text-purple-600 dark:text-purple-400 tracking-widest">Engineering Services</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold mt-2">Data Pipelines & Automations</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Turn manual data entry and brittle scrapers into resilient pipelines.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h4 class="font-bold text-base mb-1">Web Scraping & Continuous Monitoring</h4>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Headless browser clusters monitoring target portals, parsing unstructured data, and writing clean JSON to your API endpoints.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800">
+                        <h4 class="font-bold text-base mb-1">Webhook Orchestration</h4>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Connect CRM, payments, and internal databases with error-tolerant worker queues and automatic retry policies.</p>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <a href="https://wa.me/+64204774826?text=Hi,%20I%20want%20to%20discuss%20a%20data%20automation%20pipeline" target="_blank" rel="noopener" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-3 rounded-xl transition">Discuss Automation Project</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= GPMC DAEMON PAGE ================= -->
+        <div id="view-gpmc" class="hidden space-y-10">
+            <button onclick="showView('home')" class="text-sm font-semibold text-brand-600 dark:text-brand-glow flex items-center gap-1 hover:underline">← Back to Overview</button>
+            
+            <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8">
+                <div class="border-b border-gray-200 dark:border-gray-800 pb-6 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase text-emerald-600 dark:text-emerald-400 tracking-widest">Open Source Project</span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold mt-2">Google Photos Free Uploader</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Continuous backup daemon preserving Google Photos unlimited quota tiers.</p>
+                    </div>
+                    <a href="https://github.com/robocrax/gpmc-daemon" target="_blank" rel="noopener" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition">View on GitHub ↗️</a>
+                </div>
+
+                <div class="prose dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-300 space-y-4">
+                    <p>
+                        <code>gpmc-daemon</code> monitors local file directories and streams photos/videos to Google Photos using OEM compression profiles, allowing storage saving without burning Google Drive storage tiers.
+                    </p>
+                    <div class="bg-gray-900 text-emerald-400 p-4 rounded-xl text-xs overflow-x-auto">
+                        <code>git clone https://github.com/robocrax/gpmc-daemon.git<br>cd gpmc-daemon && make build<br>./gpmc-daemon --watch /path/to/photos</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HEARTBEATS PAGE ================= -->
+        <div id="view-heartbeats" class="hidden space-y-10">
+            <button onclick="showView('home')" class="text-sm font-semibold text-brand-600 dark:text-brand-glow flex items-center gap-1 hover:underline">← Back to Overview</button>
+            
+            <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8">
+                <div class="border-b border-gray-200 dark:border-gray-800 pb-6 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase text-blue-600 dark:text-blue-400 tracking-widest">Open Source Project</span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold mt-2">Heartbeats Ping Sidecar</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Container monitoring daemon with conditional HTTP pings.</p>
+                    </div>
+                    <a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition">View on GitHub ↗️</a>
+                </div>
+
+                <div class="space-y-4 text-sm text-gray-600 dark:text-gray-300">
+                    <p>
+                        A zero-overhead Go binary designed to run alongside docker clusters. It periodically pings local or remote endpoints (ICMP/TCP) and triggers an external heartbeat (such as Healthchecks.io) strictly when all checks pass.
+                    </p>
+                    <div class="bg-gray-900 text-blue-400 p-4 rounded-xl text-xs overflow-x-auto">
+                        <code>docker run -d \<br>
+                        &nbsp;&nbsp;-e TARGET_IP="192.168.1.50" \<br>
+                        &nbsp;&nbsp;-e HEARTBEAT_URL="https://hc-ping.com/YOUR-UUID" \<br>
+                        &nbsp;&nbsp;ghcr.io/robocrax/heartbeats-ping-sidecar:latest</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-gray-900 py-10 mt-16 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; RoboCrax. Media & Cloud Engineering.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com/robocrax" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-white">GitHub</a>
+                <a href="https://wa.me/+64204774826" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-white">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Router Logic -->
+    <script>
+        const views = ['home', 'jellyfin', 'wordpress', 'automations', 'gpmc', 'heartbeats'];
+
+        function showView(viewName) {
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) {
+                    if (v === viewName) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+            window.location.hash = viewName === 'home' ? '' : viewName;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (views.includes(hash)) {
+                showView(hash);
+            } else {
+                showView('home');
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (views.includes(hash)) {
+                showView(hash);
+            } else {
+                showView('home');
+            }
+        });
+
+        function requestAccess() {
+            window.open("https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg", "_blank");
+        }
+    </script>
+</body>
+</html>
