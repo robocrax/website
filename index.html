@@ -196,7 +196,7 @@
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
                             <div class="flex items-center gap-3">
                                 <span class="text-2xl">📸</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Unlimited Google Photos uploads</h3>
+                                <h3 class="text-xl sm:text-2xl font-bold font-mono text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Unlimited Google Photos uploads</h3>
                             </div>
                             <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shrink-0">Open Source</span>
                         </div>
@@ -238,7 +238,7 @@
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
                             <div class="flex items-center gap-3">
                                 <span class="text-2xl">💓</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Device Ping Heartbeats</h3>
+                                <h3 class="text-xl sm:text-2xl font-bold font-mono text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Device Ping Heartbeats</h3>
                             </div>
                             <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shrink-0">Open Source</span>
                         </div>
@@ -716,7 +716,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Unlimited Google Photos uploads</h1>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold font-mono text-gray-900 dark:text-white">Unlimited Google Photos uploads</h1>
                     <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">github.com/robocrax/gpmc-daemon · Google Photos Sync Daemon</p>
                 </div>
             </div>
@@ -848,7 +848,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Device Ping Heartbeats</h1>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold font-mono text-gray-900 dark:text-white">Device Ping Heartbeats</h1>
                     <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">github.com/robocrax/heartbeats-ping-sidecar · Monitoring Sidecar Utility</p>
                 </div>
             </div>
@@ -982,8 +982,8 @@
             if (/android/i.test(ua)) {
                 if (/tv|smarttv|googletv|appletv|hbbtv|pov_tv|netcast.tv/i.test(ua)) {
                     descText = "Detected: <strong>Android TV / Smart TV</strong>. We recommend <strong>Fladder</strong> for native TV navigation.";
-                    btnHref = "https://github.com/Fladder-App/Fladder/releases";
-                    btnText = "Get Fladder for TV ↗";
+                    btnHref = "https://play.google.com/store/apps/details?id=nl.jknaapen.fladder";
+                    btnText = "Get Fladder on Google Play ↗";
                 } else {
                     descText = "Detected: <strong>Android Mobile / Tablet</strong>. We recommend <strong>Findroid</strong> for modern playback.";
                     btnHref = "https://play.google.com/store/apps/details?id=dev.jdtech.jellyfin";
@@ -991,7 +991,7 @@
                 }
             } else if (/iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
                 descText = "Detected: <strong>Apple iOS / iPadOS</strong>. We recommend the official <strong>Jellyfin Mobile</strong> client.";
-                btnHref = "https://apps.apple.com/app/jellyfin-mobile/id1480190735";
+                btnHref = "https://apps.apple.com/us/app/jellyfin-mobile/id1480192618";
                 btnText = "Get Jellyfin on App Store ↗";
             } else if (/Macintosh|Mac OS X/i.test(ua)) {
                 descText = "Detected: <strong>macOS Desktop</strong>. Download <strong>Jellyfin Media Player v2</strong>.";
