@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en-NZ">
 <head>
     <meta charset="utf-8">
-    <title>RoboCrax</title>
+    <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="RoboCrax: Jellyfin streaming, enterprise website hosting, IT support, automations, and developer utilities.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="description" content="RoboCrax: Auckland-based website hosting, IT support, data automations, a community streaming server and free open-source tools.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="theme-color" content="#E8EDEC" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0D1B1E" media="(prefers-color-scheme: dark)">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.robocrax.com/">
     <meta property="og:title" content="RoboCrax">
-    <meta property="og:description" content="Jellyfin streaming, enterprise website hosting, human IT support, data automations, and infrastructure utilities.">
+    <meta property="og:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
     <meta property="og:image" content="https://www.robocrax.com/og_image.png">
 
     <!-- Twitter Meta Tags -->
@@ -19,1030 +21,1241 @@
     <meta property="twitter:domain" content="robocrax.com">
     <meta property="twitter:url" content="https://www.robocrax.com/">
     <meta name="twitter:title" content="RoboCrax">
-    <meta name="twitter:description" content="Jellyfin streaming, enterprise website hosting, human IT support, data automations, and infrastructure utilities.">
+    <meta name="twitter:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
     <meta name="twitter:image" content="https://www.robocrax.com/og_image.png">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'media',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-                        mono: ['Geist Mono', 'JetBrains Mono', 'Menlo', 'monospace'],
-                    },
-                    colors: {
-                        notion: {
-                            lightBg: '#FFFFFF',
-                            lightSubtle: '#F9F9F8',
-                            lightCard: '#FFFFFF',
-                            lightBorder: '#E3E2E0',
-                            darkBg: '#191919',
-                            darkSubtle: '#202020',
-                            darkCard: '#242424',
-                            darkBorder: '#2E2E2E',
-                            accent: '#2383E2'
-                        }
-                    }
-                }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- tokens ---------- */
+        :root {
+            --fog: #E8EDEC;          /* page */
+            --paper: #F8FAF9;        /* faceplates, panels */
+            --blank: #DCE3E2;        /* blanking panels, quiet fills */
+            --ink: #11262B;          /* text, primary buttons */
+            --slate: #52666A;        /* secondary text */
+            --line: rgba(17, 38, 43, .14);
+            --harbour: #1C5D7A;      /* links, focus */
+            --rack: #1B3135;         /* the rack frame */
+            --ear: #E3E9E8;          /* rack ears */
+            --screw: #9AACAE;
+            --led-green: #34A851;    /* logo green: taking new work */
+            --led-blue: #4285F4;     /* logo blue: free & open source */
+            --led-amber: #FABB05;    /* logo yellow: invite only */
+            --warn-bg: #FBEDEB;
+            --warn-ink: #8A2A1F;
+            --display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+            --text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+            --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+            --wrap: 1120px;
+            --gutter: clamp(16px, 4vw, 40px);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --fog: #0D1B1E;
+                --paper: #14282C;
+                --blank: #1B3237;
+                --ink: #E4ECEA;
+                --slate: #9AB0B1;
+                --line: rgba(228, 236, 234, .14);
+                --harbour: #7DBCD9;
+                --rack: #060F11;
+                --ear: #1C3236;
+                --screw: #3D5458;
+                --warn-bg: #2A1714;
+                --warn-ink: #F2A397;
             }
         }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap');
+
+        /* ---------- base ---------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            margin: 0;
+            background: var(--fog);
+            color: var(--ink);
+            font: 400 17px/1.6 var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+        img { display: block; max-width: 100%; }
+        a { color: var(--harbour); text-underline-offset: 3px; }
+        a:hover { text-decoration-thickness: 2px; }
+        :focus-visible { outline: 2px solid var(--harbour); outline-offset: 3px; border-radius: 2px; }
+        h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: -0.005em; }
+        p { margin: 0; }
+        code, .mono { font-family: var(--mono); font-size: .9em; }
+        .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+        [hidden] { display: none !important; }
+
+        /* ---------- buttons ---------- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+            min-height: 46px; padding: 0 20px;
+            font: 600 15px/1 var(--text); text-decoration: none; cursor: pointer;
+            border-radius: 6px; border: 1px solid transparent;
+            transition: background-color .15s, border-color .15s, color .15s;
+        }
+        .btn svg { width: 18px; height: 18px; flex: none; }
+        .btn-primary { background: var(--ink); color: var(--paper); }
+        .btn-primary:hover { background: var(--harbour); }
+        .btn-quiet { background: transparent; color: var(--ink); border-color: var(--line); }
+        .btn-quiet:hover { border-color: var(--ink); }
+        .btn-small { min-height: 38px; padding: 0 14px; font-size: 14px; }
+
+        /* ---------- header ---------- */
+        .site-head {
+            position: sticky; top: 0; z-index: 40;
+            background: color-mix(in srgb, var(--fog) 88%, transparent);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+        .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+        .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
+        .brand img { height: 34px; width: auto; }
+        .brand span { font: 700 22px/1 var(--display); letter-spacing: .01em; }
+        .site-nav { display: flex; align-items: center; gap: 6px; }
+        .nav-group { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); }
+        .site-nav a.nav-link { color: var(--slate); text-decoration: none; font-weight: 500; font-size: 15px; padding: 6px 14px; border-radius: 6px; }
+        .site-nav a.nav-link:hover { color: var(--ink); background: var(--blank); }
+        .site-nav a.nav-link[aria-current="page"] { color: var(--paper); background: var(--ink); }
+        .site-nav { gap: 12px; }
+        @media (max-width: 640px) {
+            .brand span { display: none; }
+            #nav-contact-btn, #nav-request-btn { display: none !important; }
+            .site-nav a.nav-link { padding: 6px 12px; }
+        }
+
+        /* ---------- me page ---------- */
+        .me-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, .95fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding: clamp(44px, 8vw, 96px) 0 clamp(40px, 6vw, 64px); }
+        @media (max-width: 900px) { .me-hero { grid-template-columns: 1fr; } }
+        .me-intro h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.02; letter-spacing: -0.015em; max-width: 16ch; }
+        .me-intro .lede { margin-top: 24px; font-size: clamp(1.06rem, 1.5vw, 1.2rem); color: var(--slate); max-width: 56ch; }
+        .me-intro .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+        .profile { padding-top: 26px; padding-bottom: 22px; }
+        .profile-top { display: flex; align-items: center; gap: 14px; }
+        .profile-top img { width: 36px; height: auto; }
+        .profile-name { font: 700 1.65rem/1 var(--display); }
+        .profile-role { margin-top: 5px; font-size: 15px; color: var(--slate); }
+        .profile-status { margin-top: 18px; }
+        .glance { margin: 14px 0 0; }
+        .glance div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+        .glance dt { font-size: 14px; color: var(--slate); }
+        .glance dd { margin: 0; font-size: 15px; }
+
+        .clients { padding-bottom: clamp(56px, 8vw, 96px); }
+        .clients-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 22px; border-top: 1px solid var(--line); }
+        .clients-head h2 { font: 500 15px/1.4 var(--text); color: var(--slate); }
+        .clients-head a { font-size: 15px; font-weight: 500; }
+        .client-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 32px; }
+        .client-list a { font: 600 clamp(1.15rem, 1.9vw, 1.4rem)/1.25 var(--display); color: var(--ink); text-decoration: none; opacity: .78; transition: opacity .15s, color .15s; }
+        .client-list a:hover { opacity: 1; color: var(--harbour); }
+
+        .me-section { padding-bottom: clamp(56px, 8vw, 104px); }
+        .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+        .section-head h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); }
+
+        .services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+        @media (max-width: 900px) { .services { grid-template-columns: 1fr; } }
+        .service { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; transition: border-color .15s; }
+        .service:hover { border-color: var(--ink); }
+        .service:has(h3 a:focus-visible) { outline: 2px solid var(--harbour); outline-offset: 2px; }
+        .service h3 { font-size: 1.5rem; }
+        .service h3 a { color: var(--ink); text-decoration: none; }
+        .service h3 a::after { content: ""; position: absolute; inset: 0; }
+        .service h3 a:focus-visible { outline: none; }
+        .service:hover h3 a { color: var(--harbour); }
+        .service p { font-size: 16px; color: var(--slate); }
+        .service .service-meta { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14.5px; font-weight: 500; color: var(--ink); }
+
+        .principles .item h3 { font-size: 1.3rem; }
+
+        .jf-unit { padding-top: 30px; padding-bottom: 30px; }
+        .jf-unit h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+        .jf-unit h2 a { color: var(--ink); text-decoration: none; }
+        .jf-unit h2 a:hover { color: var(--harbour); }
+
+        /* ---------- home: the rack ---------- */
+        .rack {
+            background: var(--rack);
+            border-radius: 6px;
+            padding: 10px;
+            display: grid; gap: 6px;
+            box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 24px 48px -28px rgba(9, 25, 28, .55);
+        }
+        .unit {
+            --ears: 30px;
+            position: relative;
+            background: var(--paper);
+            border-radius: 2px;
+            padding: 26px calc(var(--ears) + clamp(14px, 3vw, 30px));
+        }
+        /* rack ears with screws: two screws on tall units, one on 1U */
+        .unit::before, .unit::after {
+            content: ""; position: absolute; top: 0; bottom: 0; width: var(--ears);
+            background:
+                radial-gradient(circle at 50% 16px, var(--screw) 0 4px, transparent 4.5px),
+                radial-gradient(circle at 50% calc(100% - 16px), var(--screw) 0 4px, transparent 4.5px),
+                var(--ear);
+        }
+        .unit::before { left: 0; border-right: 1px solid var(--line); border-radius: 2px 0 0 2px; }
+        .unit::after { right: 0; border-left: 1px solid var(--line); border-radius: 0 2px 2px 0; }
+        .unit.u1::before, .unit.u1::after {
+            background: radial-gradient(circle at 50% 50%, var(--screw) 0 4px, transparent 4.5px), var(--ear);
+        }
+        .unit.u1 { padding-top: 16px; padding-bottom: 16px; }
+        @media (max-width: 760px) { .unit { --ears: 18px; } }
+
+
+        .unit-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+        .status { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; color: var(--slate); white-space: nowrap; }
+        .led { width: 9px; height: 9px; border-radius: 50%; flex: none; background: currentColor; box-shadow: 0 0 0 2px rgba(0,0,0,.12), 0 0 9px 1px currentColor; }
+        .led-green { color: var(--led-green); }
+        .led-blue { color: var(--led-blue); }
+        .led-amber { color: var(--led-amber); }
+
+        .unit h3 { font-size: clamp(1.45rem, 2.4vw, 1.85rem); }
+        .unit h3 a { color: var(--ink); text-decoration: none; }
+        .unit h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }   /* whole unit is clickable */
+        .unit:hover h3 a { color: var(--harbour); }
+        .unit h3 a:focus-visible { outline: none; }
+        .unit:has(h3 a:focus-visible) { outline: 2px solid var(--harbour); outline-offset: 2px; }
+        .unit .desc { margin-top: 10px; color: var(--slate); max-width: 64ch; }
+        .unit .unit-foot { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+        .unit .unit-foot a, .unit .unit-foot button, .unit .detect { position: relative; z-index: 2; }
+        .more { font-weight: 600; font-size: 15px; color: var(--ink); }
+
+        .detect {
+            margin-top: 24px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 6px;
+            display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px 20px;
+            background: var(--fog);
+        }
+        .detect p { font-size: 15px; color: var(--slate); }
+        .detect p strong { color: var(--ink); font-weight: 600; }
+        .detect .detect-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+        @media (max-width: 760px) { .detect { grid-template-columns: 1fr; } }
+
+        .u1 .tool { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 24px; }
+        .u1 h3 { font-size: 1.3rem; }
+        .u1 .desc { margin-top: 4px; font-size: 15px; }
+        .u1 .unit-foot { margin-top: 0; }
+        @media (max-width: 760px) { .u1 .tool { grid-template-columns: 1fr; } .u1 .unit-foot { margin-top: 8px; } }
+
+        /* power-on self test: the LEDs blink once when the page loads */
+        @media (prefers-reduced-motion: no-preference) {
+            .booting .rack .led { animation: post 1.1s steps(1, end) both; animation-delay: calc(var(--i, 0) * 85ms); }
+            @keyframes post { 0% { opacity: .12; } 35% { opacity: 1; } 50% { opacity: .12; } 70% { opacity: 1; } 100% { opacity: 1; } }
+        }
+
+        /* ---------- inner pages ---------- */
+        .page { padding: clamp(28px, 5vw, 56px) 0 clamp(64px, 9vw, 112px); }
+        .back {
+            display: inline-flex; align-items: center; gap: 6px; color: var(--slate); text-decoration: none;
+            font-size: 15px; font-weight: 500; padding: 6px 10px 6px 4px; margin-left: -4px; border-radius: 6px;
+        }
+        .back:hover { color: var(--ink); background: var(--blank); }
+        .back svg { width: 18px; height: 18px; }
+        .page-head { margin: 22px 0 clamp(32px, 5vw, 52px); max-width: 760px; }
+        .page-head h1 { font-size: clamp(2.3rem, 5.4vw, 3.8rem); line-height: 1.02; letter-spacing: -0.012em; }
+        .page-head h1:focus { outline: none; }
+        .page-head .lede { margin-top: 18px; font-size: 1.15rem; color: var(--slate); max-width: 60ch; }
+        .page-head .where { margin-top: 12px; font-size: 15px; color: var(--slate); }
+
+        .block { margin-top: clamp(40px, 6vw, 64px); }
+        .block > h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 14px; }
+        .block > p { color: var(--slate); max-width: 66ch; }
+        .block > p + p { margin-top: 12px; }
+
+        .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 3vw, 30px); }
+        .panel h3 { font-size: 1.3rem; }
+        .panel p { margin-top: 8px; color: var(--slate); font-size: 16px; }
+
+        .grid { display: grid; gap: 14px; margin-top: 22px; }
+        .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        @media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid-3 { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .grid-2, .grid-4 { grid-template-columns: 1fr; } }
+
+        .item { border-top: 2px solid var(--ink); padding-top: 14px; }
+        .item h3 { font-size: 1.2rem; }
+        .item p { margin-top: 6px; color: var(--slate); font-size: 15.5px; }
+
+        /* real sequences only: numbered steps */
+        .steps { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+        .steps.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .steps.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        @media (max-width: 760px) { .steps.cols-2, .steps.cols-3 { grid-template-columns: 1fr; } }
+        .steps > li { counter-increment: step; position: relative; padding-left: 56px; }
+        .steps > li::before {
+            content: counter(step); position: absolute; left: 0; top: 0;
+            width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+            font: 700 18px/1 var(--display); background: var(--ink); color: var(--paper);
+        }
+        .steps > li h3 { font-size: 1.25rem; padding-top: 6px; }
+        .steps > li p { margin-top: 6px; color: var(--slate); font-size: 16px; }
+        .steps > li.panel { padding-left: 76px; }
+        .steps > li.panel::before { left: 22px; top: 24px; }
+        .steps > li.panel h3 { padding-top: 2px; }
+
+        .stage { margin-top: clamp(40px, 6vw, 64px); }
+        .stage-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+        .stage-num { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 700 18px/1 var(--display); background: var(--ink); color: var(--paper); flex: none; }
+        .stage-head h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+
+        .row-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+        .row-cta p { max-width: 52ch; }
+        .address { margin-top: 12px; padding: 12px 14px; background: var(--fog); border: 1px solid var(--line); border-radius: 6px; font: 500 16px/1.3 var(--mono); color: var(--ink); overflow-wrap: anywhere; }
+
+        .code {
+            margin-top: 14px; padding: 18px 20px; border-radius: 6px; overflow-x: auto;
+            background: #0F2124; color: #D7E4E2; font: 400 14px/1.7 var(--mono);
+        }
+        .code .c { color: #7F9A9D; }
+        .code pre { margin: 0; font: inherit; }
+
+        /* pricing */
+        .plans { display: grid; grid-template-columns: 3fr 2fr; gap: 14px; align-items: start; margin-top: 22px; }
+        @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+        .plan-stack { display: grid; gap: 14px; }
+        .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 3vw, 30px); display: flex; flex-direction: column; gap: 14px; }
+        .plan.main { border: 2px solid var(--ink); }
+        .plan-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+        .plan h3 { font-size: 1.5rem; }
+        .plan.main h3 { font-size: 2rem; }
+        .plan .tier { font-size: 14px; color: var(--slate); margin-top: 2px; }
+        .price { font: 700 2rem/1 var(--display); white-space: nowrap; }
+        .plan:not(.main) .price { font-size: 1.45rem; }
+        .price small { font: 400 14px/1 var(--text); color: var(--slate); margin-left: 2px; }
+        .badge { align-self: flex-start; font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--ink); color: var(--paper); }
+        .plan ul { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: grid; gap: 9px; font-size: 15.5px; color: var(--slate); }
+        .plan li { display: flex; gap: 10px; }
+        .plan li::before { content: ""; flex: none; width: 15px; height: 15px; margin-top: 5px; background: currentColor; color: var(--led-green);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat;
+                    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat; }
+        .plan li.note { font-size: 14.5px; }
+        .plan li.note::before { color: var(--slate); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E"); }
+        .plan .foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14.5px; display: flex; justify-content: space-between; gap: 10px; color: var(--slate); }
+        .plan .btn { width: 100%; margin-top: auto; }
+        .callout { margin-top: 14px; padding: 18px 20px; border-radius: 6px; background: var(--warn-bg); color: var(--warn-ink); }
+        .callout h3 { font-size: 1.15rem; }
+        .callout p { margin-top: 6px; font-size: 15.5px; color: inherit; }
+
+        /* ---------- portfolio ---------- */
+        .group-title { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom: 18px; }
+        .sites + .group-title { margin-top: clamp(44px, 6vw, 68px); }
+        .sites { display: grid; gap: 30px 20px; }
+        .sites-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .sites-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .sites-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 24px; }
+        @media (max-width: 900px) { .sites-4, .sites-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 600px) { .sites-4, .sites-3, .sites-2 { grid-template-columns: 1fr; } }
+        .site { position: relative; }
+        .frame { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--paper); transition: border-color .15s; }
+        .frame-url { display: block; padding: 7px 12px; font: 500 12.5px/1.2 var(--mono); color: var(--slate); background: var(--blank); border-bottom: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .frame img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+        .site h3 { font-size: 1.2rem; margin-top: 12px; }
+        .site-lg h3 { font-size: 1.55rem; margin-top: 14px; }
+        .site h3 a { color: var(--ink); text-decoration: none; }
+        .site h3 a::after { content: ""; position: absolute; inset: 0; }        /* whole card opens the site */
+        .site h3 a:focus-visible { outline: none; }
+        .site:has(h3 a:focus-visible) .frame { outline: 2px solid var(--harbour); outline-offset: 2px; }
+        .site:hover .frame { border-color: var(--ink); }
+        .site:hover h3 a { color: var(--harbour); }
+        .site p { margin-top: 4px; font-size: 15px; color: var(--slate); }
+        .site-lg p { font-size: 16px; max-width: 52ch; }
+
+        .app-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: clamp(28px, 5vw, 72px); align-items: start; }
+        .app-layout .page-head { margin-bottom: 36px; }
+        .phone { margin: 28px 0 0; max-width: 290px; border: 10px solid var(--rack); border-radius: 36px; overflow: hidden; background: #1c0a45; box-shadow: 0 30px 50px -30px rgba(9, 25, 28, .6); }
+        .phone img { width: 100%; height: auto; }
+        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .phone { margin-top: 0; } }
+
+        /* ---------- footer ---------- */
+        .site-foot { border-top: 1px solid var(--line); padding: clamp(40px, 6vw, 64px) 0; }
+        .site-foot .wrap { display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: end; }
+        .site-foot h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); max-width: 22ch; }
+        .site-foot .meta { margin-top: 14px; color: var(--slate); font-size: 15px; }
+        .site-foot .foot-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+        @media (max-width: 760px) { .site-foot .wrap { grid-template-columns: 1fr; } }
+
+        /* ---------- invite modal ---------- */
+        .modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(6, 15, 17, .62); }
+        .modal-card { width: 100%; max-width: 520px; max-height: 90vh; display: flex; flex-direction: column; background: var(--paper); border-radius: 10px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(0,0,0,.5); }
+        .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 20px 22px; border-bottom: 1px solid var(--line); }
+        .modal-head h2 { font-size: 1.6rem; }
+        .modal-head p { margin-top: 6px; font-size: 15px; color: var(--slate); }
+        .modal-close { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; }
+        .modal-close:hover { border-color: var(--ink); }
+        .modal-close svg { width: 18px; height: 18px; }
+        .modal-body { flex: 1; min-height: 460px; background: #fff; overflow: auto; }
+        .modal-body iframe { display: block; width: 100%; height: 567px; border: 0; }
+        @media (max-width: 600px) { .modal { padding: 0; place-items: end stretch; } .modal-card { max-width: none; max-height: 94vh; border-radius: 10px 10px 0 0; } }
+        @media (prefers-reduced-motion: no-preference) {
+            .modal:not([hidden]) .modal-card { animation: rise .22s ease-out; }
+            @keyframes rise { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+        }
     </style>
 </head>
-<body class="bg-notion-lightBg dark:bg-notion-darkBg text-[#2F3437] dark:text-[#E3E2E0] font-sans antialiased selection:bg-blue-100 dark:selection:bg-blue-900/40">
+<body class="booting">
 
-    <!-- Navigation Header -->
-    <nav class="sticky top-0 z-40 bg-white/95 dark:bg-notion-darkBg/95 backdrop-blur border-b border-notion-lightBorder dark:border-notion-darkBorder transition-colors">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
-            <!-- Left: SVG Logo + Clean Title -->
-            <a href="#home" class="flex items-center gap-3 group">
-                <img src="https://www.robocrax.com/logo.svg" alt="RoboCrax Logo" class="h-8 w-auto block">
-                <span class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">RoboCrax</span>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="site-head">
+        <div class="wrap">
+            <a class="brand" href="#home" aria-label="RoboCrax home">
+                <img src="logo.svg" alt="" width="25" height="34">
+                <span>RoboCrax</span>
             </a>
-            
-            <!-- Right: Dynamic CTAs -->
-            <div class="flex items-center gap-3">
-                <a id="nav-contact-btn" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener" class="text-sm font-medium px-4 py-2 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder hover:bg-gray-100 dark:hover:bg-notion-darkCard transition text-gray-700 dark:text-gray-300">
-                    Contact
-                </a>
-                <button id="nav-request-btn" onclick="openModal()" class="hidden text-sm font-semibold px-4 py-2 rounded-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 hover:opacity-90 transition shadow-sm">
-                    Request Access
-                </button>
-            </div>
+            <nav class="site-nav" aria-label="Main">
+                <div class="nav-group">
+                    <a class="nav-link" href="#home" data-nav="home">Me</a>
+                    <a class="nav-link" href="#jellyfin" data-nav="jellyfin">Jellyfin</a>
+                    <a class="nav-link" href="#portfolio" data-nav="portfolio">Work</a>
+                </div>
+                <a id="nav-contact-btn" class="btn btn-primary btn-small" data-track="whatsapp-nav"
+                   href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg><span class="btn-label">Message me</span></a>
+                <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Container -->
-    <main class="max-w-5xl mx-auto px-6 py-8 sm:py-12">
+    <main id="main">
 
-        <!-- ================= HOME VIEW ================= -->
-        <div id="view-home" class="space-y-8">
-            <!-- Header Intro -->
-            <div class="space-y-3 pb-6 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                    Services
-                </h1>
-            </div>
-
-            <!-- ENTIRELY CLICKABLE CARDS -->
-            <div class="space-y-6">
-
-                <!-- 1. JELLYFIN STREAMING -->
-                <div onclick="navigateTo('jellyfin')" class="cursor-pointer group p-8 sm:p-10 rounded-2xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border-2 border-blue-500/40 dark:border-blue-500/30 hover:border-blue-500 dark:hover:border-blue-400 shadow-sm relative space-y-6 transition-all duration-200">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">🎬</span>
-                            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Cheap-as Streaming Service</h2>
-                        </div>
-                        <div class="self-start sm:self-auto">
-                            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 px-3 py-1 rounded-full">HD Streaming</span>
-                        </div>
-                    </div>
-
-                    <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
-                        A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.
-                    </p>
-
-                    <!-- Client Auto-Detect Box for User's Device Only -->
-                    <div onclick="event.stopPropagation();" class="p-6 rounded-xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-4">
-                        <div>
-                            <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Detected Client Setup</span>
-                            <p id="home-detected-client-desc" class="text-sm text-gray-700 dark:text-gray-300 font-medium mt-1">
-                                Detecting your operating system...
-                            </p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                            <a id="home-detected-client-btn" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener" class="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-sm hover:opacity-90 transition shadow-sm shrink-0">
-                                Download Client
+        <!-- ================= ME (HOME) ================= -->
+        <section id="view-home" class="view" aria-labelledby="home-title">
+            <div class="wrap">
+                <div class="me-hero">
+                    <div class="me-intro">
+                        <h1 id="home-title" tabindex="-1">I keep small businesses online, secure and running smoothly.</h1>
+                        <p class="lede">I'm an Auckland-based infrastructure engineer. I build and host websites, fix the IT problems that stall your day, and automate the busywork between your systems. When you message me, you get me: no ticket queue, no call centre.</p>
+                        <div class="actions">
+                            <a class="btn btn-primary" data-track="whatsapp-hero" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg>
+                                Message me on WhatsApp
                             </a>
-                            <button onclick="navigateTo('tv-setup')" class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder hover:bg-gray-50 dark:hover:bg-notion-darkSubtle text-sm font-semibold transition shrink-0">
-                                <svg class="w-4 h-4 fill-current text-gray-700 dark:text-white" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
-                                <span>TV Setup Guide</span>
-                            </button>
+                            <a class="btn btn-quiet" href="#portfolio">See my work</a>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 pt-1">
-                        <span>Want to join?</span>
-                        <span class="group-hover:translate-x-1 transition-transform">→</span>
-                    </div>
-                </div>
-
-                <!-- 2. ENTERPRISE WEBSITE HOSTING -->
-                <div onclick="navigateTo('wordpress')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">⚡</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Enterprise Website Hosting</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shrink-0">Auckland Based</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            Cheap as chips, fully hands-off hosting. Everything from setup, updates, security, and maintenance is managed end-to-end by me with 24/7 direct support.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Cheap and Custom plans</span>
-                    </div>
-                </div>
-
-                <!-- 3. IT SUPPORT -->
-                <div onclick="navigateTo('it-support')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">🛠️</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">IT Support</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800 shrink-0">Human Help</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            For the queries you cannot ask AI to solve. On standby when your laptop dies, storage runs out, printers refuse to work, or emails get stuck. I remote in via software of your choice and sort it out as a friend.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Talk to us and see what we can do for you</span>
-                    </div>
-                </div>
-
-                <!-- 4. DATA AUTOMATIONS -->
-                <div onclick="navigateTo('automations')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">🔄</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Data & ETL Automations</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-purple-50 text-purple-600 dark:bg-purple-950/40 dark:text-purple-300 border border-purple-200 dark:border-purple-800 shrink-0">Bespoke Pipelines</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            Reliable, self-healing data synchronization workers. Continuous headless browser scrapers, webhook processors with exponential retry policies, and automated relational database syncs.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Custom workflows running 24x7, the way you want them</span>
-                    </div>
-                </div>
-
-                <!-- 5. UNLIMITED GOOGLE PHOTOS UPLOADS (GPMC) -->
-                <div onclick="navigateTo('gpmc')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📸</span>
-                                <h3 class="text-xl sm:text-2xl font-bold font-mono text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Unlimited Google Photos uploads</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shrink-0">Open Source</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            Background media synchronization daemon. Watches local disk volumes and streams photos/videos into Google Photos using native compression parameters to maintain unlimited storage tiers.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <a href="https://github.com/robocrax/gpmc-daemon" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-xs hover:opacity-90 transition shadow-sm">
-                            View on Github ↗
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 6. NZ ROAD CODE PRACTICE QUIZ (SECOND LAST) -->
-                <div onclick="navigateTo('nzquiz')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">🚗</span>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">NZ Road Code Practice Quiz</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shrink-0">100% Free & Unlimited</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            A free web clone of the NZ AA / Waka Kotahi NZTA Road Code Theory Test. No 10-question limits, no in-app purchases, and no downloads needed—includes full mock exams, custom batch sizes, and endless mode right in your browser.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <a href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-xs hover:opacity-90 transition shadow-sm">
-                            Launch Quiz ↗
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 7. DEVICE PING HEARTBEATS (VERY END) -->
-                <div onclick="navigateTo('heartbeats')" class="cursor-pointer group p-8 rounded-2xl bg-white dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder hover:border-gray-400 dark:hover:border-gray-600 transition flex flex-col justify-between gap-6">
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">💓</span>
-                                <h3 class="text-xl sm:text-2xl font-bold font-mono text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Device Ping Heartbeats</h3>
-                            </div>
-                            <span class="self-start sm:self-auto text-xs font-mono px-2.5 py-1 rounded bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shrink-0">Open Source</span>
-                        </div>
-                        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal max-w-2xl">
-                            Lightweight Go sidecar utility that tests target LAN or WAN devices with ICMP/TCP pings, firing success heartbeats to monitoring providers like Healthchecks.io only when devices are healthy.
-                        </p>
-                    </div>
-                    <div class="flex justify-start items-center border-t pt-4 border-notion-lightBorder dark:border-notion-darkBorder">
-                        <a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener" onclick="event.stopPropagation();" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-xs hover:opacity-90 transition shadow-sm">
-                            View on Github ↗
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ================= JELLYFIN SUB-PAGE ================= -->
-        <div id="view-jellyfin" class="hidden space-y-12">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">A community-based streaming platform</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">Full HD Streaming, on all your devices *</p>
-                </div>
-            </div>
-
-            <!-- STEP 1: REQUEST ACCESS (BUTTON LAUNCHES MODAL) -->
-            <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center font-mono">1</span>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Request Access</h2>
-                </div>
-                <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
-                    <div>
-                        <h3 class="text-base font-bold text-gray-900 dark:text-white">Start with a Free Account</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Applications are reviewed within 24 hours. Submit your access request below.</p>
-                    </div>
-                    <button onclick="openModal()" class="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-sm hover:opacity-90 transition shadow-sm shrink-0">
-                        Open Request Form
-                    </button>
-                </div>
-            </div>
-
-            <!-- STEP 2: SETUP YOUR DEVICES -->
-            <div class="space-y-6">
-                <div class="flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center font-mono">2</span>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Setup Your Devices</h2>
-                </div>
-                
-                <!-- Client Download Box for User Device -->
-                <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-6">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Client Installation</span>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-1">Recommended for Your Device</h3>
-                            <p id="jellyfin-detected-client-desc" class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                Detecting your operating system...
-                            </p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                            <a id="jellyfin-detected-client-btn" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener" class="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-semibold text-sm hover:opacity-90 transition shadow-sm shrink-0">
-                                Download Client
-                            </a>
-                            <button onclick="navigateTo('tv-setup')" class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder hover:bg-gray-50 dark:hover:bg-notion-darkSubtle text-sm font-semibold transition shrink-0">
-                                <svg class="w-4 h-4 fill-current text-gray-700 dark:text-white" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
-                                <span>TV Setup Guide</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 3: MEMBERSHIP (AFTER FREE TRIAL) -->
-            <div class="space-y-6">
-                <div class="flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center font-mono">3</span>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Membership (After Free Trial)</h2>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                    Once your free trial concludes, select a plan to maintain uninterrupted access.
-                </p>
-
-                <!-- Equal-Height Asymmetric Layout: Left Main (3 cols) vs Right Stack (2 cols) -->
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
-                    
-                    <!-- Left: Standard Plan (3 Cols, Full Height) -->
-                    <div class="lg:col-span-3 p-6 sm:p-8 rounded-2xl bg-white dark:bg-notion-darkCard border-2 border-blue-500 dark:border-blue-400 shadow-md shadow-blue-500/5 flex flex-col justify-between space-y-6 relative h-full">
-                        <div class="absolute -top-3 left-6 bg-blue-600 dark:bg-blue-500 text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full tracking-wider shadow-sm">
-                            Most Popular
-                        </div>
-                        
-                        <div class="space-y-4 pt-1">
-                            <div class="flex justify-between items-start">
+                    <div class="rack profile-rack">
+                        <aside class="unit profile" aria-label="At a glance">
+                            <div class="profile-top">
+                                <img src="logo.svg" alt="" width="36" height="50">
                                 <div>
-                                    <h3 class="font-bold text-2xl text-gray-900 dark:text-white">Standard Plan</h3>
-                                    <span class="text-xs text-gray-500">Core Household Tier</span>
+                                    <p class="profile-name">RoboCrax</p>
+                                    <p class="profile-role">Infrastructure engineer, Auckland</p>
                                 </div>
-                                <span class="text-3xl font-mono font-bold text-gray-900 dark:text-white">$99 <span class="text-xs font-normal text-gray-400">/ yr</span></span>
                             </div>
-                            
-                            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                                Complete access to the private curated library with zero advertisements, built for reliable everyday streaming across all household devices.
-                            </p>
+                            <p class="status profile-status"><span class="led led-green" style="--i:0" aria-hidden="true"></span>Taking new work</p>
+                            <dl class="glance">
+                                <div><dt>Focus</dt><dd>Websites, IT support and automation</dd></div>
+                                <div><dt>Clients</dt><dd>Businesses across New Zealand and Australia</dd></div>
+                                <div><dt>Contact</dt><dd>Direct on WhatsApp, 24/7</dd></div>
+                                <div><dt>Toolbox</dt><dd>Linux, Proxmox, Docker, Cloudflare, WordPress, Go, Python, Node.js</dd></div>
+                            </dl>
+                        </aside>
+                    </div>
+                </div>
 
-                            <ul class="text-xs sm:text-sm space-y-3 text-gray-600 dark:text-gray-300 pt-2 border-t border-notion-lightBorder dark:border-notion-darkBorder">
-                                <li class="flex items-start gap-2.5">
-                                    <span class="text-blue-600 font-bold">✓</span>
-                                    <span><strong>Full HD</strong> direct video stream across all clients.</span>
-                                </li>
-                                <li class="flex items-start gap-2.5">
-                                    <span class="text-blue-600 font-bold">✓</span>
-                                    <span>Automated multi-source media request system enabled.</span>
-                                </li>
-                                <li class="flex items-start gap-2.5">
-                                    <span class="text-blue-600 font-bold">✓</span>
-                                    <span>Active streaming on weekdays and standard weekends.</span>
-                                </li>
-                                <li class="flex items-start gap-2.5">
-                                    <span class="text-blue-600 font-bold">✓</span>
-                                    <span>2 concurrent household streams included.</span>
-                                </li>
-                                <li class="flex items-start gap-2.5 text-gray-500 dark:text-gray-400">
-                                    <span class="text-blue-500 font-medium">ℹ️</span>
-                                    <span>Bandwidth limitation applies and is prioritized for our peak add-on users.</span>
-                                </li>
+                <div class="clients">
+                    <div class="clients-head">
+                        <h2>Businesses I've worked with</h2>
+                        <a href="#portfolio">See all work</a>
+                    </div>
+                    <ul class="client-list">
+                        <li><a href="#portfolio">Kitchenmaker</a></li>
+                        <li><a href="#portfolio">Teamsports</a></li>
+                        <li><a href="#portfolio">Football HQ</a></li>
+                        <li><a href="#portfolio">Hari Tiny Homes</a></li>
+                        <li><a href="#portfolio">Arcon Supplies</a></li>
+                        <li><a href="#portfolio">iProvideCare</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="wrap me-section" aria-labelledby="do-title">
+                <div class="section-head"><h2 id="do-title">What I do</h2></div>
+                <div class="services">
+                    <article class="service">
+                        <h3><a href="#wordpress">Website hosting</a></h3>
+                        <p>Fully managed hosting from Auckland. Setup, updates, security and backups are handled for you, and changes happen whenever you message.</p>
+                        <p class="service-meta">Most sites around $200 a year</p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#it-support">IT support</a></h3>
+                        <p>Remote help for the problems a chatbot can't fix: dying laptops, full drives, stubborn printers and stuck email. You watch the whole session.</p>
+                        <p class="service-meta">AnyDesk, TeamViewer, RustDesk or Quick Assist</p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#automations">Data and automation</a></h3>
+                        <p>Small, dependable programs that move your data so you don't have to: scrapers, webhook relays and database syncs that run 24/7.</p>
+                        <p class="service-meta">Built in Go, Python and Node.js</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="wrap me-section" aria-labelledby="work-title">
+                <div class="section-head">
+                    <h2 id="work-title">Selected work</h2>
+                    <a class="btn btn-quiet" href="#portfolio">See all work</a>
+                </div>
+                <div class="sites sites-4">
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
+                        <p>Custom kitchens and cabinetry, Auckland</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
+                        <p>Tiny homes and granny flats, NZ</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
+                        <p>adidas sports distributor and online store</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
+                        <p>adidas teamwear for Oceania football</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="wrap me-section" aria-labelledby="how-title">
+                <div class="section-head"><h2 id="how-title">How I work</h2></div>
+                <div class="grid grid-3 principles">
+                    <div class="item">
+                        <h3>You deal with me</h3>
+                        <p>Every job is handled by me personally, from the first message to the ongoing support afterwards.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Local and fairly priced</h3>
+                        <p>Based in Auckland, with straightforward pricing and none of the big-provider markups or upsells.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Built to look after itself</h3>
+                        <p>I build systems that retry, recover and report on their own, so fewer problems ever reach you.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="wrap me-section" aria-labelledby="built-title">
+                <div class="section-head"><h2 id="built-title">Apps I've built</h2></div>
+                <div class="rack">
+                    <article class="unit u1">
+                        <div class="tool">
+                            <div>
+                                <h3><a href="#respond">Live quiz app for SSMB Auckland</a></h3>
+                                <p class="desc">A Kahoot-style quiz and polling app built from scratch. The audience joins on their phones, answers live questions and races up the leaderboard.</p>
+                            </div>
+                            <div class="unit-foot">
+                                <span class="status"><span class="led led-blue" style="--i:1" aria-hidden="true"></span>Custom build</span>
+                                <a class="btn btn-quiet btn-small" href="#respond">See how it works</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="unit u1">
+                        <div class="tool">
+                            <div>
+                                <h3><a href="#nzquiz">NZ Road Code Practice Quiz</a></h3>
+                                <p class="desc">A free take on the NZTA learner theory test. No 10-question limit, no in-app purchases, full mock exams and endless practice in your browser.</p>
+                            </div>
+                            <div class="unit-foot">
+                                <span class="status"><span class="led led-blue" style="--i:2" aria-hidden="true"></span>Free to use</span>
+                                <a class="btn btn-quiet btn-small" data-track="launch-quiz-home" href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">Launch quiz</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="unit u1">
+                        <div class="tool">
+                            <div>
+                                <h3><a href="#heartbeats">Device Ping Heartbeats</a></h3>
+                                <p class="desc">A tiny Go sidecar that pings devices on your network and reports to Healthchecks.io only while they're healthy.</p>
+                            </div>
+                            <div class="unit-foot">
+                                <span class="status"><span class="led led-blue" style="--i:3" aria-hidden="true"></span>Open source</span>
+                                <a class="btn btn-quiet btn-small" data-track="github-heartbeats" href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">View on GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="wrap me-section" aria-labelledby="jf-title">
+                <div class="rack">
+                    <article class="unit jf-unit">
+                        <div class="unit-top">
+                            <span class="status"><span class="led led-amber" style="--i:4" aria-hidden="true"></span>Invite only</span>
+                        </div>
+                        <h2 id="jf-title"><a href="#jellyfin">Cheap-as Streaming Service</a></h2>
+                        <p class="desc">A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+                        <div class="detect">
+                            <p id="home-detected-client-desc">Detecting your operating system...</p>
+                            <div class="detect-actions">
+                                <a id="home-detected-client-btn" class="btn btn-primary btn-small" data-track="client-download-home" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
+                                <a class="btn btn-quiet btn-small" href="#tv-setup">TV setup guide</a>
+                            </div>
+                        </div>
+                        <div class="unit-foot"><a class="more" href="#jellyfin">Want to join? See plans and request access</a></div>
+                    </article>
+                </div>
+            </section>
+        </section>
+
+        <!-- ================= PORTFOLIO ================= -->
+        <section id="view-portfolio" class="view page" aria-labelledby="portfolio-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="portfolio-title" tabindex="-1">Websites I've worked on</h1>
+                    <p class="lede">A selection of New Zealand and Australian businesses whose websites I've built, rebuilt or looked after, from adidas distributors to a mobile car detailer.</p>
+                </div>
+
+                <h2 class="group-title">Major clients</h2>
+                <div class="sites sites-2">
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
+                        <p>Custom kitchens and cabinetry from an Auckland maker with over 30 years of craftsmanship.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
+                        <p>Affordable tiny homes and granny flats, with plans, pricing and custom-build estimates online.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
+                        <p>New Zealand distributor of adidas sportswear and team gear, with a full online store.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
+                        <p>Exclusive adidas teamwear distributor for the Oceania football region, for clubs, trade and the public.</p>
+                    </article>
+                </div>
+
+                <h2 class="group-title">More sites</h2>
+                <div class="sites sites-3">
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">kkdecor.co.nz</span><img src="work/kkdecor.webp" alt="KK Decor homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.kkdecor.co.nz/" target="_blank" rel="noopener" data-track="work-kkdecor">KK Decor</a></h3>
+                        <p>Stylish indoor and outdoor blinds.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">swetafurnishing.co.nz</span><img src="work/swetafurnishing.webp" alt="Sweta Furnishing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.swetafurnishing.co.nz/" target="_blank" rel="noopener" data-track="work-swetafurnishing">Sweta Furnishing</a></h3>
+                        <p>Made-to-measure curtains and blinds in Papatoetoe, Auckland.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">krishnasolutions.co.nz</span><img src="work/krishnasolutions.webp" alt="Krishna Solutions homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://krishnasolutions.co.nz/" target="_blank" rel="noopener" data-track="work-krishnasolutions">Krishna Solutions</a></h3>
+                        <p>IT support, websites and digital marketing for Auckland homes and businesses.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">arconsupplies.com.au</span><img src="work/arconsupplies.webp" alt="Arcon Supplies homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.arconsupplies.com.au/" target="_blank" rel="noopener" data-track="work-arconsupplies">Arcon Supplies</a></h3>
+                        <p>Reinforcing mesh, bar and accessories for builders in Mount Druitt, NSW.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">iprovidecare.com.au</span><img src="work/iprovidecare.webp" alt="iProvideCare homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.iprovidecare.com.au/" target="_blank" rel="noopener" data-track="work-iprovidecare">iProvideCare</a></h3>
+                        <p>Specialist community nursing at home across Sydney.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">conceptualise.co.nz</span><img src="work/conceptualise.webp" alt="Conceptualise homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.conceptualise.co.nz/" target="_blank" rel="noopener" data-track="work-conceptualise">Conceptualise</a></h3>
+                        <p>Affordable web design that gets NZ small businesses online.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">exlan.co.nz</span><img src="work/exlan.webp" alt="Exlan Auto Detailing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.exlan.co.nz/" target="_blank" rel="noopener" data-track="work-exlan">Exlan Auto Detailing</a></h3>
+                        <p>Mobile car detailing across Auckland.</p>
+                    </article>
+                    <!-- Ready to publish once confirmed: remove these comment markers to show ASAS.
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">asas.co.nz</span><img src="work/asas.webp" alt="ASAS homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://asas.co.nz/" target="_blank" rel="noopener" data-track="work-asas">ASAS</a></h3>
+                        <p>Free ACC advocacy for people across New Zealand.</p>
+                    </article>
+                    -->
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>And more</h3>
+                            <p>These are just some of the sites I've worked on. If you want yours built, rebuilt or simply looked after, let's talk.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-portfolio" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20website" target="_blank" rel="noopener">Talk to me about a website</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STREAMING (JELLYFIN) ================= -->
+        <section id="view-jellyfin" class="view page" aria-labelledby="jellyfin-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="jellyfin-title" tabindex="-1">A community-based streaming platform</h1>
+                    <p class="lede">Full HD Streaming, on all your devices *</p>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h2>Request Access</h2></div>
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>Start with a Free Account</h3>
+                            <p>Applications are reviewed within 24 hours. Submit your access request below.</p>
+                        </div>
+                        <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open Request Form</button>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h2>Setup Your Devices</h2></div>
+                    <div class="panel">
+                        <h3>Recommended for Your Device</h3>
+                        <div class="row-cta" style="margin-top:8px">
+                            <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
+                            <div class="detect-actions" style="display:flex;flex-wrap:wrap;gap:10px">
+                                <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
+                                <a class="btn btn-quiet" href="#tv-setup">TV Setup Guide</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><h2>Membership (After Free Trial)</h2></div>
+                    <p style="color:var(--slate)">Once your free trial concludes, select a plan to maintain uninterrupted access.</p>
+
+                    <div class="plans">
+                        <div class="plan main">
+                            <span class="badge">Most Popular</span>
+                            <div class="plan-top">
+                                <div>
+                                    <h3>Standard Plan</h3>
+                                    <p class="tier">Core Household Tier</p>
+                                </div>
+                                <span class="price">$99<small>/ yr</small></span>
+                            </div>
+                            <p style="color:var(--slate)">Complete access to the private curated library with zero advertisements, built for reliable everyday streaming across all household devices.</p>
+                            <ul>
+                                <li><span><strong>Full HD</strong> direct video stream across all clients.</span></li>
+                                <li><span>Automated multi-source media request system enabled.</span></li>
+                                <li><span>Active streaming on weekdays and standard weekends.</span></li>
+                                <li><span>2 concurrent household streams included.</span></li>
+                                <li class="note"><span>Bandwidth limitation applies and is prioritized for our peak add-on users.</span></li>
                             </ul>
+                            <button class="btn btn-primary" type="button" data-open-invite data-track="plan-standard">Choose Standard Plan ($99/yr)</button>
                         </div>
 
-                        <div class="pt-4 border-t border-notion-lightBorder dark:border-notion-darkBorder">
-                            <button onclick="openModal()" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition shadow-sm">
-                                Choose Standard Plan ($99/yr)
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Right: Stacked 2 Cards (2 Cols, Flex Col Justify Between) -->
-                    <div class="lg:col-span-2 flex flex-col gap-5 h-full">
-                        
-                        <!-- Top: Weekend Peak Add-on -->
-                        <div class="flex-1 p-5 rounded-2xl bg-notion-lightSubtle/60 dark:bg-notion-darkSubtle/60 border border-notion-lightBorder dark:border-notion-darkBorder flex flex-col justify-between space-y-3">
-                            <div>
-                                <div class="flex justify-between items-start">
+                        <div class="plan-stack">
+                            <div class="plan">
+                                <div class="plan-top">
                                     <div>
-                                        <h3 class="font-semibold text-sm text-gray-900 dark:text-white">Weekend Peak Add-on</h3>
-                                        <span class="text-[11px] text-gray-400">Unthrottled Peak Allocation</span>
+                                        <h3>Weekend Peak Add-on</h3>
+                                        <p class="tier">Unthrottled Peak Allocation</p>
                                     </div>
-                                    <span class="text-base font-mono font-semibold text-gray-900 dark:text-white">$349 <span class="text-[10px] font-normal text-gray-400">/ yr</span></span>
+                                    <span class="price">$349<small>/ yr</small></span>
                                 </div>
-                                <ul class="text-xs space-y-1.5 text-gray-500 dark:text-gray-400 mt-2">
-                                    <li class="flex items-start gap-1.5"><span>✓</span> <span>All Standard Plan features included.</span></li>
-                                    <li class="flex items-start gap-1.5"><span>✓</span> <span>Unthrottled bandwidth even during peak periods.</span></li>
-                                    <li class="flex items-start gap-1.5"><span>✓</span> <span>4K requests accepted.</span></li>
+                                <ul>
+                                    <li><span>All Standard Plan features included.</span></li>
+                                    <li><span>Unthrottled bandwidth even during peak periods.</span></li>
+                                    <li><span>4K requests accepted.</span></li>
                                 </ul>
+                                <div class="foot"><span>Hardware Cap:</span><span>1 / 6 spots claimed</span></div>
                             </div>
-                            <div class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 pt-2 border-t border-notion-lightBorder dark:border-notion-darkBorder flex justify-between items-center">
-                                <span>Hardware Cap:</span>
-                                <span>1 / 6 spots claimed</span>
-                            </div>
-                        </div>
-
-                        <!-- Bottom: Lifetime Pass Card -->
-                        <div class="flex-1 p-5 rounded-2xl bg-purple-50/40 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/50 flex flex-col justify-between space-y-3">
-                            <div>
-                                <div class="flex justify-between items-start">
+                            <div class="plan">
+                                <div class="plan-top">
                                     <div>
-                                        <h3 class="font-bold text-sm text-purple-900 dark:text-purple-300 flex items-center gap-1.5">
-                                            <span>💾</span> <span>Lifetime Supporter Pass</span>
-                                        </h3>
-                                        <span class="text-[11px] text-purple-600 dark:text-purple-400">Contribute To The Server Build</span>
+                                        <h3>Lifetime Supporter Pass</h3>
+                                        <p class="tier">Contribute To The Server Build</p>
                                     </div>
-                                    <span class="text-base font-mono font-bold text-purple-900 dark:text-purple-200">$999 <span class="text-[10px] font-normal text-purple-500 dark:text-purple-400">lifetime</span></span>
+                                    <span class="price">$999<small>lifetime</small></span>
                                 </div>
-                                <p class="text-xs text-purple-800 dark:text-purple-300/80 leading-relaxed mt-2">
-                                    Directly funds the addition of dedicated enterprise storage arrays to our server cluster.
-                                </p>
-                                <ul class="text-xs space-y-1.5 text-purple-800 dark:text-purple-300/80 mt-2">
-                                    <li class="flex items-start gap-1.5"><span>★</span> <span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
-                                    <li class="flex items-start gap-1.5"><span>★</span> <span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
-                                    <li class="flex items-start gap-1.5"><span>★</span> <span>Unrestricted streaming, forever.</span></li>
+                                <p style="color:var(--slate);font-size:15.5px">Directly funds the addition of dedicated enterprise storage arrays to our server cluster.</p>
+                                <ul>
+                                    <li><span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
+                                    <li><span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
+                                    <li><span>Unrestricted streaming, forever.</span></li>
                                 </ul>
-                            </div>
-                            <div class="pt-2 border-t border-purple-200/60 dark:border-purple-900/40">
-                                <a href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener" class="text-[11px] font-bold text-purple-700 dark:text-purple-300 hover:underline flex items-center justify-between">
-                                    <span>Become a Lifetime Supporter</span>
-                                    <span>→</span>
-                                </a>
+                                <a class="btn btn-quiet" data-track="whatsapp-lifetime" href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener">Become a Lifetime Supporter</a>
                             </div>
                         </div>
-
                     </div>
-                </div>
 
-                <!-- Policy Clause -->
-                <div class="p-5 rounded-xl bg-red-50/60 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 space-y-2">
-                    <h3 class="text-sm font-bold text-red-700 dark:text-red-300 flex items-center gap-2">
-                        <span>⚠️</span> Household Fair Use & Concurrency Rules
-                    </h3>
-                    <p class="text-xs text-red-600 dark:text-red-400 leading-relaxed">
-                        Every membership is issued strictly for a single primary residence with a limit of <strong>2 concurrent streams</strong>. Sharing credentials outside your household triggers automated account revocation.
-                    </p>
+                    <div class="callout">
+                        <h3>Household Fair Use &amp; Concurrency Rules</h3>
+                        <p>Every membership is issued strictly for a single primary residence with a limit of <strong>2 concurrent streams</strong>. Sharing credentials outside your household triggers automated account revocation.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ================= IT SUPPORT SUB-PAGE ================= -->
-        <div id="view-it-support" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">IT Support & Troubleshooting</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">Real Human Help · Remote Desktop Assistance</p>
+        <!-- ================= TV SETUP ================= -->
+        <section id="view-tv-setup" class="view page" aria-labelledby="tv-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#jellyfin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Jellyfin</a>
+                <div class="page-head">
+                    <h1 id="tv-title" tabindex="-1">Smart TV Quick Connect Guide</h1>
+                    <p class="lede">Authenticate your Smart TV, Android TV, Google TV, or Apple TV in seconds without typing passwords with your TV remote.</p>
+                </div>
+
+                <ol class="steps cols-2">
+                    <li class="panel">
+                        <h3>Install the TV App</h3>
+                        <p>On Android TV, Google TV, or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.</p>
+                    </li>
+                    <li class="panel">
+                        <h3>Enter Server Address</h3>
+                        <p>Launch the app and set the host server URL to:</p>
+                        <div class="address">https://app.robocrax.com</div>
+                    </li>
+                    <li class="panel">
+                        <h3>Select Quick Connect</h3>
+                        <p>Click the <strong>Quick Connect</strong> button on your TV screen. The app will generate and display a temporary <strong>6-digit code</strong>.</p>
+                    </li>
+                    <li class="panel">
+                        <h3>Authorize on Mobile or PC</h3>
+                        <p>Log into your phone or browser, navigate to <strong>User Profile → Quick Connect</strong>, enter the 6-digit code, and click Authorize.</p>
+                    </li>
+                </ol>
+
+                <div class="block" style="display:flex;flex-wrap:wrap;gap:12px">
+                    <a class="btn btn-primary" href="#jellyfin">Back to Jellyfin Setup</a>
+                    <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need Help? Contact Me</a>
                 </div>
             </div>
+        </section>
 
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">When AI Can't Fix It, I Can</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        AI chatbots are great for theory, but they can't physically plug in your printer, clean up your cluttered hard drive, or fix an operating system that won't boot. I’m on standby to troubleshoot your real-world tech frustrations, remoting in securely with whichever tool you prefer (AnyDesk, TeamViewer, RustDesk, or Quick Assist) to help you out like a friend.
-                    </p>
+        <!-- ================= WEBSITE HOSTING ================= -->
+        <section id="view-wordpress" class="view page" aria-labelledby="hosting-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="hosting-title" tabindex="-1">Website hosting, handled.</h1>
+                    <p class="lede">You run your business; I keep your website up, fast and secure. Hosting is based here in Auckland and managed end to end, with a direct line to me whenever something needs to change.</p>
                 </div>
 
-                <!-- Core Support Scenarios -->
-                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">💻</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Crashing & Dying Laptops</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Diagnosing sluggish machines, blue screens, startup freezes, and malware cleanup.
-                        </p>
+                <div class="grid grid-3">
+                    <div class="item">
+                        <h3>Local and affordable</h3>
+                        <p>Auckland-based hosting with straightforward pricing and none of the big-provider markups or upsells.</p>
                     </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">💾</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Out of Disk Space</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Finding hidden system bloat, cache buildup, and safely moving data to free up gigabytes.
-                        </p>
+                    <div class="item">
+                        <h3>Managed for you</h3>
+                        <p>Setup, upgrades, security, backups and custom tweaks are all on me. No control panels to learn.</p>
                     </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">🖨️</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Printers & Peripherals</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Fixing offline wireless printers, driver conflicts, scanner tools, and external monitors.
-                        </p>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">✉️</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Emails & Accounts</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Outlook/Gmail IMAP sync errors, broken email domains, password recovery, and migrations.
-                        </p>
+                    <div class="item">
+                        <h3>A real person, any time</h3>
+                        <p>Message or call me on WhatsApp whenever you need a change or have a question. No ticket queue, no bots.</p>
                     </div>
                 </div>
 
-                <!-- How it works box -->
-                <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-3">
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">How We Connect</h3>
-                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        Message me on WhatsApp detailing what's broken. When you're ready, we open a secure remote session using software of your choice (<strong>AnyDesk</strong>, <strong>TeamViewer</strong>, <strong>RustDesk</strong>, or native Windows <strong>Quick Assist</strong>). You watch everything on your screen in real time.
-                    </p>
-                </div>
-
-                <div class="pt-2">
-                    <a href="https://wa.me/+64204774826?text=Hi,%20I%20need%20some%20IT%20support%20with%20my%20device" target="_blank" rel="noopener" class="inline-block text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition shadow-sm">
-                        Chat on WhatsApp for IT Help
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TV SETUP SUB-PAGE ================= -->
-        <div id="view-tv-setup" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('jellyfin')" title="Back to Jellyfin" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Smart TV Quick Connect Guide</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">app.robocrax.com · Easy Living Room Setup</p>
-                </div>
-            </div>
-
-            <!-- Full Screen / Large Card Steps -->
-            <div class="space-y-6">
-                <p class="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Authenticate your Smart TV, Android TV, Google TV, or Apple TV in seconds without typing passwords with your TV remote.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800">STEP 01</span>
-                            <span class="text-2xl">📺</span>
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>What it costs</h3>
+                            <p>Most standard sites come in around <strong>$200 a year</strong>. Larger or custom setups get a quote that fits what you actually need.</p>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Install the TV App</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                            On Android TV, Google TV, or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.
-                        </p>
-                    </div>
-
-                    <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800">STEP 02</span>
-                            <span class="text-2xl">🌐</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Enter Server Address</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Launch the app and set the host server URL to:
-                        </p>
-                        <div class="p-3 rounded-lg bg-gray-100 dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder font-mono text-sm text-blue-600 dark:text-blue-400 font-bold">
-                            https://app.robocrax.com
+                        <div style="display:flex;flex-wrap:wrap;gap:10px">
+                            <a class="btn btn-primary" data-track="whatsapp-hosting" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20Enterprise%20Website%20Hosting" target="_blank" rel="noopener">Talk to me about hosting</a>
+                            <a class="btn btn-quiet" href="#portfolio">See websites I've worked on</a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800">STEP 03</span>
-                            <span class="text-2xl">🔢</span>
+        <!-- ================= IT SUPPORT ================= -->
+        <section id="view-it-support" class="view page" aria-labelledby="it-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="it-title" tabindex="-1">IT support from a real person.</h1>
+                    <p class="lede">AI is great for explaining things. It can't clear your drive, coax a printer back online or rescue a laptop that won't boot. I can, over a secure remote session that you watch from start to finish.</p>
+                </div>
+
+                <div class="block" style="margin-top:0">
+                    <h2>What I usually fix</h2>
+                    <div class="grid grid-4">
+                        <div class="item">
+                            <h3>Slow or crashing laptops</h3>
+                            <p>Sluggish machines, blue screens, startup freezes and malware clean-up.</p>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Select Quick Connect</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Click the <strong>Quick Connect</strong> button on your TV screen. The app will generate and display a temporary <strong>6-digit code</strong>.
-                        </p>
-                    </div>
-
-                    <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800">STEP 04</span>
-                            <span class="text-2xl">✅</span>
+                        <div class="item">
+                            <h3>Running out of space</h3>
+                            <p>Finding hidden bloat and old caches, and safely moving files to win back gigabytes.</p>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Authorize on Mobile or PC</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Log into your phone or browser, navigate to <strong>User Profile → Quick Connect</strong>, enter the 6-digit code, and click Authorize.
-                        </p>
+                        <div class="item">
+                            <h3>Printers and peripherals</h3>
+                            <p>Offline wireless printers, driver conflicts, scanners and external monitors.</p>
+                        </div>
+                        <div class="item">
+                            <h3>Email and accounts</h3>
+                            <p>Outlook and Gmail sync errors, broken email domains, password recovery and migrations.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="pt-4 flex gap-4">
-                    <button onclick="navigateTo('jellyfin')" class="text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition">
-                        ← Back to Jellyfin Setup
-                    </button>
-                    <a href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener" class="text-sm font-medium px-5 py-3 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder hover:bg-gray-100 dark:hover:bg-notion-darkCard transition text-gray-700 dark:text-gray-300">
-                        Need Help? Contact Me
-                    </a>
+                <div class="block">
+                    <h2>How a session works</h2>
+                    <ol class="steps cols-3">
+                        <li>
+                            <h3>Tell me what's wrong</h3>
+                            <p>Send a WhatsApp message describing the problem. A screenshot helps.</p>
+                        </li>
+                        <li>
+                            <h3>Open a remote session</h3>
+                            <p>Use whatever you're comfortable with: AnyDesk, TeamViewer, RustDesk or Windows Quick Assist.</p>
+                        </li>
+                        <li>
+                            <h3>Watch it get fixed</h3>
+                            <p>Everything happens on your screen in real time, and you can end the session whenever you like.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="block">
+                    <a class="btn btn-primary" data-track="whatsapp-it" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20some%20IT%20support%20with%20my%20device" target="_blank" rel="noopener">Message me about IT help</a>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ================= ENTERPRISE WEBSITE HOSTING SUB-PAGE ================= -->
-        <div id="view-wordpress" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Enterprise Website Hosting</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">Auckland Based · Fully Managed Service</p>
+        <!-- ================= AUTOMATIONS ================= -->
+        <section id="view-automations" class="view page" aria-labelledby="auto-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="auto-title" tabindex="-1">Automations that keep running when you stop watching.</h1>
+                    <p class="lede">If someone on your team copies data between systems by hand, or a Zapier chain breaks every few weeks, that's a job for a small, purpose-built program. I write them in Go, Python and Node.js, and they run on a schedule or the moment something happens.</p>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="panel">
+                        <h3>Pull data from websites</h3>
+                        <p>Headless-browser scrapers built with Playwright or Puppeteer that handle JavaScript-heavy pages, extract prices, stock levels or listings, and write clean JSON straight into your database.</p>
+                    </div>
+                    <div class="panel">
+                        <h3>Catch and route webhooks</h3>
+                        <p>Relays that receive events from Stripe, Shopify or your CRM, keep a raw log of every payload, and deliver them onward with automatic retries when the other end is down.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <h2>Built to look after themselves</h2>
+                    <p>Each automation retries failed work with backoff, logs what it did, and tells you when something needs a human. Database syncs run on their own and pick up where they left off after an outage, so nothing gets lost or doubled up.</p>
+                </div>
+
+                <div class="block">
+                    <a class="btn btn-primary" data-track="whatsapp-automations" href="https://wa.me/+64204774826?text=Hi,%20I%20want%20to%20scope%20a%20custom%20data%20automation" target="_blank" rel="noopener">Scope an automation with me</a>
                 </div>
             </div>
+        </section>
 
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Cheap as Chips, Managed 100% End-to-End</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        No confusing control panels or technical headaches. Based right here in Auckland, I handle your website's entire hosting setup, regular updates, maintenance, and custom requirements directly with 24/7 support whenever you need help.
-                    </p>
+        <!-- ================= LIVE QUIZ APP (SSMB) ================= -->
+        <section id="view-respond" class="view page" aria-labelledby="respond-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="app-layout">
+                    <div>
+                        <div class="page-head">
+                            <h1 id="respond-title" tabindex="-1">Live quizzes for SSMB Auckland</h1>
+                            <p class="lede">A Kahoot-style quiz and polling app I built from scratch for SSMB Auckland's events. Everyone plays on their own phone while the host runs the session from a console.</p>
+                            <p class="where">respond.ssmb.org.nz</p>
+                        </div>
+                        <div class="grid grid-2">
+                            <div class="item">
+                                <h3>Join in seconds</h3>
+                                <p>Open the link and pick a nickname. No app to install and no account to create.</p>
+                            </div>
+                            <div class="item">
+                                <h3>Questions arrive on their own</h3>
+                                <p>Phones stay in sync with the host and reconnect by themselves if the signal drops.</p>
+                            </div>
+                            <div class="item">
+                                <h3>Quizzes, polls and open answers</h3>
+                                <p>Timed quiz rounds with one or more right answers, quick polls, and typed responses.</p>
+                            </div>
+                            <div class="item">
+                                <h3>Points and a leaderboard</h3>
+                                <p>Correct answers score points, and the leaderboard keeps the room competitive between rounds.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <figure class="phone">
+                        <img src="work/respond.webp" alt="The quiz app on a phone, showing a live fill-in-the-blank question" width="390" height="780" loading="lazy">
+                    </figure>
                 </div>
 
-                <!-- Three Core Value Cards -->
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <div class="text-base font-bold text-gray-900 dark:text-white">Local & Cheap as Chips</div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Auckland-based hosting offering straightforward, ultra-affordable pricing without the high corporate markups.
-                        </p>
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>Want one for your event or classroom?</h3>
+                            <p>I can build a quiz or polling app around your branding and the way your sessions run.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-respond" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20a%20live%20quiz%20app%20like%20the%20SSMB%20one" target="_blank" rel="noopener">Message me about a quiz app</a>
                     </div>
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <div class="text-base font-bold text-gray-900 dark:text-white">Fully Managed by Me</div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            You focus entirely on your business. I take care of all the setup, upgrades, backups, and custom tweaks for you.
-                        </p>
-                    </div>
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <div class="text-base font-bold text-gray-900 dark:text-white">24/7 Direct Support</div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Direct line via WhatsApp or phone anytime you need changes made or questions answered. No robotic ticket queues.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Pricing Note Banner -->
-                <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-2">
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Enterprise Plans & Custom Quotes</h3>
-                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                        Pricing is tailored to your site's scale and requirements (typically around <strong>$200/year</strong> for standard setups). Reach out directly and we'll sort out the best plan for you.
-                    </p>
-                </div>
-
-                <div class="pt-2">
-                    <a href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20Enterprise%20Website%20Hosting" target="_blank" rel="noopener" class="inline-block text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition">
-                        Talk to Me About Hosting
-                    </a>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ================= DATA AUTOMATIONS SUB-PAGE ================= -->
-        <div id="view-automations" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">Data & ETL Automations</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">Event-driven workflows, web extractors & integration middleware</p>
+        <!-- ================= NZ ROAD CODE QUIZ ================= -->
+        <section id="view-nzquiz" class="view page" aria-labelledby="quiz-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="quiz-title" tabindex="-1">NZ Road Code Practice Quiz</h1>
+                    <p class="lede">Free, unlimited practice for the NZTA learner theory test. The official app stops you at 10 questions and puts the rest behind a paywall; this one lets you keep going until every rule sticks.</p>
+                    <p class="where"><a href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">nzroadcodequiz.robocrax.com</a></p>
+                </div>
+
+                <div class="grid grid-4">
+                    <div class="item">
+                        <h3>Unlimited quiz mode</h3>
+                        <p>No 10-question cap. Practise until you know every rule.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Full mock exams</h3>
+                        <p>The real 35-question format with the same pass mark as the NZTA test.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Topic drills</h3>
+                        <p>Focus on intersections, signs, general road safety or parking.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Works in any browser</h3>
+                        <p>Phone, tablet or computer, with nothing to install.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>Free, with no catch</h3>
+                            <p>No subscriptions, no ads and no in-app purchases. Built to help Kiwis pass their learner licence on the first try.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="launch-quiz-page" href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">Launch the quiz</a>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Resilient, Self-Healing Data Pipelines</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        We develop tailor-made automation daemons and microservices designed to replace brittle Zapier integrations or error-prone manual spreadsheets. Built in Go, Python, and Node.js, these pipelines execute on schedule or via event triggers with zero maintenance overhead.
-                    </p>
+        <!-- ================= HEARTBEATS ================= -->
+        <section id="view-heartbeats" class="view page" aria-labelledby="hb-title" hidden>
+            <div class="wrap">
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <div class="page-head">
+                    <h1 id="hb-title" tabindex="-1">Device Ping Heartbeats</h1>
+                    <p class="lede"><code>heartbeats-ping-sidecar</code> is a tiny Go container for watching devices you can't install monitoring agents on: IoT gateways, home automation hubs, isolated database servers. It checks them with ICMP or TCP and sends a heartbeat to Healthchecks.io or BetterStack only when every check passes, so silence means something's wrong.</p>
+                    <p class="where"><a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">github.com/robocrax/heartbeats-ping-sidecar</a></p>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-5">
-                    <div class="p-6 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-3">
-                        <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">Scraping & Monitoring</span>
-                        <h3 class="font-bold text-base text-gray-900 dark:text-white">Headless Browser Extraction</h3>
-                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Automated Playwright/Puppeteer clusters that bypass dynamic JavaScript renderings, extract structured pricing or inventory data, and output sanitized JSON directly to your database.
-                        </p>
-                    </div>
-
-                    <div class="p-6 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-3">
-                        <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300">Message Relays</span>
-                        <h3 class="font-bold text-base text-gray-900 dark:text-white">Webhook Ingestion & Routing</h3>
-                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Resilient webhook ingestion brokers that ingest Stripe, Shopify, or custom CRM event payloads, storing raw logs before dispatching to target endpoints with exponential backoff retries.
-                        </p>
-                    </div>
+                <div class="block" style="margin-top:0">
+                    <h2>Docker Compose example</h2>
+                    <div class="code"><pre>version: '3.8'
+services:
+  sidecar:
+    image: ghcr.io/robocrax/heartbeats-ping-sidecar:latest
+    restart: always
+    environment:
+      - TARGET_HOST=192.168.1.50
+      - HEARTBEAT_URL=https://hc-ping.com/your-uuid-token
+      - PING_INTERVAL_SEC=30</pre></div>
                 </div>
 
-                <div class="pt-2">
-                    <a href="https://wa.me/+64204774826?text=Hi,%20I%20want%20to%20scope%20a%20custom%20data%20automation" target="_blank" rel="noopener" class="inline-block text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition">
-                        Contact Me About Automations
-                    </a>
+                <div class="block">
+                    <a class="btn btn-primary" data-track="github-heartbeats-page" href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">View on GitHub</a>
                 </div>
             </div>
-        </div>
-
-        <!-- ================= GPMC SUB-PAGE ================= -->
-        <div id="view-gpmc" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold font-mono text-gray-900 dark:text-white">Unlimited Google Photos uploads</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">github.com/robocrax/gpmc-daemon · Google Photos Sync Daemon</p>
-                </div>
-            </div>
-
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Overview & Quota Preservation Strategy</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <code>gpmc-daemon</code> is a headless continuous backup daemon written for Linux servers and NAS units. It observes local media directories and uploads them to Google Photos utilizing the platform's free "Storage Saver" compression parameters so they do not consume your storage limits.
-                    </p>
-                </div>
-
-                <!-- Feature Grid -->
-                <div class="grid sm:grid-cols-3 gap-4">
-                    <div class="p-4 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-1">
-                        <span class="font-bold text-sm text-gray-900 dark:text-white">inotify Watcher</span>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Detects newly added photos and videos instantaneously with low CPU footprint.</p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-1">
-                        <span class="font-bold text-sm text-gray-900 dark:text-white">Zero-State Deduplication</span>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Maintains an internal SQLite hash database to ensure zero duplicate uploads.</p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-1">
-                        <span class="font-bold text-sm text-gray-900 dark:text-white">Headless OAuth2</span>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">One-time browser authentication token flow with automated refresh cycles.</p>
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white font-mono uppercase tracking-wider">Quickstart & Installation</h3>
-                    <div class="p-5 rounded-xl bg-gray-950 text-gray-100 font-mono text-xs overflow-x-auto space-y-2 border border-gray-800">
-                        <div class="text-gray-500"># 1. Clone the repository</div>
-                        <div>git clone https://github.com/robocrax/gpmc-daemon.git</div>
-                        <div>cd gpmc-daemon</div>
-                        <div class="text-gray-500 pt-2"># 2. Compile binary via Makefile</div>
-                        <div>make build</div>
-                        <div class="text-gray-500 pt-2"># 3. Initialize daemon watching target path</div>
-                        <div>./gpmc-daemon --watch-dir /mnt/storage/photos --config ~/.config/gpmc/config.json</div>
-                    </div>
-                </div>
-
-                <div class="pt-2 flex gap-4">
-                    <a href="https://github.com/robocrax/gpmc-daemon" target="_blank" rel="noopener" class="text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition shadow-sm">
-                        View on Github ↗
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= NZ ROAD CODE QUIZ SUB-PAGE ================= -->
-        <div id="view-nzquiz" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">NZ Road Code Practice Quiz</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">nzroadcodequiz.robocrax.com · Free & Unlimited Learner Driver Practice</p>
-                </div>
-            </div>
-
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Unrestricted Road Code Theory Training</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        A free, web-based clone and enhancement of the NZ Automobile Association (AA) and Waka Kotahi NZTA Road Code Theory Practice Test. The official mobile app restricts practice sessions to only 10 questions per quiz and locks full access behind paywalls. This open platform gives learner drivers complete control over their preparation with zero limits.
-                    </p>
-                </div>
-
-                <!-- Features Matrix -->
-                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">♾️</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Unlimited Quiz Mode</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            No artificial 10-question caps. Practice endlessly until you master every rule.
-                        </p>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">📝</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Full Mock Exams</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Simulate the exact 35-question NZTA learner theory test conditions and passing criteria.
-                        </p>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">🎯</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Category Drills</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Focus exclusively on intersection rules, signs, general road safety, or parking regulations.
-                        </p>
-                    </div>
-
-                    <div class="p-5 rounded-xl bg-notion-lightSubtle dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder space-y-2">
-                        <span class="text-2xl">🌐</span>
-                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">Universal Browser Access</h4>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                            Runs seamlessly on phones, tablets, and desktop computers without installing any app.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Callout Box -->
-                <div class="p-6 rounded-2xl bg-white dark:bg-notion-darkCard border border-notion-lightBorder dark:border-notion-darkBorder shadow-sm space-y-2">
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">100% Free & Unlimited Access</h3>
-                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        No subscriptions, no ads, and no in-app purchases. Built to help Kiwis study and pass their learner driver theory license exam on the first attempt.
-                    </p>
-                </div>
-
-                <div class="pt-2 flex gap-4">
-                    <a href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener" class="text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition shadow-sm">
-                        Launch Quiz ↗
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= HEARTBEATS SUB-PAGE ================= -->
-        <div id="view-heartbeats" class="hidden space-y-10">
-            <!-- Compact Title Header with Square Back Icon -->
-            <div class="flex items-center gap-3 pb-4 border-b border-notion-lightBorder dark:border-notion-darkBorder">
-                <button onclick="navigateTo('home')" title="Back to Index" class="w-9 h-9 rounded-lg border border-notion-lightBorder dark:border-notion-darkBorder bg-white dark:bg-notion-darkCard hover:bg-gray-100 dark:hover:bg-notion-darkSubtle flex items-center justify-center text-gray-700 dark:text-gray-200 shadow-sm transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold font-mono text-gray-900 dark:text-white">Device Ping Heartbeats</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">github.com/robocrax/heartbeats-ping-sidecar · Monitoring Sidecar Utility</p>
-                </div>
-            </div>
-
-            <!-- Deep Content Section -->
-            <div class="space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Purpose & Operational Design</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <code>heartbeats-ping-sidecar</code> is a compiled, minimal Go binary container designed to monitor isolated network nodes (such as IoT gateways, home automation hubs, or isolated database servers) without installing heavy telemetry agents. It tests connectivity via ICMP or TCP handshakes and sends an HTTP pulse to external monitors (Healthchecks.io, BetterStack) strictly when all checks return successfully.
-                    </p>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white font-mono uppercase tracking-wider">Docker Compose Example</h3>
-                    <div class="p-5 rounded-xl bg-gray-950 text-blue-300 font-mono text-xs overflow-x-auto border border-gray-800 space-y-1">
-                        <div>version: '3.8'</div>
-                        <div>services:</div>
-                        <div class="pl-4">sidecar:</div>
-                        <div class="pl-8">image: ghcr.io/robocrax/heartbeats-ping-sidecar:latest</div>
-                        <div class="pl-8">restart: always</div>
-                        <div class="pl-8">environment:</div>
-                        <div class="pl-12">- TARGET_HOST=192.168.1.50</div>
-                        <div class="pl-12">- HEARTBEAT_URL=https://hc-ping.com/your-uuid-token</div>
-                        <div class="pl-12">- PING_INTERVAL_SEC=30</div>
-                    </div>
-                </div>
-
-                <div class="pt-2 flex gap-4">
-                    <a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener" class="text-sm font-semibold px-6 py-3 rounded-lg bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition">
-                        View on Github ↗
-                    </a>
-                </div>
-            </div>
-        </div>
+        </section>
 
     </main>
 
-    <!-- Centered Minimal Footer -->
-    <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-notion-lightBorder dark:border-notion-darkBorder text-center text-xs text-gray-500 dark:text-gray-400">
-        <p>We can improve your IT infrastructure</p>
+    <footer class="site-foot">
+        <div class="wrap">
+            <div>
+                <h2>Need something set up, fixed or automated?</h2>
+                <p class="meta">RoboCrax, Auckland, New Zealand. Message me on WhatsApp at +64 20 477 4826.</p>
+            </div>
+            <div class="foot-actions">
+                <a class="btn btn-primary" data-track="whatsapp-footer" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">Message me</a>
+            </div>
+        </div>
     </footer>
 
     <!-- ================= REQUEST ACCESS MODAL ================= -->
-    <div id="invite-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
-        <div class="bg-white dark:bg-notion-darkBg border border-notion-lightBorder dark:border-notion-darkBorder w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[85vh] animate-in fade-in zoom-in duration-200">
-            <!-- Modal Header -->
-            <div class="p-6 border-b border-notion-lightBorder dark:border-notion-darkBorder flex justify-between items-start">
+    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
+        <div class="modal-card">
+            <div class="modal-head">
                 <div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Request Access</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        Applications are manually reviewed within 24 hours.<br>
-                        Contact me to speed up this process.
-                    </p>
+                    <h2 id="invite-title">Request Access</h2>
+                    <p>Applications are manually reviewed within 24 hours.<br>Contact me to speed up this process.</p>
                 </div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-notion-darkSubtle border border-notion-lightBorder dark:border-notion-darkBorder flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition">
-                    ✕
+                <button class="modal-close" type="button" data-close-invite aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
                 </button>
             </div>
-            
-            <!-- Iframe Content -->
-            <div class="w-full flex-1 min-h-[460px] bg-white">
-                <iframe style="height: 567px;" src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" class="w-full h-full border-0" scrolling="no" title="Request Access Form"></iframe>
+            <div class="modal-body">
+                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request Access Form"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- Scripts: Router, Modal Management & Platform Detection -->
     <script>
-        const views = ['home', 'jellyfin', 'tv-setup', 'wordpress', 'it-support', 'automations', 'gpmc', 'nzquiz', 'heartbeats'];
+        const views = ['home', 'portfolio', 'jellyfin', 'tv-setup', 'wordpress', 'it-support', 'automations', 'respond', 'nzquiz', 'heartbeats'];
+        const titles = {
+            'home': 'RoboCrax | Hosting, IT help and automations in Auckland',
+            'jellyfin': 'Jellyfin | RoboCrax',
+            'tv-setup': 'Smart TV setup | RoboCrax',
+            'wordpress': 'Website hosting | RoboCrax',
+            'it-support': 'IT support | RoboCrax',
+            'automations': 'Data and automation | RoboCrax',
+            'portfolio': "Websites I've worked on | RoboCrax",
+            'respond': 'Live quiz app for SSMB Auckland | RoboCrax',
+            'nzquiz': 'NZ Road Code Practice Quiz | RoboCrax',
+            'heartbeats': 'Device Ping Heartbeats | RoboCrax'
+        };
+        let firstRender = true;
 
-        // Enforce URL hashtag update & handle view switching
+        // Optional analytics hook: if an analytics script (e.g. Umami) is added later, CTA clicks are reported.
+        function track(name) {
+            try { if (window.umami && typeof window.umami.track === 'function') window.umami.track(name); } catch (e) {}
+        }
+        document.addEventListener('click', (e) => {
+            const el = e.target.closest('[data-track]');
+            if (el) track(el.dataset.track);
+        });
+
         function navigateTo(viewName) {
             window.location.hash = viewName;
         }
 
         function renderViewFromHash() {
             const rawHash = window.location.hash.replace('#', '').trim();
+            // in-page anchors on the home view (e.g. #services-rack) keep the home view showing
+            if (rawHash && !views.includes(rawHash) && document.getElementById(rawHash)) {
+                views.forEach(v => { document.getElementById(`view-${v}`).hidden = v !== 'home'; });
+                return;
+            }
             const viewName = views.includes(rawHash) ? rawHash : 'home';
 
             views.forEach(v => {
                 const el = document.getElementById(`view-${v}`);
-                if (el) {
-                    el.classList.toggle('hidden', v !== viewName);
-                }
+                if (el) el.hidden = v !== viewName;
             });
 
-            // Adjust Top Right Nav Buttons: Show "Request Access" ONLY in Jellyfin
-            const reqBtn = document.getElementById('nav-request-btn');
-            const contactBtn = document.getElementById('nav-contact-btn');
+            // "Request access" in the header only on the streaming pages
+            const streaming = viewName === 'jellyfin' || viewName === 'tv-setup';
+            document.getElementById('nav-request-btn').hidden = !streaming;
+            document.getElementById('nav-contact-btn').hidden = streaming;
 
-            if (viewName === 'jellyfin' || viewName === 'tv-setup') {
-                reqBtn.classList.remove('hidden');
-                contactBtn.classList.add('hidden');
-            } else {
-                reqBtn.classList.add('hidden');
-                contactBtn.classList.remove('hidden');
-            }
+            document.querySelectorAll('[data-nav]').forEach(a => {
+                const current = a.dataset.nav === viewName || (a.dataset.nav === 'jellyfin' && viewName === 'tv-setup');
+                if (current) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+            });
 
-            // Sync URL hash so links can be shared directly
+            document.title = titles[viewName];
+
             if (window.location.hash !== `#${viewName}`) {
-                history.replaceState(null, null, `#${viewName}`);
+                history.replaceState(null, '', `#${viewName}`);
             }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (!firstRender) {
+                window.scrollTo(0, 0);
+                const heading = document.querySelector(`#view-${viewName} h1`);
+                if (heading) heading.focus({ preventScroll: true });
+                track(`view-${viewName}`);
+            }
+            firstRender = false;
         }
 
-        window.addEventListener('load', () => {
+        window.addEventListener('hashchange', () => {
+            if (!modal.hidden) closeModal();   // switching pages always dismisses the request form
+            renderViewFromHash();
+        });
+        window.addEventListener('DOMContentLoaded', () => {
             renderViewFromHash();
             detectClientPlatform();
+            setTimeout(() => document.body.classList.remove('booting'), 2000);
         });
 
-        window.addEventListener('hashchange', () => {
-            renderViewFromHash();
-        });
-
-        // Auto-detect client platform and populate both Home and Jellyfin buttons
+        // Recommend a Jellyfin client for the visitor's device
         function detectClientPlatform() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            
-            const homeDesc = document.getElementById('home-detected-client-desc');
-            const homeBtn = document.getElementById('home-detected-client-btn');
-            
-            const jellyDesc = document.getElementById('jellyfin-detected-client-desc');
-            const jellyBtn = document.getElementById('jellyfin-detected-client-btn');
-
-            let descText = "";
-            let btnText = "";
-            let btnHref = "";
+            let descText, btnText, btnHref;
 
             if (/android/i.test(ua)) {
                 if (/tv|smarttv|googletv|appletv|hbbtv|pov_tv|netcast.tv/i.test(ua)) {
                     descText = "Detected: <strong>Android TV / Smart TV</strong>. We recommend <strong>Fladder</strong> for native TV navigation.";
                     btnHref = "https://play.google.com/store/apps/details?id=nl.jknaapen.fladder";
-                    btnText = "Get Fladder on Google Play ↗";
+                    btnText = "Get Fladder on Google Play";
                 } else {
                     descText = "Detected: <strong>Android Mobile / Tablet</strong>. We recommend <strong>Findroid</strong> for modern playback.";
                     btnHref = "https://play.google.com/store/apps/details?id=dev.jdtech.jellyfin";
-                    btnText = "Get Findroid on Google Play ↗";
+                    btnText = "Get Findroid on Google Play";
                 }
             } else if (/iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
                 descText = "Detected: <strong>Apple iOS / iPadOS</strong>. We recommend the official <strong>Jellyfin Mobile</strong> client.";
                 btnHref = "https://apps.apple.com/us/app/jellyfin-mobile/id1480192618";
-                btnText = "Get Jellyfin on App Store ↗";
+                btnText = "Get Jellyfin on the App Store";
             } else if (/Macintosh|Mac OS X/i.test(ua)) {
                 descText = "Detected: <strong>macOS Desktop</strong>. Download <strong>Jellyfin Media Player v2</strong>.";
                 btnHref = "https://github.com/jellyfin/jellyfin-media-player/releases";
-                btnText = "Download for Mac (GitHub) ↗";
+                btnText = "Download for Mac";
             } else if (/Windows/i.test(ua)) {
                 descText = "Detected: <strong>Windows PC</strong>. Download <strong>Jellyfin Media Player v2</strong>.";
                 btnHref = "https://github.com/jellyfin/jellyfin-media-player/releases";
-                btnText = "Download for Windows (GitHub) ↗";
+                btnText = "Download for Windows";
             } else if (/Linux/i.test(ua)) {
                 descText = "Detected: <strong>Linux Desktop</strong>. Download <strong>Jellyfin Media Player v2</strong>.";
                 btnHref = "https://github.com/jellyfin/jellyfin-media-player/releases";
-                btnText = "Download for Linux (GitHub) ↗";
+                btnText = "Download for Linux";
             } else {
                 descText = "Detected: <strong>Web / Universal Client</strong>. Browse official client downloads.";
                 btnHref = "https://jellyfin.org/downloads/clients/";
-                btnText = "Browse All Clients ↗";
+                btnText = "Browse all clients";
             }
 
-            if (homeDesc && homeBtn) {
-                homeDesc.innerHTML = descText;
-                homeBtn.href = btnHref;
-                homeBtn.innerText = btnText;
-            }
-
-            if (jellyDesc && jellyBtn) {
-                jellyDesc.innerHTML = descText;
-                jellyBtn.href = btnHref;
-                jellyBtn.innerText = btnText;
-            }
+            [['home-detected-client-desc', 'home-detected-client-btn'], ['jellyfin-detected-client-desc', 'jellyfin-detected-client-btn']]
+                .forEach(([descId, btnId]) => {
+                    const desc = document.getElementById(descId), btn = document.getElementById(btnId);
+                    if (desc && btn) { desc.innerHTML = descText; btn.href = btnHref; btn.textContent = btnText; }
+                });
         }
 
-        // Modal Controls
+        // Request-access modal (the jfa-go form loads only when first opened)
+        const modal = document.getElementById('invite-modal');
+        let lastFocus = null;
         function openModal() {
-            const modal = document.getElementById('invite-modal');
-            modal.classList.remove('hidden');
+            const frame = modal.querySelector('iframe');
+            if (!frame.src) frame.src = frame.dataset.src;
+            lastFocus = document.activeElement;
+            modal.hidden = false;
             document.body.style.overflow = 'hidden';
+            modal.querySelector('[data-close-invite]').focus();
+            track('request-access-opened');
         }
-
         function closeModal() {
-            const modal = document.getElementById('invite-modal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            modal.hidden = true;
+            document.body.style.overflow = '';
+            if (lastFocus) lastFocus.focus();
         }
-
-        // Close on background click
-        document.getElementById('invite-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        document.getElementById('nav-request-btn').addEventListener('click', openModal);
+        document.querySelectorAll('[data-open-invite]').forEach(b => b.addEventListener('click', openModal));
+        modal.querySelector('[data-close-invite]').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
     </script>
 </body>
 </html>
