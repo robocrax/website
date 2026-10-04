@@ -38,9 +38,22 @@
             --slate: #52666A;        /* secondary text */
             --line: rgba(17, 38, 43, .14);
             --harbour: #1C5D7A;      /* links, focus */
-            --rack: #1B3135;         /* the rack frame */
-            --ear: #E3E9E8;          /* rack ears */
-            --screw: #9AACAE;
+            --rack: #1B2B2F;         /* cabinet frame, powder-coated graphite */
+            --rack-inside: #081113;  /* cabinet interior, seen through the cage-nut holes */
+            --rail: #BCC6C7;         /* zinc-plated mounting rails */
+            --rail-edge: #8C999C;
+            --rail-ink: #33454A;     /* U numbers stamped on the rails */
+            --face-hi: #FFFFFF;      /* light server faceplates */
+            --face: #F4F7F6;
+            --face-lo: #E2E8E7;
+            --ear-face: #E9EEED;     /* rack ears */
+            --ear-lo: #CED8D7;
+            --bevel: rgba(255, 255, 255, .7);
+            --seam: rgba(6, 15, 17, .42);
+            --perf: rgba(17, 38, 43, .3);   /* vent perforation */
+            --tape: #FFFFFF;         /* label-maker tape */
+            --screw-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cdefs%3E%3CradialGradient id='a' cx='.35' cy='.3' r='.8'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.55' stop-color='%23b5c0c2'/%3E%3Cstop offset='1' stop-color='%23718086'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='6' cy='6' r='5.3' fill='url(%23a)' stroke='%2353636a' stroke-width='.7'/%3E%3Cpath d='M6 3.3v5.4M3.3 6h5.4' stroke='%23485659' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+            --screw-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cdefs%3E%3CradialGradient id='a' cx='.35' cy='.3' r='.8'%3E%3Cstop offset='0' stop-color='%23a9b6b9'/%3E%3Cstop offset='.55' stop-color='%23596a6e'/%3E%3Cstop offset='1' stop-color='%232a3639'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='6' cy='6' r='5.3' fill='url(%23a)' stroke='%23121a1c' stroke-width='.7'/%3E%3Cpath d='M6 3.3v5.4M3.3 6h5.4' stroke='%23161f21' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
             --led-green: #34A851;    /* logo green: taking new work */
             --led-blue: #4285F4;     /* logo blue: free & open source */
             --led-amber: #FABB05;    /* logo yellow: invite only */
@@ -61,9 +74,21 @@
                 --slate: #9AB0B1;
                 --line: rgba(228, 236, 234, .14);
                 --harbour: #7DBCD9;
-                --rack: #060F11;
-                --ear: #1C3236;
-                --screw: #3D5458;
+                --rack: #050B0D;
+                --rack-inside: #000;
+                --rail: #33454A;
+                --rail-edge: #1F2C2F;
+                --rail-ink: #A4B6B8;
+                --face-hi: #1B3236;
+                --face: #15292D;
+                --face-lo: #0F2125;
+                --ear-face: #1B3135;
+                --ear-lo: #122427;
+                --bevel: rgba(255, 255, 255, .07);
+                --seam: rgba(0, 0, 0, .75);
+                --perf: rgba(0, 0, 0, .55);
+                --tape: #DCE5E3;
+                --screw-img: var(--screw-dark);
                 --warn-bg: #2A1714;
                 --warn-ink: #F2A397;
             }
@@ -128,35 +153,18 @@
             .site-nav a.nav-link { padding: 6px 12px; }
         }
 
-        /* ---------- me page ---------- */
-        .me-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, .95fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding: clamp(44px, 8vw, 96px) 0 clamp(40px, 6vw, 64px); }
+        /* ---------- intro page ---------- */
+        .me-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(320px, 1fr); gap: clamp(32px, 5vw, 64px); align-items: center; padding: clamp(44px, 8vw, 96px) 0 clamp(56px, 8vw, 104px); }
         @media (max-width: 900px) { .me-hero { grid-template-columns: 1fr; } }
         .me-intro h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.02; letter-spacing: -0.015em; max-width: 16ch; }
         .me-intro .lede { margin-top: 24px; font-size: clamp(1.06rem, 1.5vw, 1.2rem); color: var(--slate); max-width: 56ch; }
         .me-intro .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-        .profile { padding-top: 26px; padding-bottom: 22px; }
-        .profile-top { display: flex; align-items: center; gap: 14px; }
-        .profile-top img { width: 36px; height: auto; }
-        .profile-name { font: 700 1.65rem/1 var(--display); }
-        .profile-role { margin-top: 5px; font-size: 15px; color: var(--slate); }
-        .profile-status { margin-top: 18px; }
-        .glance { margin: 14px 0 0; }
-        .glance div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
-        .glance dt { font-size: 14px; color: var(--slate); }
-        .glance dd { margin: 0; font-size: 15px; }
-
-        .clients { padding-bottom: clamp(56px, 8vw, 96px); }
-        .clients-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 22px; border-top: 1px solid var(--line); }
-        .clients-head h2 { font: 500 15px/1.4 var(--text); color: var(--slate); }
-        .clients-head a { font-size: 15px; font-weight: 500; }
-        .client-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 32px; }
-        .client-list a { font: 600 clamp(1.15rem, 1.9vw, 1.4rem)/1.25 var(--display); color: var(--ink); text-decoration: none; opacity: .78; transition: opacity .15s, color .15s; }
-        .client-list a:hover { opacity: 1; color: var(--harbour); }
-
         .me-section { padding-bottom: clamp(56px, 8vw, 104px); }
         .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
         .section-head h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); }
+        .work-foot { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+        .work-foot p { color: var(--slate); max-width: 70ch; }
 
         .services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
         @media (max-width: 900px) { .services { grid-template-columns: 1fr; } }
@@ -173,49 +181,170 @@
 
         .principles .item h3 { font-size: 1.3rem; }
 
-        .jf-unit { padding-top: 30px; padding-bottom: 30px; }
-        .jf-unit h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
-        .jf-unit h2 a { color: var(--ink); text-decoration: none; }
-        .jf-unit h2 a:hover { color: var(--harbour); }
-
-        /* ---------- home: the rack ---------- */
+        /* ---------- intro: the racks ----------
+           A 19-inch cabinet seen from the front: graphite frame, zinc rails with square cage-nut holes
+           (three per U, EIA-310 spacing) and stamped U numbers. fitRacks() grows every unit to a whole
+           number of rack units so each faceplate lines up with the holes, then numbers the rails. */
         .rack {
-            background: var(--rack);
-            border-radius: 6px;
-            padding: 10px;
-            display: grid; gap: 6px;
-            box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 24px 48px -28px rgba(9, 25, 28, .55);
-        }
-        .unit {
-            --ears: 30px;
+            --u: 30px;              /* one rack unit */
+            --post: 9px;            /* cabinet frame */
+            --rail-w: 24px;         /* rail flange: U numbers, then holes */
+            --cap: 14px;            /* top and bottom of the cabinet */
             position: relative;
-            background: var(--paper);
-            border-radius: 2px;
-            padding: 26px calc(var(--ears) + clamp(14px, 3vw, 30px));
-        }
-        /* rack ears with screws: two screws on tall units, one on 1U */
-        .unit::before, .unit::after {
-            content: ""; position: absolute; top: 0; bottom: 0; width: var(--ears);
+            padding: var(--cap) calc(var(--post) + var(--rail-w));
+            border-radius: 6px;
             background:
-                radial-gradient(circle at 50% 16px, var(--screw) 0 4px, transparent 4.5px),
-                radial-gradient(circle at 50% calc(100% - 16px), var(--screw) 0 4px, transparent 4.5px),
-                var(--ear);
+                linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 3px),
+                linear-gradient(var(--rack-inside), var(--rack-inside)) center / calc(100% - 2 * var(--post)) calc(100% - 2 * var(--cap)) no-repeat,
+                var(--rack);
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3), 0 28px 50px -30px rgba(9, 25, 28, .65);
         }
-        .unit::before { left: 0; border-right: 1px solid var(--line); border-radius: 2px 0 0 2px; }
-        .unit::after { right: 0; border-left: 1px solid var(--line); border-radius: 0 2px 2px 0; }
-        .unit.u1::before, .unit.u1::after {
-            background: radial-gradient(circle at 50% 50%, var(--screw) 0 4px, transparent 4.5px), var(--ear);
+        /* mounting rails; the right one is the left one mirrored */
+        .rack::before, .rack::after {
+            content: ""; position: absolute; top: var(--cap); bottom: var(--cap); left: var(--post); width: var(--rail-w);
+            pointer-events: none;
+            background:
+                linear-gradient(180deg,
+                    transparent calc(14.3% - 3px), var(--rack-inside) 0 calc(14.3% + 3px),
+                    transparent 0 calc(50% - 3px), var(--rack-inside) 0 calc(50% + 3px),
+                    transparent 0 calc(85.7% - 3px), var(--rack-inside) 0 calc(85.7% + 3px),
+                    transparent 0) right 4px top 0 / 6px var(--u) repeat-y,
+                linear-gradient(180deg, var(--rail-edge) 0 1px, transparent 0) left 2px top 0 / calc(var(--rail-w) - 14px) var(--u) repeat-y,
+                linear-gradient(90deg, var(--rail-edge), var(--rail) 18% 80%, var(--rail-edge));
         }
-        .unit.u1 { padding-top: 16px; padding-bottom: 16px; }
-        @media (max-width: 760px) { .unit { --ears: 18px; } }
+        .rack::after { left: auto; right: var(--post); transform: scaleX(-1); }
+        .rack-u {
+            position: absolute; top: var(--cap); left: var(--post); width: calc(var(--rail-w) - 10px);
+            display: grid; grid-auto-rows: var(--u); pointer-events: none; z-index: 1;
+            font: 600 9px/1 var(--display); color: var(--rail-ink);
+        }
+        .rack-u + .rack-u { left: auto; right: var(--post); }
+        .rack-u span { display: grid; place-items: center; }
 
+        .unit {
+            --ear: 22px;
+            --screw-x: calc(var(--ear) / 2 - 5.5px);
+            --screw-y: calc(var(--u) / 2 - 5.5px);    /* screws sit on the middle hole of the top and bottom U */
+            position: relative;
+            min-height: var(--u);
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 20px calc(var(--ear) + clamp(14px, 3vw, 30px));
+            border-radius: 2px;
+            background:
+                var(--screw-img) left var(--screw-x) top var(--screw-y) / 11px no-repeat,
+                var(--screw-img) left var(--screw-x) bottom var(--screw-y) / 11px no-repeat,
+                var(--screw-img) right var(--screw-x) top var(--screw-y) / 11px no-repeat,
+                var(--screw-img) right var(--screw-x) bottom var(--screw-y) / 11px no-repeat,
+                linear-gradient(90deg, var(--ear-lo), var(--ear-face) 30% 70%, var(--ear-lo) calc(100% - 1px), var(--seam) 0) left / var(--ear) 100% no-repeat,
+                linear-gradient(270deg, var(--ear-lo), var(--ear-face) 30% 70%, var(--ear-lo) calc(100% - 1px), var(--seam) 0) right / var(--ear) 100% no-repeat,
+                linear-gradient(180deg, var(--face-hi), var(--face) 35%, var(--face-lo));
+            box-shadow: inset 0 1px 0 var(--bevel), inset 0 -1px 0 var(--seam);
+        }
+        @media (max-width: 760px) { .rack { --post: 6px; --rail-w: 22px; } .unit { --ear: 16px; } }
+
+        /* black network gear and blanking panels */
+        .unit.dev {
+            --face-hi: #303D40; --face: #222D30; --face-lo: #192326;
+            --ear-face: #283437; --ear-lo: #1B2528;
+            --bevel: rgba(255, 255, 255, .09);
+            --screw-img: var(--screw-dark);
+            padding: 0;
+        }
+        @media (prefers-color-scheme: dark) {
+            .unit.dev { --face-hi: #182427; --face: #111B1D; --face-lo: #0B1315; --ear-face: #142023; --ear-lo: #0D1618; --bevel: rgba(255, 255, 255, .05); }
+        }
+
+        /* 48-port switch: four banks of 2 x 6 RJ45 jacks with link LEDs, plus SFP+ uplink cages */
+        .unit.switch { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; padding: 0 calc(var(--ear) + 9px); }
+        .switch .sys {
+            width: 6px; height: 16px; flex: none;
+            background:
+                radial-gradient(circle, var(--led-green) 0 1.6px, transparent 2.3px) 0 0 / 6px 6px no-repeat,
+                radial-gradient(circle, var(--led-green) 0 1.6px, transparent 2.3px) 0 10px / 6px 6px no-repeat;
+        }
+        .switch .ports { display: flex; gap: 5px; min-width: 0; overflow: hidden; }
+        .switch .ports i {
+            position: relative; flex: none; width: 53px; height: 18px;
+            background:
+                linear-gradient(90deg, #050A0B 0 8px, transparent 0) 0 0 / 9px 8px repeat-x,
+                linear-gradient(90deg, #050A0B 0 8px, transparent 0) 0 10px / 9px 8px repeat-x;
+        }
+        .switch .ports i::before, .switch .ports i::after { content: ""; position: absolute; inset: 0; }
+        .switch .ports i::before {          /* link */
+            background:
+                linear-gradient(90deg, #3CCB6E 0 2px, transparent 0) 1px 1px / 18px 2px repeat-x,
+                linear-gradient(90deg, #3CCB6E 0 2px, transparent 0) 10px 15px / 27px 2px repeat-x;
+        }
+        .switch .ports i::after {           /* activity */
+            background:
+                linear-gradient(90deg, #F2B33D 0 2px, transparent 0) 14px 1px / 27px 2px repeat-x,
+                linear-gradient(90deg, #3CCB6E 0 2px, transparent 0) 1px 15px / 36px 2px repeat-x;
+        }
+        .switch .sfp {
+            width: 24px; height: 18px; flex: none;
+            background:
+                linear-gradient(90deg, #050A0B 0 9px, transparent 0) 1px 1px / 13px 6px repeat-x,
+                linear-gradient(90deg, #050A0B 0 9px, transparent 0) 1px 11px / 13px 6px repeat-x,
+                linear-gradient(90deg, #56656A 0 11px, transparent 0) 0 0 / 13px 8px repeat-x,
+                linear-gradient(90deg, #56656A 0 11px, transparent 0) 0 10px / 13px 8px repeat-x;
+        }
+        @media (max-width: 480px) { .switch .ports i:nth-child(4) { display: none; } }
+
+        /* brush strip that passes patch leads through to the back */
+        .brush::after {
+            content: ""; position: absolute; top: calc(50% - 4px); height: 8px; left: calc(var(--ear) + 16px); right: calc(var(--ear) + 16px);
+            border-radius: 4px;
+            background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .1) 0 1px, transparent 0 3px), #030708;
+            box-shadow: inset 0 1px 2px #000, 0 1px 0 rgba(255, 255, 255, .06);
+        }
+        /* moulded blanking panel */
+        .blank::after {
+            content: ""; position: absolute; top: 6px; bottom: 6px; left: calc(var(--ear) + 10px); right: calc(var(--ear) + 10px);
+            background: repeating-linear-gradient(180deg, rgba(255, 255, 255, .07) 0 1px, transparent 0 4px);
+        }
 
         .unit-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
         .status { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; color: var(--slate); white-space: nowrap; }
-        .led { width: 9px; height: 9px; border-radius: 50%; flex: none; background: currentColor; box-shadow: 0 0 0 2px rgba(0,0,0,.12), 0 0 9px 1px currentColor; }
+        .led {
+            width: 8px; height: 8px; border-radius: 50%; flex: none;
+            background: radial-gradient(circle at 35% 32%, rgba(255, 255, 255, .9) 0 .8px, transparent 2px), currentColor;
+            box-shadow: 0 0 0 1.5px rgba(0, 0, 0, .16), 0 0 8px 1px currentColor;
+        }
         .led-green { color: var(--led-green); }
         .led-blue { color: var(--led-blue); }
         .led-amber { color: var(--led-amber); }
+
+        /* the profile server: bezel with name and status, hot-swap drive bays on the right */
+        .profile { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-content: center; align-items: center; gap: 10px 16px; padding: 12px calc(var(--ear) + 14px); }
+        .profile-top { display: flex; align-items: center; gap: 12px; }
+        .profile-top img { width: 30px; height: auto; }
+        .profile-name { font: 700 1.5rem/1 var(--display); }
+        .profile-role { margin-top: 4px; font-size: 14px; line-height: 1.3; color: var(--slate); }
+        .bays { grid-column: 2; grid-row: 1 / span 2; align-self: stretch; display: flex; gap: 2px; }
+        .bays i {
+            position: relative; width: 13px; border-radius: 2px;
+            background: radial-gradient(circle, var(--perf) .75px, transparent 1.2px) 0 2px / 3px 3px, var(--face-lo);
+            box-shadow: inset 0 0 0 1px var(--seam);
+        }
+        .bays i::before {                   /* drive activity */
+            content: ""; position: absolute; top: 4px; left: 4px; width: 5px; height: 5px; border-radius: 50%;
+            background: var(--led-green); box-shadow: 0 0 4px var(--led-green);
+        }
+        .bays i::after {                    /* release latch */
+            content: ""; position: absolute; left: 3px; right: 3px; bottom: 4px; height: 14px; border-radius: 1px;
+            background: var(--face-hi); box-shadow: inset 0 0 0 1px var(--seam);
+        }
+        @media (max-width: 380px) { .bays i:nth-child(n+3) { display: none; } }
+
+        /* one labelled unit per fact */
+        .glance { margin: 0; }
+        .glance .unit { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-content: center; align-items: center; gap: 12px; padding: 5px calc(var(--ear) + 14px) 5px calc(var(--ear) + 12px); }
+        .glance dt {
+            justify-self: start; padding: 4px 7px 3px; border-radius: 2px;
+            font: 600 12.5px/1 var(--display); letter-spacing: .02em; color: #11262B;
+            background: var(--tape); box-shadow: 0 0 0 1px rgba(17, 38, 43, .16), 0 1px 1px rgba(0, 0, 0, .12);
+        }
+        .glance dd { margin: 0; font-size: 14.5px; line-height: 1.38; }
 
         .unit h3 { font-size: clamp(1.45rem, 2.4vw, 1.85rem); }
         .unit h3 a { color: var(--ink); text-decoration: none; }
@@ -228,6 +357,40 @@
         .unit .unit-foot a, .unit .unit-foot button, .unit .detect { position: relative; z-index: 2; }
         .more { font-weight: 600; font-size: 15px; color: var(--ink); }
 
+        .jf-unit { padding-top: 30px; padding-bottom: 30px; }
+        .jf-unit h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+        .jf-unit h2 a { color: var(--ink); text-decoration: none; }
+        .jf-unit h2 a:hover { color: var(--harbour); }
+        /* the streaming server's drive cage: eight hot-swap 3.5-inch trays */
+        .drives { display: none; }
+        .drives i {
+            position: relative; padding: 0 16px 0 30px; border-radius: 2px;
+            background: radial-gradient(circle, var(--perf) .8px, transparent 1.3px) 0 1px / 4px 4px, var(--face-lo);
+            background-clip: content-box, border-box;
+            box-shadow: inset 0 0 0 1px var(--seam);
+        }
+        .drives i::before {                 /* release handle */
+            content: ""; position: absolute; left: 4px; top: 4px; bottom: 4px; width: 21px; border-radius: 2px;
+            background: var(--face-hi); box-shadow: inset 0 0 0 1px var(--seam);
+        }
+        .drives i::after {                  /* power and activity LEDs */
+            content: ""; position: absolute; right: 6px; top: calc(50% - 6px); width: 4px; height: 4px; border-radius: 50%;
+            background: var(--led-green); box-shadow: 0 0 4px var(--led-green), 0 8px 0 var(--led-blue);
+        }
+        @media (min-width: 1000px) {
+            .drives { position: absolute; top: 30px; right: calc(var(--ear) + 30px); display: grid; grid-template-columns: repeat(2, 124px); grid-auto-rows: 31px; gap: 3px; }
+            .jf-unit h2, .jf-unit .desc { max-width: min(64ch, calc(100% - 290px)); }
+            /* app servers: perforated bezel beside the controls */
+            .u1 { padding-right: calc(var(--ear) + 96px); }
+            .u1::after {
+                content: ""; position: absolute; top: 9px; bottom: 9px; right: calc(var(--ear) + 18px); width: 56px; border-radius: 2px;
+                background:
+                    radial-gradient(circle, var(--perf) 1.1px, transparent 1.6px) 0 0 / 6px 5.2px,
+                    radial-gradient(circle, var(--perf) 1.1px, transparent 1.6px) 3px 2.6px / 6px 5.2px;
+                box-shadow: inset 0 0 0 1px var(--seam);
+            }
+        }
+
         .detect {
             margin-top: 24px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 6px;
             display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px 20px;
@@ -238,16 +401,28 @@
         .detect .detect-actions { display: flex; flex-wrap: wrap; gap: 10px; }
         @media (max-width: 760px) { .detect { grid-template-columns: 1fr; } }
 
+        .u1 { padding-top: 12px; padding-bottom: 12px; }
         .u1 .tool { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 24px; }
         .u1 h3 { font-size: 1.3rem; }
         .u1 .desc { margin-top: 4px; font-size: 15px; }
         .u1 .unit-foot { margin-top: 0; }
         @media (max-width: 760px) { .u1 .tool { grid-template-columns: 1fr; } .u1 .unit-foot { margin-top: 8px; } }
 
-        /* power-on self test: the LEDs blink once when the page loads */
         @media (prefers-reduced-motion: no-preference) {
+            /* power-on self test: the status LEDs blink once when the page loads */
             .booting .rack .led { animation: post 1.1s steps(1, end) both; animation-delay: calc(var(--i, 0) * 85ms); }
             @keyframes post { 0% { opacity: .12; } 35% { opacity: 1; } 50% { opacity: .12; } 70% { opacity: 1; } 100% { opacity: 1; } }
+            /* port and disk activity */
+            .switch .ports i::after, .bays i::before { animation: blink 2.6s steps(1, end) infinite; }
+            .switch .ports i:nth-child(2)::after { animation-duration: 1.9s; animation-delay: -.7s; }
+            .switch .ports i:nth-child(3)::after { animation-duration: 3.3s; animation-delay: -1.2s; }
+            .switch .ports i:nth-child(4)::after { animation-duration: 2.2s; animation-delay: -.3s; }
+            .bays i:nth-child(2)::before { animation-duration: 1.7s; }
+            .bays i:nth-child(3)::before { animation-duration: 3.1s; animation-delay: -1s; }
+            .bays i:nth-child(4)::before { animation-duration: 2.3s; animation-delay: -.5s; }
+            .drives i:nth-child(3n+1)::after { animation: blink 2.9s steps(1, end) infinite; }
+            .drives i:nth-child(3n+2)::after { animation: blink 2.1s steps(1, end) -1.3s infinite; }
+            @keyframes blink { 0%, 100% { opacity: 1; } 8% { opacity: .15; } 14% { opacity: 1; } 41% { opacity: .2; } 45% { opacity: 1; } 47% { opacity: .2; } 51% { opacity: 1; } 78% { opacity: .1; } 83% { opacity: 1; } }
         }
 
         /* ---------- inner pages ---------- */
@@ -317,12 +492,18 @@
         .code .c { color: #7F9A9D; }
         .code pre { margin: 0; font: inherit; }
 
-        /* pricing */
-        .plans { display: grid; grid-template-columns: 3fr 2fr; gap: 14px; align-items: start; margin-top: 22px; }
+        /* pricing: the main plan runs full width, the two upgrades sit side by side underneath at equal height */
+        .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
         @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
-        .plan-stack { display: grid; gap: 14px; }
         .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 3vw, 30px); display: flex; flex-direction: column; gap: 14px; }
-        .plan.main { border: 2px solid var(--ink); }
+        .plan.main { grid-column: 1 / -1; border: 2px solid var(--ink); }
+        @media (min-width: 901px) {
+            /* details on the left, the feature list on the right */
+            .plan.main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto 1fr; column-gap: clamp(28px, 4vw, 56px); }
+            .plan.main > * { grid-column: 1; }
+            .plan.main > .badge { justify-self: start; }
+            .plan.main > ul { grid-column: 2; grid-row: 1 / -1; align-self: center; padding: 0 0 0 clamp(28px, 4vw, 56px); border-top: 0; border-left: 1px solid var(--line); }
+        }
         .plan-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
         .plan h3 { font-size: 1.5rem; }
         .plan.main h3 { font-size: 2rem; }
@@ -345,14 +526,12 @@
         .callout p { margin-top: 6px; font-size: 15.5px; color: inherit; }
 
         /* ---------- portfolio ---------- */
-        .group-title { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom: 18px; }
-        .sites + .group-title { margin-top: clamp(44px, 6vw, 68px); }
         .sites { display: grid; gap: 30px 20px; }
-        .sites-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .sites + .sites { margin-top: clamp(40px, 5vw, 56px); }
         .sites-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         .sites-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 24px; }
-        @media (max-width: 900px) { .sites-4, .sites-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 600px) { .sites-4, .sites-3, .sites-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .sites-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 600px) { .sites-3, .sites-2 { grid-template-columns: 1fr; } }
         .site { position: relative; }
         .frame { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--paper); transition: border-color .15s; }
         .frame-url { display: block; padding: 7px 12px; font: 500 12.5px/1.2 var(--mono); color: var(--slate); background: var(--blank); border-bottom: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -366,6 +545,7 @@
         .site:hover .frame { border-color: var(--ink); }
         .site:hover h3 a { color: var(--harbour); }
         .site p { margin-top: 4px; font-size: 15px; color: var(--slate); }
+        .tag { display: inline-block; margin-left: 6px; padding: 4px 7px 3px; border-radius: 4px; vertical-align: 3px; font: 500 12px/1 var(--text); color: var(--slate); background: var(--blank); white-space: nowrap; }
         .site-lg p { font-size: 16px; max-width: 52ch; }
 
         .app-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: clamp(28px, 5vw, 72px); align-items: start; }
@@ -412,7 +592,7 @@
             </a>
             <nav class="site-nav" aria-label="Main">
                 <div class="nav-group">
-                    <a class="nav-link" href="#home" data-nav="home">Me</a>
+                    <a class="nav-link" href="#home" data-nav="home">Intro</a>
                     <a class="nav-link" href="#jellyfin" data-nav="jellyfin">Jellyfin</a>
                     <a class="nav-link" href="#portfolio" data-nav="portfolio">Work</a>
                 </div>
@@ -426,7 +606,7 @@
 
     <main id="main">
 
-        <!-- ================= ME (HOME) ================= -->
+        <!-- ================= INTRO (HOME) ================= -->
         <section id="view-home" class="view" aria-labelledby="home-title">
             <div class="wrap">
                 <div class="me-hero">
@@ -442,41 +622,60 @@
                         </div>
                     </div>
 
-                    <div class="rack profile-rack">
-                        <aside class="unit profile" aria-label="At a glance">
+                    <aside class="rack profile-rack" aria-label="At a glance">
+                        <div class="unit dev switch" aria-hidden="true"><span class="sys"></span><span class="ports"><i></i><i></i><i></i><i></i></span><span class="sfp"></span></div>
+                        <div class="unit dev brush" aria-hidden="true"></div>
+                        <div class="unit profile">
                             <div class="profile-top">
-                                <img src="logo.svg" alt="" width="36" height="50">
+                                <img src="logo.svg" alt="" width="30" height="42">
                                 <div>
                                     <p class="profile-name">RoboCrax</p>
                                     <p class="profile-role">Infrastructure engineer, Auckland</p>
                                 </div>
                             </div>
-                            <p class="status profile-status"><span class="led led-green" style="--i:0" aria-hidden="true"></span>Taking new work</p>
-                            <dl class="glance">
-                                <div><dt>Focus</dt><dd>Websites, IT support and automation</dd></div>
-                                <div><dt>Clients</dt><dd>Businesses across New Zealand and Australia</dd></div>
-                                <div><dt>Contact</dt><dd>Direct on WhatsApp, 24/7</dd></div>
-                                <div><dt>Toolbox</dt><dd>Linux, Proxmox, Docker, Cloudflare, WordPress, Go, Python, Node.js</dd></div>
-                            </dl>
-                        </aside>
-                    </div>
-                </div>
-
-                <div class="clients">
-                    <div class="clients-head">
-                        <h2>Businesses I've worked with</h2>
-                        <a href="#portfolio">See all work</a>
-                    </div>
-                    <ul class="client-list">
-                        <li><a href="#portfolio">Kitchenmaker</a></li>
-                        <li><a href="#portfolio">Teamsports</a></li>
-                        <li><a href="#portfolio">Football HQ</a></li>
-                        <li><a href="#portfolio">Hari Tiny Homes</a></li>
-                        <li><a href="#portfolio">Arcon Supplies</a></li>
-                        <li><a href="#portfolio">iProvideCare</a></li>
-                    </ul>
+                            <p class="status"><span class="led led-green" style="--i:0" aria-hidden="true"></span>Taking new work</p>
+                            <span class="bays" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                        </div>
+                        <dl class="glance">
+                            <div class="unit"><dt>Focus</dt><dd>Websites, IT support and automation</dd></div>
+                            <div class="unit"><dt>Clients</dt><dd>Businesses across New Zealand and Australia</dd></div>
+                            <div class="unit"><dt>Contact</dt><dd>Direct on WhatsApp, 24/7</dd></div>
+                            <div class="unit"><dt>Toolbox</dt><dd>Linux, Proxmox, Docker, Cloudflare, WordPress, Go, Python, Node.js</dd></div>
+                        </dl>
+                        <div class="unit dev blank" aria-hidden="true"></div>
+                    </aside>
                 </div>
             </div>
+
+            <section class="wrap me-section" aria-labelledby="work-title">
+                <div class="section-head"><h2 id="work-title">Some of my work</h2></div>
+                <div class="sites sites-2">
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
+                        <p>Custom kitchens and cabinetry, Auckland</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
+                        <p>Tiny homes and granny flats, NZ</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
+                        <p>adidas sports distributor and online store</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
+                        <p>adidas teamwear for Oceania football</p>
+                    </article>
+                </div>
+                <div class="work-foot">
+                    <p>I've also worked with SSMB Auckland, Vaishnav's Auckland, KK Decor, Krishna Solutions, Arcon Supplies, iProvideCare and more.</p>
+                    <a class="btn btn-quiet" href="#portfolio">See all work</a>
+                </div>
+            </section>
 
             <section class="wrap me-section" aria-labelledby="do-title">
                 <div class="section-head"><h2 id="do-title">What I do</h2></div>
@@ -495,35 +694,6 @@
                         <h3><a href="#automations">Data and automation</a></h3>
                         <p>Small, dependable programs that move your data so you don't have to: scrapers, webhook relays and database syncs that run 24/7.</p>
                         <p class="service-meta">Built in Go, Python and Node.js</p>
-                    </article>
-                </div>
-            </section>
-
-            <section class="wrap me-section" aria-labelledby="work-title">
-                <div class="section-head">
-                    <h2 id="work-title">Selected work</h2>
-                    <a class="btn btn-quiet" href="#portfolio">See all work</a>
-                </div>
-                <div class="sites sites-4">
-                    <article class="site">
-                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
-                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
-                        <p>Custom kitchens and cabinetry, Auckland</p>
-                    </article>
-                    <article class="site">
-                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
-                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
-                        <p>Tiny homes and granny flats, NZ</p>
-                    </article>
-                    <article class="site">
-                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
-                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
-                        <p>adidas sports distributor and online store</p>
-                    </article>
-                    <article class="site">
-                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
-                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
-                        <p>adidas teamwear for Oceania football</p>
                     </article>
                 </div>
             </section>
@@ -547,7 +717,7 @@
             </section>
 
             <section class="wrap me-section" aria-labelledby="built-title">
-                <div class="section-head"><h2 id="built-title">Apps I've built</h2></div>
+                <div class="section-head"><h2 id="built-title">Tools I've built</h2></div>
                 <div class="rack">
                     <article class="unit u1">
                         <div class="tool">
@@ -604,6 +774,7 @@
                             </div>
                         </div>
                         <div class="unit-foot"><a class="more" href="#jellyfin">Want to join? See plans and request access</a></div>
+                        <span class="drives" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
                     </article>
                 </div>
             </section>
@@ -612,13 +783,12 @@
         <!-- ================= PORTFOLIO ================= -->
         <section id="view-portfolio" class="view page" aria-labelledby="portfolio-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="portfolio-title" tabindex="-1">Websites I've worked on</h1>
                     <p class="lede">A selection of New Zealand and Australian businesses whose websites I've built, rebuilt or looked after, from adidas distributors to a mobile car detailer.</p>
                 </div>
 
-                <h2 class="group-title">Major clients</h2>
                 <div class="sites sites-2">
                     <article class="site site-lg">
                         <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
@@ -642,8 +812,17 @@
                     </article>
                 </div>
 
-                <h2 class="group-title">More sites</h2>
                 <div class="sites sites-3">
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz</span><img src="work/ssmb.webp" alt="SSMB Auckland homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/" target="_blank" rel="noopener" data-track="work-ssmb">SSMB Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Shree Swaminarayan Mandir Bhuj, a Hindu temple and community in Clevedon, Auckland.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz/vaishnavs</span><img src="work/vaishnavs.webp" alt="Vaishnav's Auckland website" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/vaishnavs/" target="_blank" rel="noopener" data-track="work-vaishnavs">Vaishnav's Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Pure vegetarian sweets, snacks and catering. An entity of SSMB Auckland.</p>
+                    </article>
                     <article class="site">
                         <div class="frame"><span class="frame-url">kkdecor.co.nz</span><img src="work/kkdecor.webp" alt="KK Decor homepage" width="640" height="400" loading="lazy"></div>
                         <h3><a href="https://www.kkdecor.co.nz/" target="_blank" rel="noopener" data-track="work-kkdecor">KK Decor</a></h3>
@@ -703,7 +882,7 @@
         <!-- ================= STREAMING (JELLYFIN) ================= -->
         <section id="view-jellyfin" class="view page" aria-labelledby="jellyfin-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="jellyfin-title" tabindex="-1">A community-based streaming platform</h1>
                     <p class="lede">Full HD Streaming, on all your devices *</p>
@@ -759,38 +938,36 @@
                             <button class="btn btn-primary" type="button" data-open-invite data-track="plan-standard">Choose Standard Plan ($99/yr)</button>
                         </div>
 
-                        <div class="plan-stack">
-                            <div class="plan">
-                                <div class="plan-top">
-                                    <div>
-                                        <h3>Weekend Peak Add-on</h3>
-                                        <p class="tier">Unthrottled Peak Allocation</p>
-                                    </div>
-                                    <span class="price">$349<small>/ yr</small></span>
+                        <div class="plan">
+                            <div class="plan-top">
+                                <div>
+                                    <h3>Weekend Peak Add-on</h3>
+                                    <p class="tier">Unthrottled Peak Allocation</p>
                                 </div>
-                                <ul>
-                                    <li><span>All Standard Plan features included.</span></li>
-                                    <li><span>Unthrottled bandwidth even during peak periods.</span></li>
-                                    <li><span>4K requests accepted.</span></li>
-                                </ul>
-                                <div class="foot"><span>Hardware Cap:</span><span>1 / 6 spots claimed</span></div>
+                                <span class="price">$349<small>/ yr</small></span>
                             </div>
-                            <div class="plan">
-                                <div class="plan-top">
-                                    <div>
-                                        <h3>Lifetime Supporter Pass</h3>
-                                        <p class="tier">Contribute To The Server Build</p>
-                                    </div>
-                                    <span class="price">$999<small>lifetime</small></span>
+                            <ul>
+                                <li><span>All Standard Plan features included.</span></li>
+                                <li><span>Unthrottled bandwidth even during peak periods.</span></li>
+                                <li><span>4K requests accepted.</span></li>
+                            </ul>
+                            <div class="foot"><span>Hardware Cap:</span><span>1 / 6 spots claimed</span></div>
+                        </div>
+                        <div class="plan">
+                            <div class="plan-top">
+                                <div>
+                                    <h3>Lifetime Supporter Pass</h3>
+                                    <p class="tier">Contribute To The Server Build</p>
                                 </div>
-                                <p style="color:var(--slate);font-size:15.5px">Directly funds the addition of dedicated enterprise storage arrays to our server cluster.</p>
-                                <ul>
-                                    <li><span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
-                                    <li><span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
-                                    <li><span>Unrestricted streaming, forever.</span></li>
-                                </ul>
-                                <a class="btn btn-quiet" data-track="whatsapp-lifetime" href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener">Become a Lifetime Supporter</a>
+                                <span class="price">$999<small>lifetime</small></span>
                             </div>
+                            <p style="color:var(--slate);font-size:15.5px">Directly funds the addition of dedicated enterprise storage arrays to our server cluster.</p>
+                            <ul>
+                                <li><span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
+                                <li><span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
+                                <li><span>Unrestricted streaming, forever.</span></li>
+                            </ul>
+                            <a class="btn btn-quiet" data-track="whatsapp-lifetime" href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener">Become a Lifetime Supporter</a>
                         </div>
                     </div>
 
@@ -841,7 +1018,7 @@
         <!-- ================= WEBSITE HOSTING ================= -->
         <section id="view-wordpress" class="view page" aria-labelledby="hosting-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="hosting-title" tabindex="-1">Website hosting, handled.</h1>
                     <p class="lede">You run your business; I keep your website up, fast and secure. Hosting is based here in Auckland and managed end to end, with a direct line to me whenever something needs to change.</p>
@@ -880,7 +1057,7 @@
         <!-- ================= IT SUPPORT ================= -->
         <section id="view-it-support" class="view page" aria-labelledby="it-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="it-title" tabindex="-1">IT support from a real person.</h1>
                     <p class="lede">AI is great for explaining things. It can't clear your drive, coax a printer back online or rescue a laptop that won't boot. I can, over a secure remote session that you watch from start to finish.</p>
@@ -935,7 +1112,7 @@
         <!-- ================= AUTOMATIONS ================= -->
         <section id="view-automations" class="view page" aria-labelledby="auto-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="auto-title" tabindex="-1">Automations that keep running when you stop watching.</h1>
                     <p class="lede">If someone on your team copies data between systems by hand, or a Zapier chain breaks every few weeks, that's a job for a small, purpose-built program. I write them in Go, Python and Node.js, and they run on a schedule or the moment something happens.</p>
@@ -966,7 +1143,7 @@
         <!-- ================= LIVE QUIZ APP (SSMB) ================= -->
         <section id="view-respond" class="view page" aria-labelledby="respond-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="app-layout">
                     <div>
                         <div class="page-head">
@@ -1013,7 +1190,7 @@
         <!-- ================= NZ ROAD CODE QUIZ ================= -->
         <section id="view-nzquiz" class="view page" aria-labelledby="quiz-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="quiz-title" tabindex="-1">NZ Road Code Practice Quiz</h1>
                     <p class="lede">Free, unlimited practice for the NZTA learner theory test. The official app stops you at 10 questions and puts the rest behind a paywall; this one lets you keep going until every rule sticks.</p>
@@ -1054,7 +1231,7 @@
         <!-- ================= HEARTBEATS ================= -->
         <section id="view-heartbeats" class="view page" aria-labelledby="hb-title" hidden>
             <div class="wrap">
-                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Me</a>
+                <a class="back" href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Intro</a>
                 <div class="page-head">
                     <h1 id="hb-title" tabindex="-1">Device Ping Heartbeats</h1>
                     <p class="lede"><code>heartbeats-ping-sidecar</code> is a tiny Go container for watching devices you can't install monitoring agents on: IoT gateways, home automation hubs, isolated database servers. It checks them with ICMP or TCP and sends a heartbeat to Healthchecks.io or BetterStack only when every check passes, so silence means something's wrong.</p>
@@ -1146,6 +1323,7 @@ services:
             // in-page anchors on the home view (e.g. #services-rack) keep the home view showing
             if (rawHash && !views.includes(rawHash) && document.getElementById(rawHash)) {
                 views.forEach(v => { document.getElementById(`view-${v}`).hidden = v !== 'home'; });
+                fitRacks();
                 return;
             }
             const viewName = views.includes(rawHash) ? rawHash : 'home';
@@ -1178,7 +1356,48 @@ services:
                 track(`view-${viewName}`);
             }
             firstRender = false;
+            fitRacks();
         }
+
+        // Racks: grow every unit to a whole number of rack units (1U = --u) so the faceplates line up
+        // with the rail holes, then stamp the U numbers on both rails, U1 at the bottom like a real cabinet
+        function fitRacks() {
+            document.querySelectorAll('.rack').forEach(rack => {
+                if (!rack.offsetParent) return;          // in a hidden view; fitted when that view is shown
+                const u = parseFloat(getComputedStyle(rack).getPropertyValue('--u')) || 30;
+                let total = 0;
+                rack.querySelectorAll('.unit').forEach(unit => {
+                    unit.style.height = '';
+                    const size = Math.max(1, Math.ceil((unit.offsetHeight - 2) / u));
+                    unit.style.height = `${size * u}px`;
+                    total += size;
+                });
+                let rails = rack.querySelectorAll('.rack-u');
+                if (!rails.length) {
+                    rails = [0, 1].map(() => {
+                        const rail = rack.appendChild(document.createElement('span'));
+                        rail.className = 'rack-u';
+                        rail.setAttribute('aria-hidden', 'true');
+                        return rail;
+                    });
+                }
+                rails.forEach(rail => {
+                    if (rail.childElementCount === total) return;
+                    rail.replaceChildren(...Array.from({ length: total }, (_, i) => {
+                        const n = document.createElement('span');
+                        n.textContent = total - i;
+                        return n;
+                    }));
+                });
+            });
+        }
+        let fitQueued = false;
+        window.addEventListener('resize', () => {
+            if (fitQueued) return;
+            fitQueued = true;
+            requestAnimationFrame(() => { fitQueued = false; fitRacks(); });
+        });
+        if (document.fonts) document.fonts.ready.then(fitRacks);
 
         window.addEventListener('hashchange', () => {
             if (!modal.hidden) closeModal();   // switching pages always dismisses the request form
