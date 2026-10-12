@@ -138,7 +138,7 @@
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--line);
         }
-        .site-head .wrap { position: relative; display: flex; align-items: center; justify-content: space-between; height: var(--head-h); gap: 16px; }
+        .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--head-h); gap: 16px; }
         .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
         .brand img { height: 34px; width: auto; }
         .brand span { font: 700 22px/1 var(--display); letter-spacing: .01em; }
@@ -147,7 +147,8 @@
         .site-nav a.nav-link { color: var(--slate); text-decoration: none; font-weight: 500; font-size: 15px; padding: 6px 13px; border-radius: 6px; white-space: nowrap; }
         .site-nav a.nav-link:hover { color: var(--ink); background: var(--blank); }
         .site-nav a.nav-link[aria-current="true"] { color: var(--ink); background: var(--blank); }
-        .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100vw; transform-origin: 0 50%; transform: scaleX(0); background: var(--harbour); }
+        /* scroll progress: spans the header edge to edge, so it ends exactly at the right of the screen at any width */
+        .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform-origin: 0 50%; transform: scaleX(0); background: var(--harbour); }
         @media (max-width: 760px) {
             .brand span { display: none; }
             #nav-contact-btn, #nav-request-btn { display: none !important; }
@@ -475,8 +476,8 @@
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg><span class="btn-label">Message me</span></a>
                 <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
             </nav>
-            <span class="progress" id="progress" aria-hidden="true"></span>
         </div>
+        <span class="progress" id="progress" aria-hidden="true"></span>
     </header>
 
     <!-- position markers -->
@@ -955,9 +956,9 @@
                     <div class="panel row-cta">
                         <div>
                             <h4>Run live video somewhere?</h4>
-                            <p>If your hall, church, club or studio has a switcher and a rota of volunteers, I can build a controller around how your services actually run.</p>
+                            <p>If your hall, church, club or studio has a switcher and a rota of volunteers, I can build and improve your workflow and I can also run live streams for you.</p>
                         </div>
-                        <a class="btn btn-primary" data-track="whatsapp-atem" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20video%20switcher%20controller" target="_blank" rel="noopener">Message me about a controller</a>
+                        <a class="btn btn-primary" data-track="whatsapp-atem" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20going%20live" target="_blank" rel="noopener">Message me about going live</a>
                     </div>
                 </div>
             </div>
