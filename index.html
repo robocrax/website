@@ -224,6 +224,7 @@
         /* ---------- building blocks ---------- */
         .block { margin-top: clamp(32px, 5vw, 52px); }
         .block > h3.h { font-size: clamp(1.4rem, 2.4vw, 1.85rem); margin-bottom: 12px; }
+        .block > h4.h { font-size: 1.3rem; margin-bottom: 10px; }
         .block > p { color: var(--slate); max-width: 66ch; }
         .block > p + p { margin-top: 12px; }
 
@@ -243,8 +244,6 @@
 
         /* real sequences only: numbered steps */
         .steps { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
-        .steps.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        @media (max-width: 600px) { .steps.cols-2 { grid-template-columns: 1fr; } }
         .steps > li { counter-increment: step; position: relative; padding-left: 52px; }
         .steps > li::before {
             content: counter(step); position: absolute; left: 0; top: 0;
@@ -298,10 +297,9 @@
         .service .service-meta { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14.5px; font-weight: 500; color: var(--ink); }
 
         /* pricing */
-        .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
-        @media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+        .plans { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 22px; }   /* one column: the copy card is too narrow for plans side by side */
         .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 14px; }
-        .plan.main { grid-column: 1 / -1; border: 2px solid var(--ink); }
+        .plan.main { border: 2px solid var(--ink); }
         .plan-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
         .plan h4 { font-size: 1.4rem; }
         .plan.main h4 { font-size: 1.8rem; }
@@ -345,6 +343,24 @@
         .site p { margin-top: 4px; font-size: 15px; color: var(--slate); }
         .tag { display: inline-block; margin-left: 6px; padding: 4px 7px 3px; border-radius: 4px; vertical-align: 3px; font: 500 12px/1 var(--text); color: var(--slate); background: var(--blank); white-space: nowrap; }
         .site-lg p { font-size: 15.5px; max-width: 52ch; }
+
+        /* the ATEM controller: a desktop shot with the phone beside it, then the old desk steps struck through */
+        .shot { margin: 24px 0 0; }
+        .shot + .shot { margin-top: 14px; }
+        .shot img { aspect-ratio: auto; }
+        .shot-narrow { max-width: 340px; }
+        .phone-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 20px; align-items: center; margin-top: 18px; }
+        .phone-row p { color: var(--slate); font-size: 15.5px; }
+        .phone.phone-sm { max-width: 130px; border-width: 6px; border-radius: 20px; }
+        /* one row per job: how it was done at the desk, struck through, then how it is done now */
+        .steps-map { list-style: none; margin: 14px 0 0; padding: 0; display: grid; }
+        .steps-map li { display: grid; grid-template-columns: 148px minmax(0, 1fr); column-gap: 18px; padding: 12px 0; border-top: 1px solid var(--line); }
+        .steps-map li:first-child { border-top: 2px solid var(--ink); }
+        .steps-map .was { grid-row: 1 / span 2; padding-top: 2px; font-size: 14px; line-height: 1.4; color: var(--slate); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--slate) 60%, transparent); }
+        .steps-map h5 { grid-column: 2; margin: 0; font: 700 1.1rem/1.25 var(--display); }
+        .steps-map p { grid-column: 2; margin-top: 3px; color: var(--slate); font-size: 15px; }
+        @media (max-width: 600px) { .steps-map li { grid-template-columns: 1fr; } .steps-map .was { grid-row: auto; } .steps-map h5, .steps-map p { grid-column: 1; } }
+        .service-more { border-style: dashed; background: transparent; }
 
         .app-layout { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: clamp(20px, 3vw, 40px); align-items: start; }
         .phone { margin: 0; max-width: 190px; border: 8px solid var(--rack); border-radius: 28px; overflow: hidden; background: #1c0a45; box-shadow: 0 30px 50px -30px rgba(9, 25, 28, .6); }
@@ -778,7 +794,7 @@
         <section id="tools" class="scene" data-stage="tools" data-marker="Tools" data-title="Tools I've built | RoboCrax" aria-labelledby="tools-title">
             <div class="copy">
                 <h2 class="title" id="tools-title">Tools I've built</h2>
-                <p class="lede">Three things I made because they needed to exist: a live quiz app for a community, a free practice test for learner drivers, and a tiny monitoring sidecar for the devices nobody can install an agent on.</p>
+                <p class="lede">Things I've built because they needed to exist: a live quiz app and a video switcher controller for a community, a free practice test for learner drivers, a monitoring sidecar for the devices nobody can put an agent on, and many Magento 2 modules for my work. The list keeps growing.</p>
                 <div class="services">
                     <article class="service">
                         <h3><a href="#respond">Live quiz app for SSMB Auckland</a></h3>
@@ -791,9 +807,23 @@
                         <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Free to use</span></p>
                     </article>
                     <article class="service">
+                        <h3><a href="#atem">SSMB ATEM video switcher controller</a></h3>
+                        <p>Everything the AV desk does, on one page, on any phone, iPad or PC: tap a source and it's on air. Built for the volunteers who run SSMB Auckland's services.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                    </article>
+                    <article class="service">
                         <h3><a href="#heartbeats">Device Ping Heartbeats</a></h3>
                         <p>A tiny Go sidecar that pings devices on your network and reports to Healthchecks.io only while they're healthy.</p>
                         <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Open source</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#magento">Magento 2 modules</a></h3>
+                        <p>Many custom Magento 2 modules, each written from scratch for my work rather than bolted on from the marketplace.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                    </article>
+                    <article class="service service-more">
+                        <h3><a data-track="whatsapp-tools" href="https://wa.me/+64204774826?text=Hi,%20I%20have%20something%20that%20needs%20building" target="_blank" rel="noopener">Something that needs building?</a></h3>
+                        <p>If a tool doesn't exist yet, I'll make it. Message me with what you're trying to do.</p>
                     </article>
                 </div>
             </div>
@@ -881,6 +911,58 @@
             </div>
         </section>
 
+        <!-- ================= TOOLS: SSMB ATEM CONTROLLER ================= -->
+        <section id="atem" class="scene" data-stage="atem" data-marker="Tools" data-title="SSMB ATEM video switcher controller | RoboCrax" aria-labelledby="atem-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">ATEM-CTL</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                <h3 class="title" id="atem-title">SSMB ATEM: the AV desk on one page</h3>
+                <p class="lede">Everything the AV desk does, the switcher, the logo, the face bubble, the projectors and the live stream, on one page, on any phone, iPad or PC. A browser-based controller for SSMB Auckland's Blackmagic ATEM 1 M/E Constellation 4K, built for the volunteers who run the mandir's services: tap a source and it cuts straight to program.</p>
+                <p class="where">Runs on the mandir network, and from anywhere behind a Cloudflare Access login</p>
+
+                <figure class="frame shot"><span class="frame-url">On a PC: inputs on the left, what's on air on the right</span><img src="work/atem/overview.webp" alt="The ATEM controller on a desktop: a grid of live input tiles on the left, the program picture, logo controls and face bubble on the right, and a glass toolbar along the bottom" width="1280" height="800" loading="lazy"></figure>
+                <div class="phone-row">
+                    <figure class="phone phone-sm"><img src="work/atem/phone.webp" alt="The same controller on a phone, in one column" width="390" height="845" loading="lazy"></figure>
+                    <p>On a phone the same page folds into one column: what's on air first, the inputs under it, and the toolbar along the bottom.</p>
+                </div>
+
+                <div class="block">
+                    <h4 class="h">Each old step at the desk, and what replaced it</h4>
+                    <ul class="steps-map">
+                        <li><span class="was">3 steps at the desk</span><h5>Cut with one tap</h5><p>Tap the input. It's on air. Red means on air. No preview, no transition: a clean cut.</p></li>
+                        <li><span class="was">16 windows to search</span><h5>Only what has a picture</h5><p>Blank inputs hide themselves, and one comes back as soon as it has a picture.</p></li>
+                        <li><span class="was">3 steps, every time</span><h5>The logo looks after itself</h5><p>Auto logo picks a clear top corner and white or black text, and steps aside when something moves in.</p></li>
+                        <li><span class="was">By numbers</span><h5>Place the speaker on the picture</h5><p>Drag the circle on program. With "Keep the face centred" on, it follows the speaker by itself.</p></li>
+                        <li><span class="was">Without seeing it</span><h5>See what the projectors show</h5><p>Choose under each screen, or drag an input onto a screen.</p></li>
+                        <li><span class="was">4 steps, then undo them</span><h5>Hold the picture</h5><p>Freeze, then Unfreeze. Program holds still while you change things behind it.</p></li>
+                        <li><span class="was">3 steps, under pressure</span><h5>When the PC stops</h5><p>Posters, Backup, Push to air. The backup picture goes on air in a few seconds, and the poster returns at the next cut.</p></li>
+                        <li><span class="was">At the desk PC</span><h5>A poster for every day</h5><p>Drop it in, drag it onto its day. On its day a poster is the Poster input; nothing goes on air by itself.</p></li>
+                        <li><span class="was">Away from the switcher</span><h5>Go live from the toolbar</h5><p>Pick the resolution, then GO LIVE. The list comes from the Web Presenter itself.</p></li>
+                        <li><span class="was">One desk</span><h5>From anywhere</h5><p>At the mandir or away. Add it to the home screen like an app; on Windows there's an app to pin to the taskbar.</p></li>
+                    </ul>
+                </div>
+
+                <figure class="frame shot"><span class="frame-url">Posters: a library and a calendar</span><img src="work/atem/posters.webp" alt="The poster library with a calendar, one poster assigned to each day" width="960" height="600" loading="lazy"></figure>
+                <figure class="frame shot"><span class="frame-url">Projectors: see each screen, then pick its source</span><img src="work/atem/projectors.webp" alt="The two projector outputs, each showing what it is displaying, with a source picker under each" width="1004" height="312" loading="lazy"></figure>
+                <figure class="frame shot shot-narrow"><span class="frame-url">Freeze: the picture held on air</span><img src="work/atem/program-frozen.webp" alt="The program picture held on air, tinted ice-blue and labelled FROZEN" width="640" height="568" loading="lazy"></figure>
+
+                <div class="block">
+                    <h4 class="h">Under the hood</h4>
+                    <p>A Node.js server in a container on the mandir's Proxmox host. A small Windows app on the capture PC streams the switcher's multiview over WebRTC, and the page crops every input's live tile out of it. Cloudflare Tunnel and Access put it on the internet safely, it installs to a phone's home screen as an app, and a Windows app pins it to the taskbar. It also exposes an HTTP API and a video feed that other tools can use, and plays a 90-second intro film that teaches new volunteers the whole thing.</p>
+                    <p>Built in Node.js and C#.</p>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Run live video somewhere?</h4>
+                            <p>If your hall, church, club or studio has a switcher and a rota of volunteers, I can build a controller around how your services actually run.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-atem" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20video%20switcher%20controller" target="_blank" rel="noopener">Message me about a controller</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ================= TOOLS: HEARTBEATS ================= -->
         <section id="heartbeats" class="scene left" data-stage="heartbeats" data-marker="Tools" data-title="Device Ping Heartbeats | RoboCrax" aria-labelledby="hb-title">
             <div class="copy">
@@ -904,6 +986,24 @@ services:
 
                 <div class="actions">
                     <a class="btn btn-primary" data-track="github-heartbeats-page" href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">View on GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: MAGENTO 2 MODULES ================= -->
+        <section id="magento" class="scene" data-stage="magento" data-marker="Tools" data-title="Magento 2 modules | RoboCrax" aria-labelledby="magento-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                <h3 class="title" id="magento-title">Magento 2 modules, built from scratch</h3>
+                <p class="lede">I've built many Magento 2 modules from scratch for my work. Each one is written from the ground up for a specific job a store needed done, rather than bolted on from the marketplace.</p>
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Need something built for your store?</h4>
+                            <p>Tell me what the store has to do that it can't today, and I'll scope a module for it.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-magento" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20Magento%202%20module" target="_blank" rel="noopener">Message me about a module</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1014,7 +1114,7 @@ services:
                 <h2 class="title" id="tv-title">Smart TV Quick Connect Guide</h2>
                 <p class="lede">Authenticate your Smart TV, Android TV, Google TV, or Apple TV in seconds without typing passwords with your TV remote.</p>
 
-                <ol class="steps cols-2">
+                <ol class="steps">
                     <li class="panel">
                         <h4>Install the TV App</h4>
                         <p>On Android TV, Google TV, or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.</p>
@@ -1138,7 +1238,7 @@ services:
                 const current = key === s.id
                     || (key === 'jellyfin' && s.id === 'tv-setup')
                     || (key === 'services' && ['wordpress', 'it-support', 'automations', 'how'].includes(s.id))
-                    || (key === 'tools' && ['respond', 'nzquiz', 'heartbeats'].includes(s.id));
+                    || (key === 'tools' && ['respond', 'nzquiz', 'atem', 'heartbeats', 'magento'].includes(s.id));
                 if (current) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
             });
             if (!firstActive) track(`view-${s.id}`);

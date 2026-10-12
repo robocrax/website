@@ -21,7 +21,7 @@ const LAYOUT = [
     { key: 'web',    kind: 'server', u: 2, label: 'WEB-01', led: 'green' },
     { key: 'auto',   kind: 'server', u: 1, label: 'AUTO-01', led: 'green' },
     { key: 'kvm',    kind: 'kvm',    u: 1, label: 'KVM' },
-    { key: 'blank1', kind: 'blank',  u: 1 },
+    { key: 'atem',   kind: 'server', u: 1, label: 'ATEM-CTL', led: 'blue' },
     { key: 'tools',  kind: 'server', u: 1, label: 'TOOLS-01', led: 'blue' },
     { key: 'ping',   kind: 'server', u: 1, label: 'PING-SIDECAR', led: 'blue' },
     { key: 'blank2', kind: 'blank',  u: 1 },
@@ -328,6 +328,50 @@ function init() {
         tvTex.needsUpdate = true;
     }
 
+    // the tablet runs the switcher controller: a tap on an input cuts it straight to program
+    const padCanvas = document.createElement('canvas'); padCanvas.width = 640; padCanvas.height = 400;
+    const padTex = new THREE.CanvasTexture(padCanvas); padTex.colorSpace = THREE.SRGBColorSpace;
+    const PAD_TILES = [['PC', '#2f6f8f', '#143445'], ['Camera 1', '#8f5a2f', '#45290f'], ['Camera 2', '#5b4a9c', '#27204a'], ['Poster', '#8a7a34', '#40380f']];
+    function drawPad(time) {
+        const g = padCanvas.getContext('2d');
+        const period = 1.9, k = Math.floor(time / period) % PAD_TILES.length, ph = (time % period) / period;
+        const bg = g.createLinearGradient(0, 0, 640, 400); bg.addColorStop(0, '#12262b'); bg.addColorStop(1, '#1d3d47');
+        g.fillStyle = bg; g.fillRect(0, 0, 640, 400);
+        const glass = (x, y, w, h, r) => { g.fillStyle = 'rgba(255,255,255,.07)'; g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); g.strokeStyle = 'rgba(255,255,255,.16)'; g.lineWidth = 1.5; g.stroke(); };
+        const fillTile = (i, x, y, w, h, r) => { const [, a, b] = PAD_TILES[i]; const gr = g.createLinearGradient(x, y, x + w, y + h); gr.addColorStop(0, a); gr.addColorStop(1, b); g.fillStyle = gr; g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); };
+        const pill = (text, x, y, color, ink = '#fff') => { g.font = `700 13px ${COND}`; const w = g.measureText(text).width + 16; g.fillStyle = color; g.beginPath(); g.roundRect(x, y - 10, w, 20, 10); g.fill(); g.fillStyle = ink; g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillText(text, x + 8, y + 1); return w; };
+        g.textAlign = 'left'; g.textBaseline = 'middle';
+        // inputs
+        glass(14, 14, 388, 314, 18);
+        g.fillStyle = '#E4ECEA'; g.font = `600 18px ${COND}`; g.fillText('Inputs', 30, 38);
+        PAD_TILES.forEach(([name], i) => {
+            const x = 28 + (i % 2) * 184, y = 58 + Math.floor(i / 2) * 130, w = 176, h = 120;
+            fillTile(i, x, y, w, h, 12);
+            if (i === k) { g.strokeStyle = '#ff453a'; g.lineWidth = 5; g.beginPath(); g.roundRect(x + 2.5, y + 2.5, w - 5, h - 5, 10); g.stroke(); pill('ON AIR', x + w - 68, y + h - 18, '#ff453a'); }
+            pill(name, x + 10, y + h - 18, 'rgba(0,0,0,.5)');
+            if (i === k && ph < 0.32) { const t = ph / 0.32; g.strokeStyle = `rgba(255,255,255,${1 - t})`; g.lineWidth = 4; g.beginPath(); g.arc(x + w / 2, y + h / 2, 10 + t * 44, 0, Math.PI * 2); g.stroke(); }
+        });
+        // program
+        glass(414, 14, 212, 208, 18);
+        fillTile(k, 426, 26, 188, 108, 10);
+        g.strokeStyle = '#ff453a'; g.lineWidth = 4; g.beginPath(); g.roundRect(428, 28, 184, 104, 8); g.stroke();
+        const pw = pill('ON AIR', 426, 158, '#ff453a');
+        g.fillStyle = '#E4ECEA'; g.font = `700 20px ${COND}`; g.fillText(PAD_TILES[k][0], 426 + pw + 10, 159);
+        pill('Auto logo', 426, 194, '#ff453a'); pill('Freeze', 506, 194, 'rgba(255,255,255,.14)');
+        glass(414, 234, 212, 94, 18);
+        g.fillStyle = '#E4ECEA'; g.font = `600 16px ${COND}`; g.fillText('Projectors', 430, 258);
+        g.fillStyle = 'rgba(228,236,234,.6)'; g.font = `500 14px ${COND}`; g.fillText('Both on program', 430, 296);
+        // toolbar
+        glass(14, 342, 612, 44, 22);
+        g.fillStyle = '#34A851'; g.beginPath(); g.roundRect(26, 353, 40, 22, 11); g.fill();
+        g.fillStyle = '#E4ECEA'; g.font = `700 16px ${COND}`; g.fillText('SSMB ATEM', 78, 358);
+        g.fillStyle = 'rgba(228,236,234,.6)'; g.font = `500 12px ${COND}`; g.fillText('Switcher and video connected', 78, 374);
+        g.fillStyle = '#E4ECEA'; g.font = `600 14px ${COND}`; g.fillText('1080p60', 300, 365); g.fillText('GO LIVE', 420, 365);
+        g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.roundRect(360, 354, 48, 22, 11); g.fill();
+        g.fillStyle = '#fff'; g.beginPath(); g.arc(372, 365, 9, 0, Math.PI * 2); g.fill();
+        padTex.needsUpdate = true;
+    }
+
     // ---------- lighting and environment ----------
     const envScene = new THREE.Scene();
     function buildEnv() {
@@ -461,6 +505,22 @@ function init() {
                 const psuCable = new THREE.CatmullRomCurve3([new THREE.Vector3(0.12, -h / 2 + 0.03, FRONT - 0.5), new THREE.Vector3(0.06, -h / 2 + 0.04, FRONT - 0.46), new THREE.Vector3(0.0, -h / 2 + 0.04, FRONT - 0.42)]);
                 add(new THREE.TubeGeometry(psuCable, 20, 0.003, 6, false), new THREE.MeshStandardMaterial({ color: col(T.amber), roughness: .7 }), [0, 0, 0], group);
                 unitLeds(unit, [{ x: px(92, 48, hpx)[0], y: px(92, 48, hpx)[1], color: T.blue, mode: 'on' }, { x: px(126, 48, hpx)[0], y: px(126, 48, hpx)[1], color: T.green, mode: 'activity' }]);
+            } else if (spec.kind === 'server' && spec.key === 'tools') {
+                // the tools server slides out as an open tray of plug-in cards: one card per thing built, and room for more
+                add(new THREE.BoxGeometry(0.436, 0.004, 0.62), matGear, [0, -h / 2 + 0.006, FRONT - 0.31], group);
+                [-1, 1].forEach(s => add(new THREE.BoxGeometry(0.004, h - 0.012, 0.62), matGear, [s * 0.216, 0, FRONT - 0.31], group));
+                add(new THREE.BoxGeometry(0.436, h - 0.012, 0.004), matGear, [0, 0, FRONT - 0.618], group);
+                const cardMat = new THREE.MeshStandardMaterial({ color: 0x1f5e4a, roughness: .7, metalness: .1 });
+                const edges = [T.red, T.amber, T.green, T.blue].map(c => new THREE.MeshStandardMaterial({ color: col(c), roughness: .5 }));
+                unit.cards = [];
+                for (let i = 0; i < 12; i++) {
+                    const card = new THREE.Group(); card.position.set(-0.176 + i * 0.032, -h / 2 + 0.022, FRONT - 0.2); group.add(card);
+                    add(new THREE.BoxGeometry(0.004, 0.026, 0.26), cardMat, [0, 0, 0], card);
+                    add(new THREE.BoxGeometry(0.008, 0.005, 0.26), edges[i % 4], [0, 0.0155, 0], card);
+                    card.userData.y = card.position.y; unit.cards.push(card);
+                }
+                const [lx, ly] = px(92, 48, hpx), [ax, ay] = px(126, 48, hpx);
+                unitLeds(unit, [{ x: lx, y: ly, color: T.blue, mode: 'pulse' }, { x: ax, y: ay, color: T.green, mode: 'activity' }]);
             } else if (spec.kind === 'server') {
                 add(new THREE.BoxGeometry(0.436, h - 0.01, 0.62), matGear, [0, 0, FRONT - 0.31], group);
                 const [lx, ly] = px(92, 48, hpx), [ax, ay] = px(126, 48, hpx);
@@ -514,7 +574,7 @@ function init() {
                 tape.position.set(tx, spec.kind === 'media' ? h / 2 - 0.0135 : ty, FRONT + 0.0085);
                 (unit.drawer || group).add(tape);
                 unit.tape = tape;
-                if (['web', 'auto', 'kvm', 'tools', 'ping', 'media', 'switch'].includes(spec.key)) {
+                if (['web', 'auto', 'kvm', 'atem', 'tools', 'ping', 'media', 'switch'].includes(spec.key)) {
                     const frame = new THREE.Group(); (unit.drawer || group).add(frame);
                     const fm = new THREE.MeshBasicMaterial({ color: col(T.harbour), transparent: true, opacity: 0, depthWrite: false });
                     const W = RACK_W + 0.016, Hh = h + 0.012, t = 0.005;
@@ -523,6 +583,15 @@ function init() {
                 }
             }
         });
+
+        // one frame around the whole tools shelf (controller, tools server and ping sidecar), for the overview stop
+        {
+            const frame = new THREE.Group(); root.add(frame);
+            const fm = new THREE.MeshBasicMaterial({ color: col(T.harbour), transparent: true, opacity: 0, depthWrite: false });
+            const W = RACK_W + 0.016, Hh = 3 * U + 0.012, t = 0.005, cy = uy('tools');
+            [[0, Hh / 2, W, t], [0, -Hh / 2, W, t], [-W / 2, 0, t, Hh], [W / 2, 0, t, Hh]].forEach(([x, yy, w, hh]) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, hh, 0.004), fm); m.position.set(x, cy + yy, FRONT + 0.012); frame.add(m); });
+            focusables.shelf = { frame, mat: fm, tape: null };
+        }
 
         // ---- cables ----
         const cableMat = (hex, r = .7) => new THREE.MeshStandardMaterial({ color: col(hex), roughness: r, metalness: 0 });
@@ -543,7 +612,7 @@ function init() {
         const trunkBottom = uy('ups') + 0.02;
         tube([v(trunkX, swY + 0.02, trunkZ), v(trunkX, (swY + trunkBottom) / 2, trunkZ), v(trunkX, trunkBottom, trunkZ)], 0.007, cableMat(T.gear, .8), 8);
         for (let i = 0; i < 3; i++) tube([v(swPortX(23 - i * 2) + 0.004, swY - 0.016, FRONT + 0.012), v(swPortX(23 - i * 2) + 0.01, swY - 0.035, FRONT + 0.04), v(0.262, swY - 0.012 + i * 0.004, FRONT + 0.012), v(trunkX, swY + 0.01, trunkZ)], 0.0033, cableMat(cableColours[(i + 1) % 5]), 32);
-        ['web', 'auto', 'kvm', 'tools', 'ping', 'media', 'router'].forEach((k, i) => {
+        ['web', 'auto', 'kvm', 'atem', 'tools', 'ping', 'media', 'router'].forEach((k, i) => {
             const y = uy(k) + (k === 'web' ? 0.02 : 0) + (k === 'media' ? 0.06 : 0);
             tube([v(trunkX, y + 0.01, trunkZ), v(0.262, y, FRONT + 0.02), v(0.2, y, FRONT + 0.014)], 0.0033, cableMat(cableColours[i % 5]), 24);
         });
@@ -562,6 +631,11 @@ function init() {
         add(new THREE.BoxGeometry(0.03, 0.08, 0.03), matGear, [0, -0.21, 0], tv);
         add(new THREE.BoxGeometry(0.26, 0.012, 0.14), matGear, [0, -0.253, 0.02], tv);
         const tvTape = new THREE.Mesh(new THREE.PlaneGeometry(0.14, 0.02625), new THREE.MeshBasicMaterial({ map: tapeTexture('LOUNGE TV') })); tvTape.position.set(-0.2, -0.21, 0.02); tv.add(tvTape);
+
+        // a tablet in front of the rack, running the switcher controller
+        const pad = new THREE.Group(); pad.position.set(-0.04, uy('atem') - 0.11, FRONT + 0.22); pad.rotation.set(-0.14, 0.2, 0); root.add(pad); extras.pad = pad;
+        add(new THREE.BoxGeometry(0.27, 0.178, 0.01), matGear, [0, 0, 0], pad);
+        const padScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.256, 0.16), new THREE.MeshBasicMaterial({ map: padTex })); padScreen.position.z = 0.0055; pad.add(padScreen);
 
         const devSpecs = [['IOT GATEWAY', 0.92, 0.5, 0.2], ['HOME HUB', 1.06, 0.33, -0.02], ['DB SERVER', 0.86, 0.17, 0.36]];
         extras.devices = devSpecs.map(([label, x, y, z]) => {
@@ -623,12 +697,17 @@ function init() {
             auto: [{ c: mk(cloudTo('auto')), color: col(T.amber), w: 1 }, { c: mk(rev(cloudTo('auto'))), color: col(T.green), w: .6 }, { c: mk([portOf('auto'), v(0.255, uy('auto'), FRONT + 0.02), trunk(uy('auto')), trunk(uy('web') + 0.03), v(0.255, uy('web') + 0.02, FRONT + 0.02), portOf('web')]), color: col('#DCE5E3'), w: .5 }],
             media: [{ c: mk([portOf('media'), v(0.255, uy('media') + 0.06, FRONT + 0.02), trunk(uy('media') + 0.07), trunk(swY), P.swOut, v(0.42, swY + 0.04, 0.4), v(0.66, 0.7, 0.3), P.tv]), color: col(T.amber), w: 1 }],
             ping: lanPts.flatMap(p => [{ c: mk(lanTo(p)), color: col(T.blue).lerp(col('#ffffff'), .3), w: 1 }, { c: mk(rev(lanTo(p))), color: col(T.green), w: .7 }]).concat([{ c: mk(rev(cloudTo('ping'))), color: col(T.green), w: .5 }]),
-            base: [{ c: mk(cloudTo('web')), color: col(T.harbour).lerp(col('#ffffff'), T.dark ? .4 : 0), w: 1 }, { c: mk(rev(cloudTo('web'))), color: col(T.green), w: .8 }, { c: mk(cloudTo('auto')), color: col(T.amber), w: .5 }, { c: mk(rev(cloudTo('media'))), color: col(T.amber), w: .4 }, { c: mk(cloudTo('tools')), color: col(T.blue), w: .5 }, { c: mk(rev(cloudTo('tools'))), color: col(T.green), w: .4 }],
+            base: [{ c: mk(cloudTo('web')), color: col(T.harbour).lerp(col('#ffffff'), T.dark ? .4 : 0), w: 1 }, { c: mk(rev(cloudTo('web'))), color: col(T.green), w: .8 }, { c: mk(cloudTo('auto')), color: col(T.amber), w: .5 }, { c: mk(rev(cloudTo('media'))), color: col(T.amber), w: .4 }, { c: mk(cloudTo('tools')), color: col(T.blue), w: .5 }, { c: mk(rev(cloudTo('tools'))), color: col(T.green), w: .4 }, { c: mk(rev(cloudTo('atem'))), color: col(T.blue), w: .4 }],
+            atem: [
+                { c: mk(rev(cloudTo('atem'))), color: col(T.blue).lerp(col('#ffffff'), .3), w: .7 }, { c: mk(cloudTo('atem')), color: col(T.green), w: .5 },
+                // taps travel from the tablet to the controller
+                { c: mk([v(-0.04, uy('atem') - 0.024, FRONT + 0.215), v(-0.04, uy('atem') - 0.004, FRONT + 0.12), v(-0.04, uy('atem'), FRONT + 0.02)]), color: col(T.red), w: 1 },
+            ],
         };
     }
 
     // ---------- camera keyframes, one per stop on the page ----------
-    const DEFAULTS = { theta: 0, phi: .15, r: 2.4, tx: 0, ty: .56, tz: 0, shiftX: 1, door: 1, web: 0, kvm: 0, media: 0, tv: 0, devices: 0, cloud: 0, fWeb: 0, fAuto: 0, fMedia: 0, fPing: 0, fBase: 0, gWeb: 0, gAuto: 0, gKvm: 0, gTools: 0, gPing: 0, gMedia: 0, gSwitch: 0 };
+    const DEFAULTS = { theta: 0, phi: .15, r: 2.4, tx: 0, ty: .56, tz: 0, shiftX: 1, door: 1, web: 0, kvm: 0, media: 0, tv: 0, devices: 0, cloud: 0, pad: 0, mods: 0, fWeb: 0, fAuto: 0, fMedia: 0, fPing: 0, fAtem: 0, fBase: 0, gWeb: 0, gAuto: 0, gKvm: 0, gAtem: 0, gTools: 0, gPing: 0, gMedia: 0, gSwitch: 0, gShelf: 0 };
     let KF = {};
     function keyframes() {
         const mid = (a, b) => (uy(a) + uy(b)) / 2;
@@ -640,9 +719,11 @@ function init() {
             'it-support':{ theta: -.36, phi: .26, r: 1.7, ty: uy('kvm') + .1, tz: FRONT + .2, shiftX: -.85, kvm: 1, gKvm: 1, fBase: .3 },
             automations: { theta: .28, phi: .08, r: 1.5, tx: .0, ty: mid('switch', 'auto'), tz: .3, shiftX: .85, cloud: 1, fAuto: 1, gAuto: 1, gSwitch: 1 },
             how:         { theta: 1.38, phi: .46, r: 3.5, ty: .5, shiftX: -1, cloud: 1, fBase: 1 },
-            tools:       { theta: -.4, phi: .14, r: 1.75, ty: mid('tools', 'ping'), tz: .3, shiftX: .85, gTools: 1, fBase: .6 },
+            tools:       { theta: -.4, phi: .14, r: 1.75, ty: uy('tools'), tz: .3, shiftX: .85, gShelf: 1, fBase: .6 },
             respond:     { theta: -.26, phi: .2, r: 1.55, ty: uy('tools'), tz: .3, shiftX: .85, gTools: 1, fBase: .6 },
             nzquiz:      { theta: -.1, phi: .1, r: 1.5, ty: uy('tools'), tz: .3, shiftX: .85, gTools: 1, fBase: .6 },
+            atem:        { theta: .22, phi: .12, r: 1.5, ty: uy('atem') - .05, tz: .3, shiftX: .85, cloud: 1, pad: 1, gAtem: 1, fAtem: 1, fBase: .3 },
+            magento:     { theta: .3, phi: .42, r: 1.45, ty: uy('tools'), tz: .55, shiftX: .85, mods: 1, gTools: 1, fBase: .6 },
             heartbeats:  { theta: .5, phi: .14, r: 2.75, tx: .42, ty: .5, tz: .15, shiftX: -.35, gPing: 1, devices: 1, cloud: 1, fPing: 1 },
             jellyfin:    { theta: .42, phi: .14, r: 1.6, ty: uy('media') + .01, tz: .3, shiftX: .85, media: 1, gMedia: 1, fMedia: 1 },
             'tv-setup':  { theta: .2, phi: .1, r: 2.3, tx: .55, ty: .62, tz: .05, shiftX: -.5, tv: 1, fMedia: 1, gMedia: .5 },
@@ -668,7 +749,7 @@ function init() {
     // ---------- per-frame ----------
     const tmpV = new THREE.Vector3(), tmpM = new THREE.Matrix4(), tmpC = new THREE.Color(), offC = new THREE.Color();
     const live = [];   // packets in flight
-    let W = 1, Hh = 1, time = 0, lastScreen = -1, lastTV = -1;
+    let W = 1, Hh = 1, time = 0, lastScreen = -1, lastTV = -1, lastPad = -1;
     function resize() {
         W = window.innerWidth; Hh = window.innerHeight;
         renderer.setSize(W, Hh, false);
@@ -705,14 +786,17 @@ function init() {
         const web = units.web; web.group.position.z = EASE(cur.web) * 0.34; web.lid.position.z = web.lidZ - EASE(clamp01((cur.web - .35) / .65)) * 0.24;
         const kvm = units.kvm; kvm.drawer.position.z = EASE(clamp01(cur.kvm / .6)) * 0.46; kvm.hinge.rotation.x = -EASE(clamp01((cur.kvm - .4) / .6)) * 1.42;
         units.media.trays[5].position.z = FRONT + 0.008 + EASE(cur.media) * 0.085;
+        const tools = units.tools; tools.group.position.z = EASE(cur.mods) * 0.34;
+        tools.cards.forEach((c, i) => { c.position.y = c.userData.y + Math.pow(Math.max(0, Math.sin(time * 1.1 - i * 0.52)), 8) * 0.02 * cur.mods; });   // cards reseat one after another
         const sc = (o, s) => { s = Math.max(0.001, s); o.scale.setScalar(s); o.visible = s > 0.002; };
-        sc(extras.tv, EASE(cur.tv)); sc(extras.cloud, EASE(cur.cloud));
+        sc(extras.tv, EASE(cur.tv)); sc(extras.cloud, EASE(cur.cloud)); sc(extras.pad, EASE(cur.pad));
+        if (cur.pad > 0.05 && time - lastPad > 0.08) { drawPad(time); lastPad = time; }
         extras.devices.forEach(d => sc(d, EASE(cur.devices)));
         extras.wanLine.material.opacity = cur.cloud * .6; extras.lanLines.forEach(l => l.material.opacity = cur.devices * .6);
         for (const k in focusables) {
             const g = cur['g' + k[0].toUpperCase() + k.slice(1)];
             focusables[k].mat.opacity = g * (0.55 + 0.25 * Math.sin(time * 3));
-            focusables[k].tape.scale.setScalar(1 + 0.3 * g);
+            if (focusables[k].tape) focusables[k].tape.scale.setScalar(1 + 0.3 * g);
         }
         if (cur.kvm > 0.3 && time - lastScreen > 0.12) { drawScreen(time); lastScreen = time; }
         if (cur.tv > 0.05 && time - lastTV > 0.3) { drawTV(time); lastTV = time; }
@@ -741,7 +825,7 @@ function init() {
         glowPos.needsUpdate = true; glowCol.needsUpdate = true;
 
         // packets
-        const flows = [['web', cur.fWeb, 5], ['auto', cur.fAuto, 4], ['media', cur.fMedia, 5], ['ping', cur.fPing, 2.6], ['base', cur.fBase, 2.2]];
+        const flows = [['web', cur.fWeb, 5], ['auto', cur.fAuto, 4], ['media', cur.fMedia, 5], ['ping', cur.fPing, 2.6], ['atem', cur.fAtem, 4], ['base', cur.fBase, 2.2]];
         if (!reduced || true) flows.forEach(([name, w, rate]) => {
             if (w < 0.03 || bootFlow <= 0) return;
             const list = curves[name];
