@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="modulepreload" href="vendor/three.module.min.js">
+    <link rel="stylesheet" href="rack.css">
 
     <style>
         /* ---------- tokens ---------- */
@@ -38,7 +38,7 @@
             --ink: #11262B;          /* text, primary buttons */
             --slate: #52666A;        /* secondary text */
             --line: rgba(17, 38, 43, .14);
-            --harbour: #1C5D7A;      /* links, focus */
+            --harbour: #1C5D7A;      /* links, focus, the playhead */
             --rack: #1B2B2F;         /* cabinet frame, powder-coated graphite */
             --rack-inside: #081113;  /* cabinet interior */
             --rail: #BCC6C7;         /* zinc-plated mounting rails */
@@ -53,13 +53,16 @@
             --led-amber: #FABB05;    /* logo yellow: invite only */
             --warn-bg: #FBEDEB;
             --warn-ink: #8A2A1F;
-            --glass: rgba(232, 237, 236, .8);
+            --studio: #D2DBDA;       /* the backdrop the rack stands in front of */
+            --studio-hi: #F3F6F5;
             --display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
             --text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
             --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-            --wrap: 1180px;
             --gutter: clamp(16px, 4vw, 40px);
-            --head-h: 68px;
+            --head-h: 64px;
+            --tl-h: 56px;            /* the timeline along the bottom */
+            --stage-w: 46vw;         /* desktop: the preview monitor on the right */
+            --win: 44svh;            /* phones: the window onto the rack above each section */
             color-scheme: light;
         }
         @media (prefers-color-scheme: dark) {
@@ -82,7 +85,8 @@
                 --tape: #DCE5E3;
                 --warn-bg: #2A1714;
                 --warn-ink: #F2A397;
-                --glass: rgba(13, 27, 30, .76);
+                --studio: #0E1D21;
+                --studio-hi: #24403F;
                 color-scheme: dark;
             }
         }
@@ -106,7 +110,6 @@
         h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: -0.005em; }
         p { margin: 0; }
         code, .mono { font-family: var(--mono); font-size: .9em; }
-        .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         [hidden] { display: none !important; }
 
@@ -121,24 +124,40 @@
         .btn svg { width: 18px; height: 18px; flex: none; }
         .btn-primary { background: var(--ink); color: var(--fog); }
         .btn-primary:hover { background: var(--harbour); color: #fff; }
-        .btn-quiet { background: var(--glass); color: var(--ink); border-color: var(--line); }
+        .btn-quiet { background: var(--paper); color: var(--ink); border-color: var(--line); }
         .btn-quiet:hover { border-color: var(--ink); }
         .btn-small { min-height: 38px; padding: 0 14px; font-size: 14px; }
 
-        /* ---------- the stage: a fixed WebGL canvas the page scrolls over ---------- */
-        #stage { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .no-webgl #stage { display: none; }
-        .stage-fallback { display: none; }
-        .no-webgl .stage-fallback { display: block; }
+        /* ---------- the stage: the rack in a preview monitor on the right (desktop) or behind the page (phones) ---------- */
+        .stage3d {
+            position: fixed; z-index: 0; overflow: hidden; pointer-events: none;
+            background: radial-gradient(130% 70% at 50% 92%, var(--studio-hi), var(--studio) 72%);
+        }
+        .stage3d::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); }
+        .stage3d.is-covered { visibility: hidden; }
+        .stage-fallback { position: absolute; left: 50%; top: 50%; width: min(34%, 200px); transform: translate(-50%, -50%); opacity: .9; }
+        .rack-ready .stage-fallback { display: none; }
+        @media (min-width: 960px) {
+            .stage3d { top: calc(var(--head-h) + 12px); right: 12px; bottom: calc(var(--tl-h) + 12px); width: var(--stage-w); border-radius: 14px; }
+        }
+        @media (min-width: 960px) and (max-width: 1199.98px) { :root { --stage-w: 40vw; } }
+        @media (max-width: 959.98px) {
+            :root { --head-h: 56px; --tl-h: 48px; }
+            /* only as tall as the window the rack is seen through, so a phone redraws a band, not the whole screen;
+               the page behind matches the backdrop, and the band's lower edge fades into it */
+            body { background: var(--studio); }
+            .stage3d { top: 0; left: 0; right: 0; height: calc(var(--head-h) + var(--win) + 12svh); background: radial-gradient(120% 60% at 50% 72%, var(--studio-hi), var(--studio) 72%); }
+            .stage3d::after { top: auto; height: 14svh; border-radius: 0; box-shadow: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--studio) 0%, transparent), var(--studio)); }
+            .stage-fallback { top: calc(var(--head-h) + var(--win) / 2); width: min(34vw, 150px); }
+        }
 
         /* ---------- header ---------- */
         .site-head {
             position: fixed; top: 0; left: 0; right: 0; z-index: 40;
-            background: var(--glass);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: color-mix(in srgb, var(--fog) 94%, transparent);
             border-bottom: 1px solid var(--line);
         }
-        .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--head-h); gap: 16px; }
+        .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--head-h); gap: 16px; padding: 0 clamp(16px, 2vw, 24px); }
         .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
         .brand img { height: 34px; width: auto; }
         .brand span { font: 700 22px/1 var(--display); letter-spacing: .01em; }
@@ -147,10 +166,9 @@
         .site-nav a.nav-link { color: var(--slate); text-decoration: none; font-weight: 500; font-size: 15px; padding: 6px 13px; border-radius: 6px; white-space: nowrap; }
         .site-nav a.nav-link:hover { color: var(--ink); background: var(--blank); }
         .site-nav a.nav-link[aria-current="true"] { color: var(--ink); background: var(--blank); }
-        /* scroll progress: spans the header edge to edge, so it ends exactly at the right of the screen at any width */
-        .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform-origin: 0 50%; transform: scaleX(0); background: var(--harbour); }
         @media (max-width: 760px) {
             .brand span { display: none; }
+            .brand img { height: 30px; }
             #nav-contact-btn, #nav-request-btn { display: none !important; }
             .site-nav a.nav-link { padding: 6px 10px; font-size: 14px; }
             .nav-link.nav-opt { display: none; }
@@ -158,34 +176,35 @@
 
         /* ---------- scenes: each section is one stop on the tour ---------- */
         main { position: relative; z-index: 1; }
-        .scene {
-            position: relative; min-height: 100vh; min-height: 100svh;
-            display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: center;
-            max-width: var(--wrap); margin: 0 auto; padding: calc(var(--head-h) + 40px) var(--gutter) 72px;
+        .scene { position: relative; }
+        .copy { min-width: 0; }
+        @media (min-width: 960px) {
+            body { padding-bottom: var(--tl-h); }
+            main { margin-right: calc(var(--stage-w) + 12px); }
+            .scene {
+                min-height: calc(100vh - var(--tl-h)); min-height: calc(100svh - var(--tl-h));
+                display: flex; flex-direction: column; justify-content: center;
+                padding: calc(var(--head-h) + 52px) clamp(24px, 4.5vw, 72px) 76px;
+            }
+            .scene > .copy { width: 100%; max-width: 640px; margin: 0 auto; }
+            .scene + .scene > .copy { padding-top: 34px; border-top: 1px solid var(--line); }
         }
-        .scene > .copy { grid-column: 7 / -1; min-width: 0; }
-        .scene.left > .copy { grid-column: 1 / 7; }
-        .scene.wide > .copy { grid-column: 1 / 9; }
-        .scene.center > .copy { grid-column: 3 / 11; align-self: end; }
-        .copy {
-            padding: clamp(22px, 3vw, 36px); border-radius: 12px;
-            background: var(--glass); border: 1px solid var(--line);
-            backdrop-filter: blur(18px) saturate(1.15); -webkit-backdrop-filter: blur(18px) saturate(1.15);
-            box-shadow: 0 40px 70px -50px rgba(9, 25, 28, .55);
-        }
-        .hero > .copy { padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
-        @media (max-width: 900px) {
-            .scene > .copy, .scene.left > .copy, .scene.wide > .copy, .scene.center > .copy { grid-column: 1 / -1; }
-            .scene { padding-top: 46vh; align-items: start; }
-            .hero.scene { padding-top: 44vh; }
-            .hero > .copy { padding: clamp(22px, 3vw, 36px); background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(18px) saturate(1.15); -webkit-backdrop-filter: blur(18px) saturate(1.15); }
+        @media (max-width: 959.98px) {
+            body { padding-bottom: calc(var(--tl-h) + env(safe-area-inset-bottom)); }
+            /* each section opens with a window onto the rack; the copy is a sheet that slides up over it */
+            .scene { padding-top: var(--win); }
+            .scene.hero { padding-top: calc(var(--head-h) + var(--win)); }
+            .scene > .copy {
+                padding: 30px var(--gutter) 52px; background: var(--fog); border-radius: 22px;
+                box-shadow: 0 0 0 1px var(--line), 0 -26px 44px -30px rgba(9, 25, 28, .6);
+            }
         }
 
         /* section openers */
-        .scene h1 { font-size: clamp(2.5rem, 5.2vw, 4.1rem); line-height: 1.02; letter-spacing: -0.015em; max-width: 16ch; }
-        .scene h2.title { font-size: clamp(2rem, 3.8vw, 3rem); line-height: 1.04; letter-spacing: -0.012em; max-width: 18ch; }
-        .scene h3.title { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.06; letter-spacing: -0.01em; max-width: 20ch; }
-        .lede { margin-top: 18px; font-size: clamp(1.04rem, 1.4vw, 1.17rem); color: var(--slate); max-width: 58ch; }
+        .scene h1 { font-size: clamp(2.4rem, 4.6vw, 4rem); line-height: 1.02; letter-spacing: -0.015em; max-width: 16ch; }
+        .scene h2.title { font-size: clamp(2rem, 3.4vw, 2.9rem); line-height: 1.04; letter-spacing: -0.012em; max-width: 18ch; }
+        .scene h3.title { font-size: clamp(1.7rem, 2.8vw, 2.4rem); line-height: 1.06; letter-spacing: -0.01em; max-width: 20ch; }
+        .lede { margin-top: 18px; font-size: clamp(1.04rem, 1.3vw, 1.15rem); color: var(--slate); max-width: 58ch; }
         .hero .lede { margin-top: 24px; }
         .lede code { font-size: .92em; }
         .where { margin-top: 12px; font-size: 15px; color: var(--slate); }
@@ -223,13 +242,13 @@
         .glance dd { margin: 0; font-size: 14.5px; line-height: 1.38; color: var(--slate); }
 
         /* ---------- building blocks ---------- */
-        .block { margin-top: clamp(32px, 5vw, 52px); }
-        .block > h3.h { font-size: clamp(1.4rem, 2.4vw, 1.85rem); margin-bottom: 12px; }
+        .block { margin-top: clamp(32px, 5vw, 48px); }
+        .block > h3.h { font-size: clamp(1.4rem, 2.2vw, 1.8rem); margin-bottom: 12px; }
         .block > h4.h { font-size: 1.3rem; margin-bottom: 10px; }
         .block > p { color: var(--slate); max-width: 66ch; }
         .block > p + p { margin-top: 12px; }
 
-        .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(18px, 2.6vw, 26px); }
+        .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: clamp(18px, 2.4vw, 24px); }
         .panel h3, .panel h4 { font-size: 1.25rem; }
         .panel p { margin-top: 8px; color: var(--slate); font-size: 16px; }
 
@@ -257,10 +276,10 @@
         .steps > li.panel::before { left: 20px; top: 22px; }
         .steps > li.panel h4 { padding-top: 2px; }
 
+        .stage-num { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 700 17px/1 var(--display); background: var(--ink); color: var(--fog); flex: none; }
         .stage { margin-top: clamp(32px, 5vw, 48px); }
         .stage-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-        .stage-num { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 700 17px/1 var(--display); background: var(--ink); color: var(--fog); flex: none; }
-        .stage-head h3 { font-size: clamp(1.4rem, 2.4vw, 1.85rem); }
+        .stage-head h3 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
         .stage > .sub { color: var(--slate); }
 
         .row-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
@@ -269,7 +288,7 @@
         .address { margin-top: 12px; padding: 12px 14px; background: var(--fog); border: 1px solid var(--line); border-radius: 6px; font: 500 16px/1.3 var(--mono); color: var(--ink); overflow-wrap: anywhere; }
 
         .code {
-            margin-top: 14px; padding: 18px 20px; border-radius: 6px; overflow-x: auto;
+            margin-top: 14px; padding: 18px 20px; border-radius: 8px; overflow-x: auto;
             background: #0F2124; color: #D7E4E2; font: 400 14px/1.7 var(--mono);
         }
         .code pre { margin: 0; font: inherit; }
@@ -296,10 +315,11 @@
         .service:hover h3 a { color: var(--harbour); }
         .service p { font-size: 15.5px; color: var(--slate); }
         .service .service-meta { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14.5px; font-weight: 500; color: var(--ink); }
+        .service-more { border-style: dashed; background: transparent; }
 
         /* pricing */
-        .plans { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 22px; }   /* one column: the copy card is too narrow for plans side by side */
-        .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 14px; }
+        .plans { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 22px; }   /* one column: the copy column is too narrow for plans side by side */
+        .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: clamp(18px, 2.4vw, 24px); display: flex; flex-direction: column; gap: 14px; }
         .plan.main { border: 2px solid var(--ink); }
         .plan-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
         .plan h4 { font-size: 1.4rem; }
@@ -319,22 +339,21 @@
         .plan li.note::before { color: var(--slate); -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E"); }
         .plan .foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14.5px; display: flex; justify-content: space-between; gap: 10px; color: var(--slate); }
         .plan .btn { width: 100%; margin-top: auto; }
-        .callout { margin-top: 14px; padding: 18px 20px; border-radius: 6px; background: var(--warn-bg); color: var(--warn-ink); }
+        .callout { margin-top: 14px; padding: 18px 20px; border-radius: 8px; background: var(--warn-bg); color: var(--warn-ink); }
         .callout h4 { font-size: 1.15rem; }
         .callout p { margin-top: 6px; font-size: 15.5px; color: inherit; }
 
         /* ---------- portfolio ---------- */
         .sites { display: grid; gap: 26px 18px; margin-top: 26px; }
-        .sites-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .sites-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        @media (max-width: 1100px) { .sites-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 600px) { .sites-3, .sites-2 { grid-template-columns: 1fr; } }
+        .sites-2, .sites-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 720px) and (max-width: 959.98px) { .sites-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .sites-3, .sites-2 { grid-template-columns: 1fr; } }
         .site { position: relative; }
         .frame { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--paper); transition: border-color .15s; }
         .frame-url { display: block; padding: 7px 12px; font: 500 12.5px/1.2 var(--mono); color: var(--slate); background: var(--blank); border-bottom: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .frame img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
         .site h3 { font-size: 1.15rem; margin-top: 12px; }
-        .site-lg h3 { font-size: 1.4rem; margin-top: 14px; }
+        .site-lg h3 { font-size: 1.35rem; margin-top: 14px; }
         .site h3 a { color: var(--ink); text-decoration: none; }
         .site h3 a::after { content: ""; position: absolute; inset: 0; }        /* whole card opens the site */
         .site h3 a:focus-visible { outline: none; }
@@ -361,63 +380,67 @@
         .steps-map h5 { grid-column: 2; margin: 0; font: 700 1.1rem/1.25 var(--display); }
         .steps-map p { grid-column: 2; margin-top: 3px; color: var(--slate); font-size: 15px; }
         @media (max-width: 600px) { .steps-map li { grid-template-columns: 1fr; } .steps-map .was { grid-row: auto; } .steps-map h5, .steps-map p { grid-column: 1; } }
-        .service-more { border-style: dashed; background: transparent; }
 
         .app-layout { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: clamp(20px, 3vw, 40px); align-items: start; }
         .phone { margin: 0; max-width: 190px; border: 8px solid var(--rack); border-radius: 28px; overflow: hidden; background: #1c0a45; box-shadow: 0 30px 50px -30px rgba(9, 25, 28, .6); }
         .phone img { width: 100%; height: auto; }
         @media (max-width: 600px) { .app-layout { grid-template-columns: 1fr; } .phone { margin-top: 20px; } }
 
-        /* ---------- position markers: a rack rail with one cage-nut hole per stop ---------- */
-        .rail {
-            position: fixed; right: 12px; top: 50%; z-index: 30; transform: translateY(-50%);
-            width: 30px; padding: 8px 0 6px; border-radius: 4px;
-            background: linear-gradient(90deg, var(--rail-edge), var(--rail) 22% 78%, var(--rail-edge));
-            box-shadow: 0 10px 30px -14px rgba(9, 25, 28, .6);
+        /* ---------- the timeline: one clip per chapter, a playhead that follows the scroll, and the tour's play button ---------- */
+        .timeline {
+            position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; height: var(--tl-h);
+            display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
+            background: var(--paper); border-top: 1px solid var(--line);
         }
-        .rail ol { list-style: none; margin: 0; padding: 0; display: grid; }
-        .rail li { position: relative; }
-        .rail .mark { position: relative; display: grid; place-items: center; width: 30px; height: 30px; text-decoration: none; color: var(--rail-ink); }
-        .rail .u { position: absolute; left: 2px; top: 50%; transform: translateY(-50%); font: 600 7.5px/1 var(--display); letter-spacing: .02em; }
-        .rail .hole { width: 9px; height: 9px; margin-left: 9px; background: var(--rack-inside); box-shadow: inset 0 1px 1px #000, 0 1px 0 rgba(255, 255, 255, .25); transition: box-shadow .2s, background-color .2s, border-radius .2s; }
-        .rail .mark:hover .hole { background: var(--harbour); }
-        .rail .mark[aria-current="true"] .hole { background: var(--led-green); border-radius: 50%; box-shadow: 0 0 0 1px rgba(0, 0, 0, .25), 0 0 9px 2px var(--led-green); }
-        .rail .mark:focus-visible { outline: 2px solid var(--harbour); outline-offset: -2px; border-radius: 3px; }
-        .rail .tape { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%) translateX(6px); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; }
-        .rail .mark:hover .tape, .rail .mark[aria-current="true"] .tape, .rail .mark:focus-visible .tape { opacity: 1; transform: translateY(-50%); }
-        .rail .mark[aria-current="true"] .tape { font-weight: 700; }
-        .rail .play {
-            position: relative; display: grid; place-items: center; width: 22px; height: 22px; margin: 8px auto 2px; padding: 0;
-            border: 1px solid rgba(0, 0, 0, .35); border-radius: 50%; background: var(--rack); color: #fff; cursor: pointer;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
+        .tl-play {
+            position: relative; flex: none; width: 34px; height: 34px; display: grid; place-items: center; padding: 0;
+            border: 0; border-radius: 50%; background: var(--ink); color: var(--fog); cursor: pointer;
         }
-        .rail .play:hover { background: var(--harbour); }
-        .rail .play svg { width: 10px; height: 10px; }
-        .rail .play .ic-pause, .rail .play[aria-pressed="true"] .ic-play { display: none; }
-        .rail .play[aria-pressed="true"] .ic-pause { display: block; }
-        .rail .play .tape { right: calc(100% + 14px); }
-        .rail .play:hover .tape, .rail .play:focus-visible .tape { opacity: 1; transform: translateY(-50%); }
-        .rail .now { display: none; }
-        @media (max-width: 900px) {
-            /* on a phone the rail lies along the bottom edge */
-            .rail {
-                top: auto; right: 0; left: 0; bottom: 0; transform: none; width: auto; border-radius: 0;
-                display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 0 8px 0 10px; height: calc(40px + env(safe-area-inset-bottom));
-                padding-bottom: env(safe-area-inset-bottom);
-                background: linear-gradient(180deg, var(--rail-edge), var(--rail) 22% 78%, var(--rail-edge));
-            }
-            .rail ol { grid-auto-flow: column; }
-            .rail .mark { width: 24px; height: 40px; }
-            .rail .u { display: none; }
-            .rail .hole { margin-left: 0; }
-            .rail .tape, .rail .mark[aria-current="true"] .tape, .rail .play .tape { display: none; }
-            .rail .now { display: block; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 12.5px/1 var(--display); color: var(--rail-ink); }
-            .rail .play { margin: 0; width: 26px; height: 26px; }
-            body { padding-bottom: 40px; }
+        .tl-play:hover { background: var(--harbour); color: #fff; }
+        .tl-play svg { width: 12px; height: 12px; }
+        .tl-play .ic-pause, .tl-play[aria-pressed="true"] .ic-play { display: none; }
+        .tl-play[aria-pressed="true"] .ic-pause { display: block; }
+        .tl-play .tape { position: absolute; left: 0; bottom: calc(100% + 12px); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .15s, transform .15s; }
+        .tl-play:hover .tape, .tl-play:focus-visible .tape { opacity: 1; transform: none; }
+        .tl-time { flex: none; font: 500 13px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+        .tl-time small { font-size: inherit; color: var(--slate); }
+        .tl-lane { position: relative; flex: 1; min-width: 0; height: 36px; }
+        .tl-track { display: flex; gap: 3px; height: 100%; margin: 0; padding: 0; list-style: none; }
+        .tl-track li { flex: 1 1 0; min-width: 56px; display: flex; }
+        .tl-clip {
+            position: relative; flex: 1; min-width: 0; display: flex; align-items: center; padding: 0 9px;
+            border-radius: 5px; background: var(--blank); color: var(--slate); text-decoration: none;
+            font: 600 13px/1 var(--display); box-shadow: inset 0 3px 0 var(--clip, transparent);
+        }
+        .tl-clip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tl-clip[data-led="green"] { --clip: var(--led-green); }
+        .tl-clip[data-led="blue"] { --clip: var(--led-blue); }
+        .tl-clip[data-led="amber"] { --clip: var(--led-amber); }
+        .tl-clip:hover { color: var(--ink); }
+        .tl-clip[aria-current="true"] { background: var(--ink); color: var(--fog); }
+        .tl-clip:focus-visible { outline-offset: 1px; }
+        .tl-clip .tick { position: absolute; top: 9px; bottom: 9px; width: 1px; background: currentColor; opacity: .3; }
+        .tl-head { position: absolute; left: 0; top: -9px; bottom: -9px; width: 2px; margin-left: -1px; background: var(--harbour); pointer-events: none; }
+        .tl-head::before { content: ""; position: absolute; top: 0; left: -4px; width: 10px; height: 7px; background: var(--harbour); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+        .tl-now { display: none; }
+        @media (max-width: 959.98px) {
+            .timeline { height: calc(var(--tl-h) + env(safe-area-inset-bottom)); padding: 0 12px env(safe-area-inset-bottom); gap: 12px; }
+            .tl-lane { position: absolute; left: 0; right: 0; top: -1px; height: 4px; }
+            .tl-track { gap: 2px; }
+            .tl-track li { min-width: 0; }
+            .tl-clip { padding: 0; border-radius: 0; font-size: 0; box-shadow: none; }
+            .tl-clip[aria-current="true"] { background: var(--slate); }
+            .tl-clip .tick { display: none; }
+            .tl-head { top: -3px; bottom: -3px; width: 3px; }
+            .tl-head::before { display: none; }
+            .tl-play .tape { display: none; }
+            .tl-now { display: block; order: 1; flex: 1; min-width: 0; font: 600 15px/1 var(--display); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .tl-time { order: 2; }
+            .tl-time small { display: none; }
         }
 
         /* ---------- footer ---------- */
-        .site-foot h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); max-width: 22ch; }
+        .site-foot h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); max-width: 22ch; }
         .site-foot .meta { margin-top: 14px; color: var(--slate); font-size: 15px; }
         .site-foot .foot-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
         .site-foot .fine { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--slate); }
@@ -438,24 +461,23 @@
             .modal:not([hidden]) .modal-card { animation: rise .22s ease-out; }
             @keyframes rise { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
         }
-
-        /* ---------- no WebGL: a flat rack drawing stands in for the stage ---------- */
-        .stage-fallback { position: fixed; left: 25%; top: 50%; width: min(26vw, 260px); transform: translate(-50%, -50%); z-index: 0; opacity: .9; }
-        @media (max-width: 900px) { .stage-fallback { left: 50%; top: 23vh; width: min(50vw, 200px); } }
     </style>
 </head>
 <body>
 
     <a class="sr-only" href="#main">Skip to content</a>
 
-    <canvas id="stage" aria-hidden="true"></canvas>
-    <svg class="stage-fallback" viewBox="0 0 120 240" aria-hidden="true">
-        <rect x="4" y="4" width="112" height="232" rx="4" fill="#1B2B2F"/>
-        <rect x="14" y="14" width="92" height="212" fill="#081113"/>
-        <g fill="#F4F7F6"><rect x="16" y="18" width="88" height="9"/><rect x="16" y="29" width="88" height="9"/><rect x="16" y="40" width="88" height="20"/><rect x="16" y="62" width="88" height="9"/><rect x="16" y="73" width="88" height="9"/><rect x="16" y="95" width="88" height="42"/><rect x="16" y="150" width="88" height="20"/></g>
-        <g fill="#222D30"><rect x="16" y="84" width="88" height="9"/><rect x="16" y="139" width="88" height="9"/><rect x="16" y="172" width="88" height="9"/></g>
-        <g><circle cx="22" cy="22" r="1.6" fill="#34A851"/><circle cx="22" cy="33" r="1.6" fill="#34A851"/><circle cx="22" cy="46" r="1.6" fill="#4285F4"/><circle cx="22" cy="66" r="1.6" fill="#4285F4"/><circle cx="22" cy="77" r="1.6" fill="#4285F4"/><circle cx="22" cy="100" r="1.6" fill="#FABB05"/><circle cx="22" cy="155" r="1.6" fill="#34A851"/></g>
-    </svg>
+    <!-- the stage: the rack is built here by rack.js, out of HTML planes in CSS 3D -->
+    <div class="stage3d" id="stage" aria-hidden="true">
+        <div class="stage-lens" id="stage-lens"><div class="stage-persp" id="stage-persp"></div></div>
+        <svg class="stage-fallback" viewBox="0 0 120 240">
+            <rect x="4" y="4" width="112" height="232" rx="4" fill="#1B2B2F"/>
+            <rect x="14" y="14" width="92" height="212" fill="#081113"/>
+            <g fill="#F4F7F6"><rect x="16" y="18" width="88" height="9"/><rect x="16" y="29" width="88" height="9"/><rect x="16" y="40" width="88" height="20"/><rect x="16" y="62" width="88" height="9"/><rect x="16" y="73" width="88" height="9"/><rect x="16" y="95" width="88" height="42"/><rect x="16" y="150" width="88" height="20"/></g>
+            <g fill="#222D30"><rect x="16" y="84" width="88" height="9"/><rect x="16" y="139" width="88" height="9"/><rect x="16" y="172" width="88" height="9"/></g>
+            <g><circle cx="22" cy="22" r="1.6" fill="#34A851"/><circle cx="22" cy="33" r="1.6" fill="#34A851"/><circle cx="22" cy="46" r="1.6" fill="#4285F4"/><circle cx="22" cy="66" r="1.6" fill="#4285F4"/><circle cx="22" cy="77" r="1.6" fill="#4285F4"/><circle cx="22" cy="100" r="1.6" fill="#FABB05"/><circle cx="22" cy="155" r="1.6" fill="#34A851"/></g>
+        </svg>
+    </div>
 
     <header class="site-head">
         <div class="wrap">
@@ -477,18 +499,21 @@
                 <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
             </nav>
         </div>
-        <span class="progress" id="progress" aria-hidden="true"></span>
     </header>
 
-    <!-- position markers -->
-    <nav class="rail" aria-label="Page sections">
-        <ol id="rail-list"></ol>
-        <span class="now" id="rail-now" aria-hidden="true"></span>
-        <button class="play" id="play-btn" type="button" aria-pressed="false" aria-label="Play tour">
+    <!-- the timeline: one clip per chapter; the playhead follows the scroll -->
+    <nav class="timeline" aria-label="Page sections">
+        <button class="tl-play" id="play-btn" type="button" aria-pressed="false" aria-label="Play tour">
             <svg class="ic-play" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><path d="M2 1.2v7.6L8.4 5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><path d="M2 1.5h2.4v7H2zM5.6 1.5H8v7H5.6z"/></svg>
             <span class="tape">Play tour</span>
         </button>
+        <span class="tl-time" aria-hidden="true"><span id="tl-time">00:00:00</span><small> / <span id="tl-dur">00:00:00</span></small></span>
+        <div class="tl-lane" id="tl-lane">
+            <ol class="tl-track" id="tl-track"></ol>
+            <span class="tl-head" id="tl-head" aria-hidden="true"></span>
+        </div>
+        <span class="tl-now" id="tl-now" aria-hidden="true"></span>
     </nav>
 
     <main id="main">
@@ -1185,48 +1210,100 @@ services:
             if (el) track(el.dataset.track);
         });
 
-        // ---------- the tour: every section is a stop; the camera blends between the current stop and the next ----------
+        // ---------- the tour: the page is a timeline. Every section is a stop, and the rack blends between the current stop and the next ----------
         const scenes = Array.from(document.querySelectorAll('[data-stage]'));
-        const tops = [];
-        let vh = window.innerHeight;
-        function measure() {
-            vh = window.innerHeight;
-            scenes.forEach((s, i) => { tops[i] = s.getBoundingClientRect().top + window.scrollY; });
-        }
+        const header = document.querySelector('.site-head');
+        const stageEl = document.getElementById('stage');
+        const timeline = document.querySelector('.timeline');
+        const phoneLayout = matchMedia('(max-width: 959.98px)');
+        const tops = [], sheetTop = [], sheetBottom = [];
+        let vh = window.innerHeight, headH = 64, tlH = 56, win = 0, stageBottom = 0, maxScroll = 1, mobile = phoneLayout.matches;
+        // the line that decides which stop is current: 42% down the viewport beside the monitor, or the header's edge on a phone,
+        // where each section opens with its window onto the rack
+        const probeOffset = () => mobile ? headH + 1 : vh * 0.42;
 
-        // position markers: one hole per stop, U numbers counting down to the footer like a real cabinet
-        const markerList = document.getElementById('rail-list');
+        // timeline clips: consecutive stops that share a marker share a clip, with a tick for each extra stop
+        const lane = document.getElementById('tl-lane');
+        const trackEl = document.getElementById('tl-track');
+        const head = document.getElementById('tl-head');
+        const timeEl = document.getElementById('tl-time');
+        const durEl = document.getElementById('tl-dur');
+        const nowEl = document.getElementById('tl-now');
+        const LED = { 'Hosting': 'green', 'IT support': 'green', 'Automation': 'green', 'Tools': 'blue', 'Jellyfin': 'amber', 'TV setup': 'amber' };
         const markers = [];
-        scenes.forEach((s) => {
-            const name = s.dataset.marker;
-            if (markers.length && markers[markers.length - 1].name === name) { markers[markers.length - 1].ids.push(s.id); return; }
-            markers.push({ name, ids: [s.id], el: null });
+        scenes.forEach((s, i) => {
+            const name = s.dataset.marker, prev = markers[markers.length - 1];
+            if (prev && prev.name === name) { prev.idx.push(i); return; }
+            markers.push({ name, idx: [i] });
         });
-        markers.forEach((m, i) => {
+        markers.forEach((m) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.className = 'mark';
-            a.href = `#${m.ids[0]}`;
-            a.setAttribute('aria-label', m.name);
-            const u = String(markers.length - i).padStart(2, '0');
-            a.innerHTML = `<span class="u" aria-hidden="true">${u}</span><span class="hole" aria-hidden="true"></span><span class="tape" aria-hidden="true">U${u} ${m.name}</span>`;
+            a.className = 'tl-clip';
+            a.href = `#${scenes[m.idx[0]].id}`;
+            if (LED[m.name]) a.dataset.led = LED[m.name];
+            const label = document.createElement('span');
+            label.textContent = m.name;
+            a.appendChild(label);
+            m.ticks = m.idx.slice(1).map(() => { const t = document.createElement('i'); t.className = 'tick'; t.setAttribute('aria-hidden', 'true'); a.appendChild(t); return t; });
             li.appendChild(a);
-            markerList.appendChild(li);
-            m.el = a;
+            trackEl.appendChild(li);
+            m.li = li; m.el = a;
         });
-        const railNow = document.getElementById('rail-now');
-        const progress = document.getElementById('progress');
+
+        // tour time: the same pace as "Play tour", one viewport every 5.5 seconds, shown as minutes:seconds:frames at 30 fps
+        const pad2 = (n) => String(n).padStart(2, '0');
+        function timecode(y) {
+            const f = Math.max(0, Math.round(y / (vh / 5.5) * 30));
+            return `${pad2(Math.floor(f / 1800))}:${pad2(Math.floor(f / 30) % 60)}:${pad2(f % 30)}`;
+        }
+
+        function measure() {
+            vh = window.innerHeight;
+            mobile = phoneLayout.matches;
+            headH = header.offsetHeight;
+            tlH = timeline.offsetHeight;
+            win = mobile ? (parseFloat(getComputedStyle(scenes[1]).paddingTop) || vh * 0.44) : 0;
+            stageBottom = stageEl.getBoundingClientRect().bottom;
+            scenes.forEach((s, i) => {
+                tops[i] = s.getBoundingClientRect().top + window.scrollY;
+                const c = s.querySelector('.copy').getBoundingClientRect();
+                sheetTop[i] = c.top + window.scrollY;
+                sheetBottom[i] = c.bottom + window.scrollY;
+            });
+            maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
+            // each clip spans the stretch of scrolling during which its stops are current
+            const off = probeOffset();
+            const start = (i) => i === 0 ? 0 : Math.min(maxScroll, Math.max(0, tops[i] - off));
+            markers.forEach((m, k) => {
+                m.start = start(m.idx[0]);
+                m.end = k + 1 < markers.length ? start(markers[k + 1].idx[0]) : maxScroll;
+                const len = Math.max(1, m.end - m.start);
+                m.li.style.flexGrow = len.toFixed(0);
+                m.idx.slice(1).forEach((j, n) => { m.ticks[n].style.left = `${((start(j) - m.start) / len * 100).toFixed(2)}%`; });
+            });
+            const laneLeft = lane.getBoundingClientRect().left;
+            markers.forEach((m) => { const r = m.li.getBoundingClientRect(); m.x = r.left - laneLeft; m.w = r.width; });
+            durEl.textContent = timecode(maxScroll);
+            if (window.RackStage) {
+                window.RackStage.setMobile(mobile);
+                // on a phone the rack is framed in the window under the header; on a desktop it fills the monitor
+                if (mobile) window.RackStage.setFrame(headH, win); else window.RackStage.setFrame(0, stageEl.clientHeight);
+            }
+        }
+
         const navRequest = document.getElementById('nav-request-btn');
         const navContact = document.getElementById('nav-contact-btn');
 
         let activeIndex = -1;
+        let firstActive = true;
         function setActive(i) {
             if (i === activeIndex) return;
             activeIndex = i;
             const s = scenes[i];
-            const mi = markers.findIndex(m => m.ids.includes(s.id));
+            const mi = markers.findIndex(m => m.idx.includes(i));
             markers.forEach((m, k) => { if (k === mi) m.el.setAttribute('aria-current', 'true'); else m.el.removeAttribute('aria-current'); });
-            if (mi >= 0) railNow.textContent = `U${String(markers.length - mi).padStart(2, '0')}  ${markers[mi].name}`;
+            if (mi >= 0) nowEl.textContent = markers[mi].name;
             document.title = s.dataset.title;
 
             // "Request access" in the header only around the streaming stops
@@ -1245,10 +1322,9 @@ services:
             if (!firstActive) track(`view-${s.id}`);
             firstActive = false;
         }
-        let firstActive = true;
 
         const smooth = (t) => t * t * (3 - 2 * t);
-        let ticking = false;
+        let ticking = false, covered = false;
         function onScroll() {
             if (ticking) return;
             ticking = true;
@@ -1256,26 +1332,45 @@ services:
         }
         function update() {
             const y = window.scrollY;
-            const probe = y + vh * 0.42;                       // the line, 42% down the viewport, that decides which stop is current
+            const probe = y + probeOffset();
             let i = 0;
             for (let k = 0; k < scenes.length; k++) if (tops[k] <= probe) i = k;
             setActive(i);
 
+            // the camera travels while the next stop comes up: the last half-viewport on a desktop, the window's height on a phone
             let t = 0;
             if (i + 1 < scenes.length) {
-                const win = vh * 0.5;                            // the camera travels during the last half-viewport before the next stop
-                t = Math.min(1, Math.max(0, 1 - (tops[i + 1] - probe) / win));
+                const span = mobile ? win : vh * 0.5;
+                t = Math.min(1, Math.max(0, 1 - (tops[i + 1] - probe) / span));
             }
             const a = scenes[i].dataset.stage;
             const b = i + 1 < scenes.length ? scenes[i + 1].dataset.stage : a;
             if (window.RackStage) window.RackStage.setBlend(a, b, smooth(t), y);
 
-            const max = document.documentElement.scrollHeight - vh;
-            progress.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+            // the playhead sits in the clip whose stretch of scrolling contains y
+            let mk = markers[markers.length - 1];
+            for (const m of markers) if (y < m.end) { mk = m; break; }
+            const p = Math.min(1, Math.max(0, (y - mk.start) / Math.max(1, mk.end - mk.start)));
+            head.style.transform = `translateX(${(mk.x + p * mk.w).toFixed(1)}px)`;
+            timeEl.textContent = timecode(y);
+
+            // on a phone, stop drawing the rack while a section's sheet covers the band it is seen in
+            let c = false;
+            if (mobile) {
+                const bandBottom = Math.min(stageBottom, vh - tlH);
+                for (let k = Math.max(0, i - 1); k <= Math.min(scenes.length - 1, i + 1); k++) {
+                    if (sheetTop[k] <= y + headH && sheetBottom[k] >= y + bandBottom) c = true;
+                }
+            }
+            if (c !== covered) {
+                covered = c;
+                stageEl.classList.toggle('is-covered', c);
+                if (window.RackStage) window.RackStage.setVisible(!c);
+            }
         }
         window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', () => { measure(); update(); if (window.RackStage) window.RackStage.setMobile(window.innerWidth < 900); });
-        window.addEventListener('rack:ready', () => { window.RackStage.setMobile(window.innerWidth < 900); measure(); update(); });
+        window.addEventListener('resize', () => { measure(); update(); });
+        window.addEventListener('rack:ready', () => { measure(); update(); });
         window.addEventListener('load', () => { measure(); update(); });
         if (document.fonts) document.fonts.ready.then(() => { measure(); update(); });
         measure(); update();
