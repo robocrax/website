@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-NZ" data-design="signal">
+<head>
+    <meta charset="utf-8">
+    <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
+<!--@META-->
+    <meta name="theme-color" content="#10153A">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="designs/signal/signal.css">
+    <link rel="modulepreload" href="vendor/three.module.min.js">
+</head>
+<body>
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <!-- the stage: one cloud of points that takes a new shape for every section (designs/signal/signal.js) -->
+    <div class="sky" id="stage" aria-hidden="true">
+        <canvas id="stage-canvas"></canvas>
+        <img class="sky-fallback" src="logo.svg" alt="" width="160" height="222">
+    </div>
+    <p class="stage-hint" id="stage-hint" aria-hidden="true">Move through the light, drag to turn it, click beside the text to send a pulse.</p>
+
+    <header class="site-head">
+        <div class="wrap">
+            <a class="brand" href="#home" aria-label="RoboCrax home">
+                <img src="logo.svg" alt="" width="22" height="30">
+                <span>RoboCrax</span>
+            </a>
+            <nav class="site-nav" aria-label="Main">
+                <a class="nav-link" href="#home" data-nav="home">Intro</a>
+                <a class="nav-link" href="#portfolio" data-nav="portfolio">Work</a>
+                <a class="nav-link nav-opt" href="#services" data-nav="services">Services</a>
+                <a class="nav-link nav-opt" href="#tools" data-nav="tools">Tools</a>
+                <a class="nav-link" href="#jellyfin" data-nav="jellyfin">Jellyfin</a>
+            </nav>
+            <a id="nav-contact-btn" class="btn btn-primary btn-small" data-track="whatsapp-nav"
+               href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+                <!--@WA--><span class="btn-label">Message me</span></a>
+            <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
+        </div>
+        <div class="progress" aria-hidden="true"><i></i></div>
+    </header>
+
+<!--@MAIN-->
+
+<!--@MODAL-->
+
+    <script src="designs/shared/site.js"></script>
+    <script type="module" src="designs/signal/signal.js"></script>
+    <script src="designs/switcher.js" data-corner="br" defer></script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en-NZ" data-design="craft">
+<head>
+    <meta charset="utf-8">
+    <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="RoboCrax: Auckland-based website hosting, IT support, data automations, a community streaming server and free open-source tools.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.robocrax.com/">
+    <meta property="og:title" content="RoboCrax">
+    <meta property="og:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
+    <meta property="og:image" content="https://www.robocrax.com/og_image.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="robocrax.com">
+    <meta property="twitter:url" content="https://www.robocrax.com/">
+    <meta name="twitter:title" content="RoboCrax">
+    <meta name="twitter:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
+    <meta name="twitter:image" content="https://www.robocrax.com/og_image.png">
+    <meta name="theme-color" content="#F2F1EE">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="designs/craft/craft.css">
+</head>
+<body>
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="site-head">
+        <a class="brand" href="#home" aria-label="RoboCrax home"><img src="logo.svg" alt="" width="20" height="28"></a>
+        <nav class="site-nav" aria-label="Main">
+            <a class="nav-link" href="#home" data-nav="home">Intro</a>
+            <a class="nav-link" href="#portfolio" data-nav="portfolio">Work</a>
+            <a class="nav-link nav-opt" href="#services" data-nav="services">Services</a>
+            <a class="nav-link nav-opt" href="#tools" data-nav="tools">Tools</a>
+            <a class="nav-link" href="#jellyfin" data-nav="jellyfin">Jellyfin</a>
+        </nav>
+        <a id="nav-contact-btn" class="head-cta" data-track="whatsapp-nav"
+           href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener"><span class="btn-label">Message me</span></a>
+        <button id="nav-request-btn" class="head-cta" type="button" data-track="request-access-nav" hidden>Request access</button>
+    </header>
+
+    <!-- the right-hand scroller (designs/craft/craft.js): a ruler the length of the page, the chapters, and where you are -->
+    <div class="veil veil-top" aria-hidden="true"></div>
+    <div class="veil veil-bottom" aria-hidden="true"></div>
+    <div class="rail" id="rail" role="scrollbar" aria-controls="main" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Page position" hidden>
+        <div class="rail-ticks" id="rail-ticks" aria-hidden="true"></div>
+        <div class="rail-hover" id="rail-hover" aria-hidden="true"><span></span></div>
+        <div class="rail-head" id="rail-head" aria-hidden="true"><span class="odo" id="odo"></span></div>
+    </div>
+    <nav class="chapters" id="chapters" aria-label="Chapters" hidden></nav>
+
+
+    <main id="main">
+
+        <!-- ================= INTRO ================= -->
+        <section id="home" class="scene hero" data-stage="home" data-marker="Intro" data-title="RoboCrax | Hosting, IT help and automations in Auckland" aria-labelledby="home-title">
+            <div class="hero-mark" aria-hidden="true">
+                <span class="app-icon"><img src="logo.svg" alt="" width="58" height="80"></span>
+                <span class="app-name"><b>01</b><span>Robo<em>Crax</em></span></span>
+            </div>
+            <div class="copy">
+                <p class="kicker"><span class="status"><span class="led led-green" aria-hidden="true"></span><span id="boot-status">Taking new work</span></span></p>
+                <h1 id="home-title">I keep small businesses online, secure and running smoothly.</h1>
+                <p class="lede">I'm an Auckland-based infrastructure engineer. I build and host websites, fix the IT problems that stall your day, and automate the busywork between your systems. Harnessing the power of Opus with a little prompt engineering.</p>
+                <div class="actions">
+                    <a class="btn btn-primary" data-track="whatsapp-hero" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg>
+                        Message me on WhatsApp
+                    </a>
+                    <a class="btn btn-quiet" href="#portfolio">See my work</a>
+                </div>
+
+                <div class="profile">
+                    <div class="profile-top">
+                        <img src="logo.svg" alt="" width="30" height="42">
+                        <div>
+                            <p class="profile-name">RoboCrax</p>
+                            <p class="profile-role">Infrastructure engineer, Auckland</p>
+                        </div>
+                    </div>
+                    <dl class="glance">
+                        <div><dt class="tape">Focus</dt><dd>Websites, IT support and automation</dd></div>
+                        <div><dt class="tape">Clients</dt><dd>Businesses across New Zealand and Australia</dd></div>
+                        <div><dt class="tape">Contact</dt><dd>Direct on WhatsApp, 24/7</dd></div>
+                        <div><dt class="tape">Toolbox</dt><dd>Linux, Proxmox, Docker, Cloudflare, WordPress, Go, Python, Node.js, Claude</dd></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WORK ================= -->
+        <section id="portfolio" class="scene left wide" data-stage="portfolio" data-marker="Work" data-title="Websites I've worked on | RoboCrax" aria-labelledby="portfolio-title">
+            <div class="copy">
+                <h2 class="title" id="portfolio-title">Websites I've worked on</h2>
+                <p class="lede">A selection of New Zealand and Australian businesses whose websites I've built, rebuilt or looked after, from adidas distributors to a mobile car detailer.</p>
+
+                <div class="sites sites-2">
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
+                        <p>Custom kitchens and cabinetry from an Auckland maker with over 30 years of craftsmanship.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
+                        <p>Affordable tiny homes and granny flats, with plans, pricing and custom-build estimates online.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
+                        <p>New Zealand distributor of adidas sportswear and team gear, with a full online store.</p>
+                    </article>
+                    <article class="site site-lg">
+                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
+                        <p>Exclusive adidas teamwear distributor for the Oceania football region, for clubs, trade and the public.</p>
+                    </article>
+                </div>
+
+                <div class="sites sites-3">
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz</span><img src="work/ssmb.webp" alt="SSMB Auckland homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/" target="_blank" rel="noopener" data-track="work-ssmb">SSMB Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Shree Swaminarayan Mandir Bhuj, a Hindu temple and community in Clevedon, Auckland.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz/vaishnavs</span><img src="work/vaishnavs.webp" alt="Vaishnav's Auckland website" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/vaishnavs/" target="_blank" rel="noopener" data-track="work-vaishnavs">Vaishnav's Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Pure vegetarian sweets, snacks and catering. An entity of SSMB Auckland.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">kkdecor.co.nz</span><img src="work/kkdecor.webp" alt="KK Decor homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.kkdecor.co.nz/" target="_blank" rel="noopener" data-track="work-kkdecor">KK Decor</a></h3>
+                        <p>Stylish indoor and outdoor blinds.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">swetafurnishing.co.nz</span><img src="work/swetafurnishing.webp" alt="Sweta Furnishing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.swetafurnishing.co.nz/" target="_blank" rel="noopener" data-track="work-swetafurnishing">Sweta Furnishing</a></h3>
+                        <p>Made-to-measure curtains and blinds in Papatoetoe, Auckland.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">krishnasolutions.co.nz</span><img src="work/krishnasolutions.webp" alt="Krishna Solutions homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://krishnasolutions.co.nz/" target="_blank" rel="noopener" data-track="work-krishnasolutions">Krishna Solutions</a></h3>
+                        <p>IT support, websites and digital marketing for Auckland homes and businesses.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">arconsupplies.com.au</span><img src="work/arconsupplies.webp" alt="Arcon Supplies homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.arconsupplies.com.au/" target="_blank" rel="noopener" data-track="work-arconsupplies">Arcon Supplies</a></h3>
+                        <p>Reinforcing mesh, bar and accessories for builders in Mount Druitt, NSW.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">iprovidecare.com.au</span><img src="work/iprovidecare.webp" alt="iProvideCare homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.iprovidecare.com.au/" target="_blank" rel="noopener" data-track="work-iprovidecare">iProvideCare</a></h3>
+                        <p>Specialist community nursing at home across Sydney.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">conceptualise.co.nz</span><img src="work/conceptualise.webp" alt="Conceptualise homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.conceptualise.co.nz/" target="_blank" rel="noopener" data-track="work-conceptualise">Conceptualise</a></h3>
+                        <p>Affordable web design that gets NZ small businesses online.</p>
+                    </article>
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">exlan.co.nz</span><img src="work/exlan.webp" alt="Exlan Auto Detailing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.exlan.co.nz/" target="_blank" rel="noopener" data-track="work-exlan">Exlan Auto Detailing</a></h3>
+                        <p>Mobile car detailing across Auckland.</p>
+                    </article>
+                    <!-- Ready to publish once confirmed: remove these comment markers to show ASAS.
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">asas.co.nz</span><img src="work/asas.webp" alt="ASAS homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://asas.co.nz/" target="_blank" rel="noopener" data-track="work-asas">ASAS</a></h3>
+                        <p>Free ACC advocacy for people across New Zealand.</p>
+                    </article>
+                    -->
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>And more</h3>
+                            <p>These are just some of the sites I've worked on. If you want yours built, rebuilt or simply looked after, let's talk.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-portfolio" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20website" target="_blank" rel="noopener">Talk to me about a website</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WHAT I DO ================= -->
+        <section id="services" class="scene" data-stage="services" data-marker="Services" data-title="What I do | RoboCrax" aria-labelledby="services-title">
+            <div class="copy">
+                <h2 class="title" id="services-title">What I do</h2>
+                <p class="lede">Three services for small businesses, plus a streaming server for the community. Scroll on to see them one at a time.</p>
+                <div class="services">
+                    <article class="service">
+                        <h3><a href="#wordpress">Website hosting</a></h3>
+                        <p>Fully managed hosting from Auckland. Setup, updates, security and backups are handled for you, and changes happen whenever you message.</p>
+                        <p class="service-meta">Most sites around $200 a year</p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#it-support">IT support</a></h3>
+                        <p>Remote help for the problems a chatbot can't fix: dying laptops, full drives, stubborn printers and stuck email. You watch the whole session.</p>
+                        <p class="service-meta">AnyDesk, TeamViewer, RustDesk or Quick Assist</p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#automations">Data and automation</a></h3>
+                        <p>Small, dependable programs that move your data so you don't have to: scrapers, webhook relays and database syncs that run 24/7.</p>
+                        <p class="service-meta">Built in Go, Python and Node.js</p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#jellyfin">Cheap-as Streaming Service</a></h3>
+                        <p>A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WEBSITE HOSTING ================= -->
+        <section id="wordpress" class="scene" data-stage="wordpress" data-marker="Hosting" data-title="Website hosting | RoboCrax" aria-labelledby="hosting-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">WEB-01</span>Website hosting</p>
+                <h2 class="title" id="hosting-title">Website hosting, handled.</h2>
+                <p class="lede">You run your business; I keep your website up, fast and secure. Hosting is based here in Auckland and managed end to end, with a direct line to me whenever something needs to change.</p>
+
+                <div class="grid grid-3">
+                    <div class="item">
+                        <h3>Local and affordable</h3>
+                        <p>Auckland-based hosting with straightforward pricing and none of the big-provider markups or upsells.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Managed for you</h3>
+                        <p>Setup, upgrades, security, backups and custom tweaks are all on me. No control panels to learn.</p>
+                    </div>
+                    <div class="item">
+                        <h3>A real person, any time</h3>
+                        <p>Message or call me on WhatsApp whenever you need a change or have a question. No ticket queue, no bots.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h3>What it costs</h3>
+                            <p>Most standard sites come in around <strong>$200 a year</strong>. Larger or custom setups get a quote that fits what you actually need.</p>
+                        </div>
+                        <div class="btns">
+                            <a class="btn btn-primary" data-track="whatsapp-hosting" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20Enterprise%20Website%20Hosting" target="_blank" rel="noopener">Talk to me about hosting</a>
+                            <a class="btn btn-quiet" href="#portfolio">See websites I've worked on</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= IT SUPPORT ================= -->
+        <section id="it-support" class="scene left" data-stage="it-support" data-marker="IT support" data-title="IT support | RoboCrax" aria-labelledby="it-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">KVM</span>IT support</p>
+                <h2 class="title" id="it-title">IT support from a real person.</h2>
+                <p class="lede">AI is great for explaining things. It can't clear your drive, coax a printer back online or rescue a laptop that won't boot. I can, over a secure remote session that you watch from start to finish.</p>
+
+                <div class="block">
+                    <h3 class="h">What I usually fix</h3>
+                    <div class="grid grid-4">
+                        <div class="item">
+                            <h4>Slow or crashing laptops</h4>
+                            <p>Sluggish machines, blue screens, startup freezes and malware clean-up.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Running out of space</h4>
+                            <p>Finding hidden bloat and old caches, and safely moving files to win back gigabytes.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Printers and peripherals</h4>
+                            <p>Offline wireless printers, driver conflicts, scanners and external monitors.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Email and accounts</h4>
+                            <p>Outlook and Gmail sync errors, broken email domains, password recovery and migrations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <h3 class="h">How a session works</h3>
+                    <ol class="steps">
+                        <li>
+                            <h4>Tell me what's wrong</h4>
+                            <p>Send a WhatsApp message describing the problem. A screenshot helps.</p>
+                        </li>
+                        <li>
+                            <h4>Open a remote session</h4>
+                            <p>Use whatever you're comfortable with: AnyDesk, TeamViewer, RustDesk or Windows Quick Assist.</p>
+                        </li>
+                        <li>
+                            <h4>Watch it get fixed</h4>
+                            <p>Everything happens on your screen in real time, and you can end the session whenever you like.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="actions">
+                    <a class="btn btn-primary" data-track="whatsapp-it" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20some%20IT%20support%20with%20my%20device" target="_blank" rel="noopener">Message me about IT help</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= AUTOMATIONS ================= -->
+        <section id="automations" class="scene" data-stage="automations" data-marker="Automation" data-title="Data and automation | RoboCrax" aria-labelledby="auto-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">AUTO-01</span>Data and automation</p>
+                <h2 class="title" id="auto-title">Automations that keep running when you stop watching.</h2>
+                <p class="lede">If someone on your team copies data between systems by hand, or a Zapier chain breaks every few weeks, that's a job for a small, purpose-built program. I write them in Go, Python and Node.js, and they run on a schedule or the moment something happens.</p>
+
+                <div class="grid grid-2">
+                    <div class="panel">
+                        <h3>Pull data from websites</h3>
+                        <p>Headless-browser scrapers built with Playwright or Puppeteer that handle JavaScript-heavy pages, extract prices, stock levels or listings, and write clean JSON straight into your database.</p>
+                    </div>
+                    <div class="panel">
+                        <h3>Catch and route webhooks</h3>
+                        <p>Relays that receive events from Stripe, Shopify or your CRM, keep a raw log of every payload, and deliver them onward with automatic retries when the other end is down.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <h3 class="h">Built to look after themselves</h3>
+                    <p>Each automation retries failed work with backoff, logs what it did, and tells you when something needs a human. Database syncs run on their own and pick up where they left off after an outage, so nothing gets lost or doubled up.</p>
+                </div>
+
+                <div class="actions">
+                    <a class="btn btn-primary" data-track="whatsapp-automations" href="https://wa.me/+64204774826?text=Hi,%20I%20want%20to%20scope%20a%20custom%20data%20automation" target="_blank" rel="noopener">Scope an automation with me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HOW I WORK ================= -->
+        <section id="how" class="scene left" data-stage="how" data-marker="How I work" data-title="How I work | RoboCrax" aria-labelledby="how-title">
+            <div class="copy">
+                <h2 class="title" id="how-title">How I work</h2>
+                <div class="grid grid-3">
+                    <div class="item">
+                        <h3>You deal with me</h3>
+                        <p>Every job is handled by me personally, from the first message to the ongoing support afterwards.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Local and fairly priced</h3>
+                        <p>Based in Auckland, with straightforward pricing and none of the big-provider markups or upsells.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Built to look after itself</h3>
+                        <p>I build systems that retry, recover and report on their own, so fewer problems ever reach you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: LIVE QUIZ APP (SSMB) ================= -->
+        <section id="tools" class="scene" data-stage="tools" data-marker="Tools" data-title="Tools I've built | RoboCrax" aria-labelledby="tools-title">
+            <div class="copy">
+                <h2 class="title" id="tools-title">Tools I've built</h2>
+                <p class="lede">Things I've built because they needed to exist: a live quiz app and a live stream controller for a community, dashboards that pull a business's data into one place, a free practice test for learner drivers, a monitoring sidecar for the devices nobody can put an agent on, and many Magento 2 modules for my work. The list keeps growing.</p>
+                <div class="services">
+                    <article class="service">
+                        <h3><a href="#respond">Live quiz app for SSMB Auckland</a></h3>
+                        <p>A Kahoot-style quiz and polling app built from scratch. The audience joins on their phones, answers live questions and races up the leaderboard.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#nzquiz">NZ Road Code Practice Quiz</a></h3>
+                        <p>A free take on the NZTA learner theory test. No 10-question limit, no in-app purchases, full mock exams and endless practice in your browser.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Free to use</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#atem">Live stream control</a></h3>
+                        <p>Everything the AV desk does, on one page, on any phone, iPad or PC: tap a camera and it's live. Built for the volunteers who run SSMB Auckland's services.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#dashboards">Dashboards and directories</a></h3>
+                        <p>Live dashboards that bring a business's data into one place, and a searchable directory of every site, store and tool a team runs.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#heartbeats">Device Ping Heartbeats</a></h3>
+                        <p>A tiny Go sidecar that pings devices on your network and reports to Healthchecks.io only while they're healthy.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Open source</span></p>
+                    </article>
+                    <article class="service">
+                        <h3><a href="#magento">Magento 2 modules</a></h3>
+                        <p>Many custom Magento 2 modules, each written from scratch for my work rather than bolted on from the marketplace.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                    </article>
+                    <article class="service service-more">
+                        <h3><a data-track="whatsapp-tools" href="https://wa.me/+64204774826?text=Hi,%20I%20have%20something%20that%20needs%20building" target="_blank" rel="noopener">Something that needs building?</a></h3>
+                        <p>If a tool doesn't exist yet, I'll make it. Message me with what you're trying to do.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="respond" class="scene" data-stage="respond" data-marker="Tools" data-title="Live quiz app for SSMB Auckland | RoboCrax" aria-labelledby="respond-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                <div class="app-layout">
+                    <div>
+                        <h3 class="title" id="respond-title">Live quizzes for SSMB Auckland</h3>
+                        <p class="lede">A Kahoot-style quiz and polling app I built from scratch for SSMB Auckland's events. Everyone plays on their own phone while the host runs the session from a console.</p>
+                        <p class="where">respond.ssmb.org.nz</p>
+                    </div>
+                    <figure class="phone">
+                        <img src="work/respond.webp" alt="The quiz app on a phone, showing a live fill-in-the-blank question" width="390" height="780" loading="lazy">
+                    </figure>
+                </div>
+                <div class="grid grid-2">
+                    <div class="item">
+                        <h4>Join in seconds</h4>
+                        <p>Open the link and pick a nickname. No app to install and no account to create.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Questions arrive on their own</h4>
+                        <p>Phones stay in sync with the host and reconnect by themselves if the signal drops.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Quizzes, polls and open answers</h4>
+                        <p>Timed quiz rounds with one or more right answers, quick polls, and typed responses.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Points and a leaderboard</h4>
+                        <p>Correct answers score points, and the leaderboard keeps the room competitive between rounds.</p>
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Want one for your event or classroom?</h4>
+                            <p>I can build a quiz or polling app around your branding and the way your sessions run.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-respond" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20a%20live%20quiz%20app%20like%20the%20SSMB%20one" target="_blank" rel="noopener">Message me about a quiz app</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: NZ ROAD CODE QUIZ ================= -->
+        <section id="nzquiz" class="scene" data-stage="nzquiz" data-marker="Tools" data-title="NZ Road Code Practice Quiz | RoboCrax" aria-labelledby="quiz-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Free to use</span></p>
+                <h3 class="title" id="quiz-title">NZ Road Code Practice Quiz</h3>
+                <p class="lede">Free, unlimited practice for the NZTA learner theory test. The official app stops you at 10 questions and puts the rest behind a paywall; this one lets you keep going until every rule sticks.</p>
+                <p class="where"><a href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">nzroadcodequiz.robocrax.com</a></p>
+
+                <div class="grid grid-4">
+                    <div class="item">
+                        <h4>Unlimited quiz mode</h4>
+                        <p>No 10-question cap. Practise until you know every rule.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Full mock exams</h4>
+                        <p>The real 35-question format with the same pass mark as the NZTA test.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Topic drills</h4>
+                        <p>Focus on intersections, signs, general road safety or parking.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Works in any browser</h4>
+                        <p>Phone, tablet or computer, with nothing to install.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Free, with no catch</h4>
+                            <p>No subscriptions, no ads and no in-app purchases. Built to help Kiwis pass their learner licence on the first try.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="launch-quiz-page" href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">Launch the quiz</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: LIVE STREAM CONTROL (SSMB ATEM) ================= -->
+        <section id="atem" class="scene" data-stage="atem" data-marker="Tools" data-title="Live stream control | RoboCrax" aria-labelledby="atem-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">ATEM-CTL</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                <h3 class="title" id="atem-title">I can sort your live stream layout</h3>
+                <p class="lede">I turned SSMB Auckland's video switcher into one simple page that runs on any phone, iPad or PC. Volunteers tap a camera and it's live, with no desk training needed.</p>
+
+                <figure class="frame shot"><span class="frame-url">Cameras on the left, what's live on the right</span><img src="work/atem/overview.webp" alt="The live stream controller on a desktop: live camera tiles on the left, the picture on air on the right, and a toolbar along the bottom" width="1280" height="800" loading="lazy"></figure>
+
+                <div class="block">
+                    <h4 class="h">What changed for the volunteers</h4>
+                    <ul class="steps-map">
+                        <li><span class="was">3 steps at the desk</span><h5>Go live with one tap</h5><p>Tap a camera and it cuts straight to air.</p></li>
+                        <li><span class="was">16 windows to search</span><h5>Only working cameras show</h5><p>Blank inputs hide themselves until they have a picture.</p></li>
+                        <li><span class="was">3 steps, every time</span><h5>Logos and overlays look after themselves</h5><p>The logo finds a clear corner and steps aside when something moves in.</p></li>
+                        <li><span class="was">One desk</span><h5>Run it from anywhere</h5><p>At the venue or away, from a phone, tablet or PC, behind a secure login.</p></li>
+                    </ul>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Run live video somewhere?</h4>
+                            <p>If your hall, church, club or studio has a switcher and a rota of volunteers, I can build and improve your workflow and I can also run live streams for you.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-atem" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20going%20live" target="_blank" rel="noopener">Message me about going live</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: DASHBOARDS ================= -->
+        <section id="dashboards" class="scene" data-stage="dashboards" data-marker="Tools" data-title="Dashboards | RoboCrax" aria-labelledby="dash-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">DASH-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                <h3 class="title" id="dash-title">Dashboards built around your data</h3>
+                <p class="lede">I can build advanced dashboards according to your needs, linking data from literally any digital, internet-connected place: your online store, invoices, spreadsheets, booking system, CRM or the devices on your network.</p>
+
+                <figure class="frame shot"><span class="frame-url">Sales at a glance, shown here with sample data</span><img src="work/dashboards/sales.webp" alt="A web sales dashboard filled with sample data: totals for the period, a sales line for each club shop and a ranking of clubs" width="1280" height="800" loading="lazy"></figure>
+                <figure class="frame shot"><span class="frame-url">Every website and tool a team runs, in one search</span><img src="work/dashboards/directory.webp" alt="A staff directory with a search box, shortcuts to tools and lists of club websites with their status" width="1280" height="800" loading="lazy"></figure>
+
+                <div class="grid grid-2">
+                    <div class="item">
+                        <h4>Every source in one place</h4>
+                        <p>Stores, invoices, spreadsheets and other systems, joined up and kept in sync.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Up to date on its own</h4>
+                        <p>Data refreshes by itself, so nobody exports reports by hand.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Search everything</h4>
+                        <p>Find any customer, order or website in seconds from one box.</p>
+                    </div>
+                    <div class="item">
+                        <h4>Private to your team</h4>
+                        <p>Behind a secure sign-in, on any phone, tablet or PC.</p>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Want your numbers on one screen?</h4>
+                            <p>Tell me where your data lives and what you need to see, and I'll build the dashboard around it.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-dashboards" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20dashboard" target="_blank" rel="noopener">Message me about a dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: HEARTBEATS ================= -->
+        <section id="heartbeats" class="scene left" data-stage="heartbeats" data-marker="Tools" data-title="Device Ping Heartbeats | RoboCrax" aria-labelledby="hb-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">PING-SIDECAR</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Open source</span></p>
+                <h3 class="title" id="hb-title">Device Ping Heartbeats</h3>
+                <p class="lede"><code>heartbeats-ping-sidecar</code> is a tiny Go container for watching devices you can't install monitoring agents on: IoT gateways, home automation hubs, isolated database servers. It checks them with ICMP or TCP and sends a heartbeat to Healthchecks.io or BetterStack only when every check passes, so silence means something's wrong.</p>
+                <p class="where"><a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">github.com/robocrax/heartbeats-ping-sidecar</a></p>
+
+                <div class="block">
+                    <h4 class="h">Docker Compose example</h4>
+                    <div class="code"><pre>version: '3.8'
+services:
+  sidecar:
+    image: ghcr.io/robocrax/heartbeats-ping-sidecar:latest
+    restart: always
+    environment:
+      - TARGET_HOST=192.168.1.50
+      - HEARTBEAT_URL=https://hc-ping.com/your-uuid-token
+      - PING_INTERVAL_SEC=30</pre></div>
+                </div>
+
+                <div class="actions">
+                    <a class="btn btn-primary" data-track="github-heartbeats-page" href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">View on GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: MAGENTO 2 MODULES ================= -->
+        <section id="magento" class="scene" data-stage="magento" data-marker="Tools" data-title="Magento 2 modules | RoboCrax" aria-labelledby="magento-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                <h3 class="title" id="magento-title">Magento 2 modules, built from scratch</h3>
+                <p class="lede">I've built many Magento 2 modules from scratch for my work. Each one is written from the ground up for a specific job a store needed done, rather than bolted on from the marketplace.</p>
+                <div class="block">
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Need something built for your store?</h4>
+                            <p>Tell me what the store has to do that it can't today, and I'll scope a module for it.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-magento" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20Magento%202%20module" target="_blank" rel="noopener">Message me about a module</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STREAMING (JELLYFIN) ================= -->
+        <section id="jellyfin" class="scene" data-stage="jellyfin" data-marker="Jellyfin" data-title="Jellyfin | RoboCrax" aria-labelledby="jellyfin-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">JELLYFIN</span><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                <h2 class="title" id="jellyfin-title">A community-based streaming platform</h2>
+                <p class="lede">Full HD Streaming, on all your devices *</p>
+                <p class="lede">A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h3>Request Access</h3></div>
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Start with a Free Account</h4>
+                            <p>Applications are reviewed within 24 hours. Submit your access request below.</p>
+                        </div>
+                        <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open Request Form</button>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h3>Setup Your Devices</h3></div>
+                    <div class="panel">
+                        <h4>Recommended for Your Device</h4>
+                        <div class="detect">
+                            <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
+                            <div class="detect-actions">
+                                <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
+                                <a class="btn btn-quiet" href="#tv-setup">TV Setup Guide</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><h3>Membership (After Free Trial)</h3></div>
+                    <p class="sub">Once your free trial concludes, select a plan to maintain uninterrupted access.</p>
+
+                    <div class="plans">
+                        <div class="plan main">
+                            <span class="badge">Most Popular</span>
+                            <div class="plan-top">
+                                <div>
+                                    <h4>Standard Plan</h4>
+                                    <p class="tier">Core Household Tier</p>
+                                </div>
+                                <span class="price">$99<small>/ yr</small></span>
+                            </div>
+                            <p class="desc">Complete access to the private curated library with zero advertisements, built for reliable everyday streaming across all household devices.</p>
+                            <ul>
+                                <li><span><strong>Full HD</strong> direct video stream across all clients.</span></li>
+                                <li><span>Automated multi-source media request system enabled.</span></li>
+                                <li><span>Active streaming on weekdays and standard weekends.</span></li>
+                                <li><span>2 concurrent household streams included.</span></li>
+                                <li class="note"><span>Bandwidth limitation applies and is prioritized for our peak add-on users.</span></li>
+                            </ul>
+                            <button class="btn btn-primary" type="button" data-open-invite data-track="plan-standard">Choose Standard Plan ($99/yr)</button>
+                        </div>
+
+                        <div class="plan">
+                            <div class="plan-top">
+                                <div>
+                                    <h4>Weekend Peak Add-on</h4>
+                                    <p class="tier">Unthrottled Peak Allocation</p>
+                                </div>
+                                <span class="price">$349<small>/ yr</small></span>
+                            </div>
+                            <ul>
+                                <li><span>All Standard Plan features included.</span></li>
+                                <li><span>Unthrottled bandwidth even during peak periods.</span></li>
+                                <li><span>4K requests accepted.</span></li>
+                            </ul>
+                            <div class="foot"><span>Hardware Cap:</span><span>1 / 6 spots claimed</span></div>
+                        </div>
+                        <div class="plan">
+                            <div class="plan-top">
+                                <div>
+                                    <h4>Lifetime Supporter Pass</h4>
+                                    <p class="tier">Contribute To The Server Build</p>
+                                </div>
+                                <span class="price">$999<small>lifetime</small></span>
+                            </div>
+                            <p class="desc">Directly funds the addition of dedicated enterprise storage arrays to our server cluster.</p>
+                            <ul>
+                                <li><span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
+                                <li><span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
+                                <li><span>Unrestricted streaming, forever.</span></li>
+                            </ul>
+                            <a class="btn btn-quiet" data-track="whatsapp-lifetime" href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener">Become a Lifetime Supporter</a>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <h4>Household Fair Use &amp; Concurrency Rules</h4>
+                        <p>Every membership is issued strictly for a single primary residence with a limit of <strong>2 concurrent streams</strong>. Sharing credentials outside your household triggers automated account revocation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TV SETUP ================= -->
+        <section id="tv-setup" class="scene left" data-stage="tv-setup" data-marker="TV setup" data-title="Smart TV setup | RoboCrax" aria-labelledby="tv-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">JELLYFIN</span>Smart TV</p>
+                <h2 class="title" id="tv-title">Smart TV Quick Connect Guide</h2>
+                <p class="lede">Authenticate your Smart TV, Android TV, Google TV, or Apple TV in seconds without typing passwords with your TV remote.</p>
+
+                <ol class="steps">
+                    <li class="panel">
+                        <h4>Install the TV App</h4>
+                        <p>On Android TV, Google TV, or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.</p>
+                    </li>
+                    <li class="panel">
+                        <h4>Enter Server Address</h4>
+                        <p>Launch the app and set the host server URL to:</p>
+                        <div class="address">https://app.robocrax.com</div>
+                    </li>
+                    <li class="panel">
+                        <h4>Select Quick Connect</h4>
+                        <p>Click the <strong>Quick Connect</strong> button on your TV screen. The app will generate and display a temporary <strong>6-digit code</strong>.</p>
+                    </li>
+                    <li class="panel">
+                        <h4>Authorize on Mobile or PC</h4>
+                        <p>Log into your phone or browser, navigate to <strong>User Profile → Quick Connect</strong>, enter the 6-digit code, and click Authorize.</p>
+                    </li>
+                </ol>
+
+                <div class="actions">
+                    <a class="btn btn-primary" href="#jellyfin">Back to Jellyfin Setup</a>
+                    <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need Help? Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" class="scene center site-foot" data-stage="contact" data-marker="Contact" data-title="Contact | RoboCrax" aria-labelledby="contact-title">
+            <div class="copy">
+                <h2 id="contact-title">Need something set up, fixed or automated?</h2>
+                <p class="meta">RoboCrax, Auckland, New Zealand. Message me on WhatsApp at +64 20 477 4826.</p>
+                <div class="foot-actions">
+                    <a class="btn btn-primary" data-track="whatsapp-footer" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">Message me</a>
+                    <a class="btn btn-quiet" href="#home">Back to the top</a>
+                </div>
+                <p class="fine">The ruler down the right-hand side is this page. Hover it to see every chapter, click or drag it to jump, and watch the counter roll as you read.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="foot-bar">
+        <p>&copy; 2026 RoboCrax</p>
+        <p>Built and hosted in Auckland</p>
+    </footer>
+
+    <!-- ================= REQUEST ACCESS MODAL ================= -->
+    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
+        <div class="modal-card">
+            <div class="modal-head">
+                <div>
+                    <h2 id="invite-title">Request Access</h2>
+                    <p>Applications are manually reviewed within 24 hours.<br>Contact me to speed up this process.</p>
+                </div>
+                <button class="modal-close" type="button" data-close-invite aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request Access Form"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="designs/shared/site.js"></script>
+    <script src="designs/craft/craft.js" defer></script>
+    <script src="designs/switcher.js" data-corner="bl" defer></script>
+</body>
+</html>

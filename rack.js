@@ -455,6 +455,7 @@ function init() {
         nzquiz:       { theta: -.1, phi: .1, r: 1.5, ty: m('tools'), tz: .3, gTools: 1, fBase: .6 },
         atem:         { theta: .22, phi: .12, r: 1.5, ty: m('atem') - .05, tz: .3, cloud: 1, pad: 1, gAtem: 1, fAtem: 1, fBase: .3 },
         magento:      { theta: .3, phi: .42, r: 1.45, ty: m('tools'), tz: .55, mods: 1, gTools: 1, fBase: .6 },
+        dashboards:   { theta: -.18, phi: .16, r: 1.6, ty: m('tools'), tz: .3, gTools: 1, fBase: .8 },
         heartbeats:   { theta: .5, phi: .14, r: 2.75, tx: .42, ty: .5, tz: .15, gPing: 1, devices: 1, cloud: 1, fPing: 1 },
         jellyfin:     { theta: .42, phi: .14, r: 1.6, ty: m('media') + .01, tz: .3, media: 1, gMedia: 1, fMedia: 1 },
         'tv-setup':   { theta: .2, phi: .1, r: 2.3, tx: .55, ty: .62, tz: .05, tv: 1, fMedia: 1, gMedia: .5 },
