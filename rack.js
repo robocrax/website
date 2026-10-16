@@ -471,7 +471,9 @@ function init() {
     function retarget() {
         const A = KF[blend.a] || KF.home, B = KF[blend.b] || A;
         for (const k in DEFAULTS) target[k] = A[k] + (B[k] - A[k]) * blend.t;
-        if (mobile) target.r *= 1.12;
+        // a phone's window onto the rack is a short strip, so the camera stands further back there:
+        // close-ups pull back the most (about half again), wide shots only a little
+        if (mobile) target.r *= 1.15 + .35 * clamp01((3.2 - target.r) / 1.7);
     }
 
     function layout() {
