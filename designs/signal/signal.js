@@ -535,11 +535,13 @@ function cloud(name) {
 // ---------- the shader ----------
 const vertexShader = /* glsl */ `
 uniform float uMix, uTime, uBurst, uSize, uScaleP, uRepel, uPulse, uWobble, uDist;
-uniform vec3 uRayO, uRayD, uPulseO;
+uniform vec3 uRayO, uRayD, uRayDLag, uPulseO;
 attribute vec3 aFrom, aTo, aColFrom, aColTo, aDir;
 attribute vec4 aRand;
 varying vec3 vColor;
 varying float vAlpha;
+
+float hash(vec3 p, float s) { return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719)) + s * 17.13) * 43758.5453); }
 
 void main() {
     // each point sets off a little after the one above it, so a morph sweeps down the shape
@@ -554,12 +556,25 @@ void main() {
     p += uWobble * .022 * vec3(sin(uTime * .8 + ph + p.y * 1.7), sin(uTime * .9 + ph * 1.3 + p.x * 1.9), cos(uTime * .7 + ph + p.z * 1.5));
 
     vec4 world = modelMatrix * vec4(p, 1.);
-    // the pointer: points near its ray step aside
+    // the pointer: points near it drift aside, each in its own time and by its own amount. About one in five
+    // can't make up its mind: it drifts out to the edge, bounces back in, and drifts out again, unsure whether
+    // to follow where the pointer is or where it just was
+    float h1 = hash(aRand.yzw, 1.), h2 = hash(aRand.yzw, 2.), h3 = hash(aRand.yzw, 3.), h4 = hash(aRand.yzw, 4.), h5 = hash(aRand.yzw, 5.);
+    float lost = step(h2, .2);
+    float bounce = mix(.5, 1. - abs(sin(uTime * (.45 + h3 * .7) + ph * 2.)), uWobble);
+    float follow = mix(h4, .5 + .5 * sin(uTime * (.3 + h1 * .4) + ph), lost);
+    vec3 rd = normalize(mix(uRayD, uRayDLag, follow));
     vec3 v = world.xyz - uRayO;
-    vec3 off = v - uRayD * dot(v, uRayD);
+    vec3 off = v - rd * dot(v, rd);
     float dist = length(off);
-    float push = uRepel * (1. - smoothstep(0., .8, dist));
-    world.xyz += off / max(dist, 1e-4) * push * .6;
+    float reach = .6 + h1 * .35;
+    float fall = exp(-dist * dist / (reach * reach));
+    float join = smoothstep(h5 * .55, h5 * .55 + .45, uRepel);
+    float strength = mix((.5 + .5 * h3) * (1. + uWobble * .12 * sin(uTime * .7 + ph * 3.)), .15 + bounce, lost);
+    float push = join * fall * strength;
+    vec3 side = off / max(dist, 1e-4);
+    world.xyz += side * push * .6;
+    world.xyz += cross(rd, side) * join * fall * lost * uWobble * .12 * sin(uTime * .8 + ph * 5.);
     // a click: a shell of light expanding from where it landed
     float pd = distance(world.xyz, uPulseO);
     float shell = exp(-pow((pd - uPulse * 5.5) * 3., 2.)) * (1. - uPulse);
@@ -621,7 +636,7 @@ async function start() {
         uMix: { value: 0 }, uTime: { value: 0 }, uBurst: { value: reduced ? 0 : (phoneMQ.matches ? .55 : .85) },
         uSize: { value: phoneMQ.matches ? .03 : .021 }, uScaleP: { value: 500 }, uRepel: { value: 0 }, uPulse: { value: 1 },
         uWobble: { value: reduced ? 0 : 1 }, uDist: { value: 8 },
-        uRayO: { value: new THREE.Vector3(0, 0, 100) }, uRayD: { value: new THREE.Vector3(0, 0, -1) }, uPulseO: { value: new THREE.Vector3() },
+        uRayO: { value: new THREE.Vector3(0, 0, 100) }, uRayD: { value: new THREE.Vector3(0, 0, -1) }, uRayDLag: { value: new THREE.Vector3(0, 0, -1) }, uPulseO: { value: new THREE.Vector3() },
     };
     const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending });
     const points = new THREE.Points(geo, material);
@@ -708,6 +723,7 @@ async function start() {
     const raycaster = new THREE.Raycaster();
     const ndc = new THREE.Vector2();
     let px = -1, py = -1, repelTarget = 0, lastActive = performance.now();
+    let sx = -1, sy = -1, lx = -1, ly = -1;     // where the cloud feels the pointer: close behind it, and further back
     let dragging = false, dragMoved = false, downX = 0, downY = 0, lastX = 0, yawVel = 0, pitchDrag = 0, pulseStart = -1;
     const parallax = { x: 0, y: 0 };
     const free = (el) => !el.closest('.copy, a, button, input, textarea, select, label, iframe, .site-head, .modal, [data-design-switcher]');
@@ -838,20 +854,27 @@ async function start() {
         camera.updateProjectionMatrix();
         uniforms.uDist.value = dist;
 
-        // the pointer ray, recomputed as the camera moves
+        // the pointer rays, recomputed as the camera moves; the cloud parts slowly and trails the pointer
         if (px >= 0) {
+            if (sx < 0 || uniforms.uRepel.value < .02) { sx = lx = px; sy = ly = py; }
+            const kf = 1 - Math.exp(-dt * 4), ks = 1 - Math.exp(-dt * 1.5);
+            sx += (px - sx) * kf; sy += (py - sy) * kf;
+            lx += (px - lx) * ks; ly += (py - ly) * ks;
             const rc = canvas.getBoundingClientRect();
-            ndc.set(((px - rc.left) / rc.width) * 2 - 1, -((py - rc.top) / rc.height) * 2 + 1);
+            ndc.set(((lx - rc.left) / rc.width) * 2 - 1, -((ly - rc.top) / rc.height) * 2 + 1);
+            raycaster.setFromCamera(ndc, camera);
+            uniforms.uRayDLag.value.copy(raycaster.ray.direction);
+            ndc.set(((sx - rc.left) / rc.width) * 2 - 1, -((sy - rc.top) / rc.height) * 2 + 1);
             raycaster.setFromCamera(ndc, camera);
             uniforms.uRayO.value.copy(raycaster.ray.origin);
             uniforms.uRayD.value.copy(raycaster.ray.direction);
         }
-        uniforms.uRepel.value += (repelTarget - uniforms.uRepel.value) * (1 - Math.exp(-dt * 5));
+        uniforms.uRepel.value += (repelTarget - uniforms.uRepel.value) * (1 - Math.exp(-dt * (repelTarget > uniforms.uRepel.value ? 1.6 : 1.2)));
         uniforms.uPulse.value = pulseStart < 0 ? 1 : Math.min(1, (time - pulseStart) / 1.5);
 
         renderer.render(scene, camera);
 
-        const settling = intro < 1 || Math.abs(sTarget - sCur) > 1e-4 || Math.abs(repelTarget - uniforms.uRepel.value) > .01 || uniforms.uPulse.value < 1 || dragging || Math.abs(yawVel) > .02;
+        const settling = intro < 1 || Math.abs(sTarget - sCur) > 1e-4 || Math.abs(repelTarget - uniforms.uRepel.value) > .01 || Math.abs(lx - px) + Math.abs(ly - py) > .5 || uniforms.uPulse.value < 1 || dragging || Math.abs(yawVel) > .02;
         if (settling || (!reduced && now - lastActive < HOLD_MS)) raf = requestAnimationFrame(tick);
     }
     document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else wake(); });
