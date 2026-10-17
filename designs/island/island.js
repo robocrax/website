@@ -479,7 +479,7 @@ function buildWorld(K, mats, tex) {
         // a snack bar, stripes on the awning
         K.box(2.2, 1.6, 1.5, PAL.white, dx + 6.6, G, dz + 6.6);
         for (let i = 0; i < 6; i++) K.box(.4, .1, .8, i % 2 ? PAL.white : PAL.red, dx + 5.7 + i * .38, G + 1.55, dz + 7.6, 0, .35);
-        spot('jellyfin', 'The drive-in', 'Jellyfin streaming', dx - 4.2, G, dz - .6, dx + 8, G + 6, dz + 8);
+        spot('tv-setup', 'The drive-in', 'Smart TV setup', dx - 4.2, G, dz - .6, dx + 8, G + 6, dz + 8);
     }
 
     // ---------- the high street: websites I've worked on ----------

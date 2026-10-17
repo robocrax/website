@@ -1,5 +1,6 @@
 // Builds the other designs' pages from rack.html, which holds the site's copy.
-// Every page gets the same <main> and request modal as rack.html; only the edits listed in RULES differ.
+// Every page gets the same <main> as rack.html; only the edits listed in RULES differ.
+// jellyfin.html is not built here: it is its own page, in the Signal design only, edited by hand.
 // Edit the copy in rack.html, then run from the repo root: node designs/build/build.mjs [design ...]
 // It writes index.html (Signal), craft.html and island.html from the tpl-*.html templates beside it.
 import fs from 'node:fs';
@@ -15,8 +16,7 @@ const cut = (from, to) => {
     if (a < 0 || b < 0) throw new Error(`markers not found: ${from} .. ${to}`);
     return src.slice(a, b);
 };
-const MAIN = cut('    <main id="main">', '\n\n    <!-- ================= REQUEST ACCESS MODAL') + '\n';
-const MODAL = cut('    <!-- ================= REQUEST ACCESS MODAL', '    <script>');
+const MAIN = cut('    <main id="main">', '\n    </main>') + '\n    </main>\n';
 const META = cut('    <meta name="viewport"', '    <link rel="preconnect"')
     .replace(/    <meta name="theme-color"[^\n]*\n/g, '');
 const WA = src.match(/<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12\.04[^"]*"\/><\/svg>/)[0];
@@ -46,7 +46,6 @@ const RULES = {
         { section: 'dashboards', find: '<span class="tape">DASH-01</span>', replace: '<span class="tape">The office</span>' },
         { section: 'heartbeats', find: '<span class="tape">PING-SIDECAR</span>', replace: '<span class="tape">The radio mast</span>' },
         { section: 'magento', find: '<span class="tape">TOOLS-01</span>', replace: '<span class="tape">The warehouse</span>' },
-        { section: 'jellyfin', find: '<span class="tape">JELLYFIN</span>', replace: '<span class="tape">The drive-in</span>' },
         { section: 'tv-setup', find: '<span class="tape">JELLYFIN</span>', replace: '<span class="tape">The drive-in</span>' },
     ],
 };
@@ -88,7 +87,7 @@ for (const design of Object.keys(RULES)) {
         else { const open = main.indexOf('>', a) + 1; main = main.slice(0, open) + '\n' + markup.replace(/\s+$/, '') + main.slice(open); }
     }
     let out = tpl.replace(/<!--@INTO:[\s\S]*?<!--@END-->\n?/g, '').replaceAll('<!--@WA-->', WA);
-    for (const [key, val] of [['META', META], ['MAIN', main], ['MODAL', MODAL]]) {
+    for (const [key, val] of [['META', META], ['MAIN', main]]) {
         if (!out.includes(`<!--@${key}-->`)) throw new Error(`[${design}] template is missing <!--@${key}-->`);
         out = out.replace(`<!--@${key}-->`, () => val.replace(/\s+$/, ''));
     }

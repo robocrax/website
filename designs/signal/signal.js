@@ -22,6 +22,8 @@ const SHAPE_OF = {
     home: 'logo', portfolio: 'windows', services: 'orbs', wordpress: 'rack', 'it-support': 'laptop',
     automations: 'knot', how: 'rings', tools: 'gear', respond: 'phone', nzquiz: 'sign', atem: 'multiview',
     dashboards: 'dash', heartbeats: 'ecg', magento: 'cubes', jellyfin: 'play', 'tv-setup': 'code', contact: 'chat',
+    // the Jellyfin page
+    'jf-plans': 'rack', 'jf-features': 'multiview', 'jf-setup': 'laptop',
 };
 // spin: turns continuously (rad/s); amp: sways about facing you instead; tilt: looks down on it; fill: share of the frame
 const POSE = {

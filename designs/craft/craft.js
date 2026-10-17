@@ -17,7 +17,7 @@
         { name: 'Work', ids: ['portfolio'] },
         { name: 'Services', ids: ['services', 'wordpress', 'it-support', 'automations', 'how'] },
         { name: 'Tools', ids: ['tools', 'respond', 'nzquiz', 'atem', 'dashboards', 'heartbeats', 'magento'] },
-        { name: 'Jellyfin', ids: ['jellyfin', 'tv-setup'] },
+        { name: 'TV setup', ids: ['tv-setup'] },
         { name: 'Contact', ids: ['contact'] },
     ];
     const chapterOf = (id) => Math.max(0, CHAPTERS.findIndex((c) => c.ids.includes(id)));

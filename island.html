@@ -5,6 +5,7 @@
     <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Pritam Bhuva">
+    <script>/* old links to the Jellyfin section now open its own page */ if (/^#(jellyfin|quick-connect)$/.test(location.hash)) location.replace('jellyfin' + (location.hash === '#quick-connect' ? '#quick-connect' : ''));</script>
     <meta name="description" content="RoboCrax: Auckland-based website hosting, IT support, data automations, a community streaming server and free open-source tools.">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -52,12 +53,11 @@
             <a class="nav-link" href="#portfolio" data-nav="portfolio">Work</a>
             <a class="nav-link nav-opt" href="#services" data-nav="services">Services</a>
             <a class="nav-link nav-opt" href="#tools" data-nav="tools">Tools</a>
-            <a class="nav-link" href="#jellyfin" data-nav="jellyfin">Jellyfin</a>
+            <a class="nav-link" href="#dashboards" data-nav="dashboards">Dashboards</a>
         </nav>
         <a id="nav-contact-btn" class="btn btn-sign btn-small" data-track="whatsapp-nav"
            href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg><span class="btn-label">Message me</span></a>
-        <button id="nav-request-btn" class="btn btn-sign btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
     </header>
 
     <main id="main">
@@ -212,7 +212,7 @@
                         <p class="service-meta">Built in Go, Python and Node.js</p>
                     </article>
                     <article class="service">
-                        <h3><a href="#jellyfin">Cheap-as Streaming Service</a></h3>
+                        <h3><a href="jellyfin">Cheap-as Streaming Service</a></h3>
                         <p>A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
                         <p class="service-meta"><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
                     </article>
@@ -603,105 +603,6 @@ services:
             </div>
         </section>
 
-        <!-- ================= STREAMING (JELLYFIN) ================= -->
-        <section id="jellyfin" class="scene" data-stage="jellyfin" data-marker="Jellyfin" data-title="Jellyfin | RoboCrax" aria-labelledby="jellyfin-title">
-            <div class="copy">
-                <p class="kicker"><span class="tape">The drive-in</span><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
-                <h2 class="title" id="jellyfin-title">A community-based streaming platform</h2>
-                <p class="lede">Full HD Streaming, on all your devices *</p>
-                <p class="lede">A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
-
-                <div class="stage">
-                    <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h3>Request Access</h3></div>
-                    <div class="panel row-cta">
-                        <div>
-                            <h4>Start with a Free Account</h4>
-                            <p>Applications are reviewed within 24 hours. Submit your access request below.</p>
-                        </div>
-                        <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open Request Form</button>
-                    </div>
-                </div>
-
-                <div class="stage">
-                    <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h3>Setup Your Devices</h3></div>
-                    <div class="panel">
-                        <h4>Recommended for Your Device</h4>
-                        <div class="detect">
-                            <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
-                            <div class="detect-actions">
-                                <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
-                                <a class="btn btn-quiet" href="#tv-setup">TV Setup Guide</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stage">
-                    <div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><h3>Membership (After Free Trial)</h3></div>
-                    <p class="sub">Once your free trial concludes, select a plan to maintain uninterrupted access.</p>
-
-                    <div class="plans">
-                        <div class="plan main">
-                            <span class="badge">Most Popular</span>
-                            <div class="plan-top">
-                                <div>
-                                    <h4>Standard Plan</h4>
-                                    <p class="tier">Core Household Tier</p>
-                                </div>
-                                <span class="price">$99<small>/ yr</small></span>
-                            </div>
-                            <p class="desc">Complete access to the private curated library with zero advertisements, built for reliable everyday streaming across all household devices.</p>
-                            <ul>
-                                <li><span><strong>Full HD</strong> direct video stream across all clients.</span></li>
-                                <li><span>Automated multi-source media request system enabled.</span></li>
-                                <li><span>Active streaming on weekdays and standard weekends.</span></li>
-                                <li><span>2 concurrent household streams included.</span></li>
-                                <li class="note"><span>Bandwidth limitation applies and is prioritized for our peak add-on users.</span></li>
-                            </ul>
-                            <button class="btn btn-primary" type="button" data-open-invite data-track="plan-standard">Choose Standard Plan ($99/yr)</button>
-                        </div>
-
-                        <div class="plan">
-                            <div class="plan-top">
-                                <div>
-                                    <h4>Weekend Peak Add-on</h4>
-                                    <p class="tier">Unthrottled Peak Allocation</p>
-                                </div>
-                                <span class="price">$349<small>/ yr</small></span>
-                            </div>
-                            <ul>
-                                <li><span>All Standard Plan features included.</span></li>
-                                <li><span>Unthrottled bandwidth even during peak periods.</span></li>
-                                <li><span>4K requests accepted.</span></li>
-                            </ul>
-                            <div class="foot"><span>Hardware Cap:</span><span>1 / 6 spots claimed</span></div>
-                        </div>
-                        <div class="plan">
-                            <div class="plan-top">
-                                <div>
-                                    <h4>Lifetime Supporter Pass</h4>
-                                    <p class="tier">Contribute To The Server Build</p>
-                                </div>
-                                <span class="price">$999<small>lifetime</small></span>
-                            </div>
-                            <p class="desc">Directly funds the addition of dedicated enterprise storage arrays to our server cluster.</p>
-                            <ul>
-                                <li><span><strong>Lifetime permanent access</strong> (zero yearly fees).</span></li>
-                                <li><span><strong>Unlimited custom requests</strong> with VIP priority.</span></li>
-                                <li><span>Unrestricted streaming, forever.</span></li>
-                            </ul>
-                            <a class="btn btn-quiet" data-track="whatsapp-lifetime" href="https://wa.me/+64204774826?text=Hi,%20I'm%20interested%20in%20supporting%20with%20the%20Lifetime%20Pass" target="_blank" rel="noopener">Become a Lifetime Supporter</a>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <h4>Household Fair Use &amp; Concurrency Rules</h4>
-                        <p>Every membership is issued strictly for a single primary residence with a limit of <strong>2 concurrent streams</strong>. Sharing credentials outside your household triggers automated account revocation.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- ================= TV SETUP ================= -->
         <section id="tv-setup" class="scene left" data-stage="tv-setup" data-marker="TV setup" data-title="Smart TV setup | RoboCrax" aria-labelledby="tv-title">
             <div class="copy">
@@ -730,7 +631,7 @@ services:
                 </ol>
 
                 <div class="actions">
-                    <a class="btn btn-primary" href="#jellyfin">Back to Jellyfin Setup</a>
+                    <a class="btn btn-primary" data-track="jellyfin-page-tv" href="jellyfin">Sign up and plans</a>
                     <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need Help? Contact Me</a>
                 </div>
             </div>
@@ -752,23 +653,6 @@ services:
 
     </main>
 
-    <!-- ================= REQUEST ACCESS MODAL ================= -->
-    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
-        <div class="modal-card">
-            <div class="modal-head">
-                <div>
-                    <h2 id="invite-title">Request Access</h2>
-                    <p>Applications are manually reviewed within 24 hours.<br>Contact me to speed up this process.</p>
-                </div>
-                <button class="modal-close" type="button" data-close-invite aria-label="Close">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-                </button>
-            </div>
-            <div class="modal-body">
-                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request Access Form"></iframe>
-            </div>
-        </div>
-    </div>
 
     <script src="designs/shared/site.js"></script>
     <script type="module" src="designs/island/island.js"></script>

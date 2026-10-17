@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-NZ" data-design="signal">
+<head>
+    <meta charset="utf-8">
+    <!-- The Jellyfin page: Signal design only, edited by hand (designs/build/build.mjs doesn't touch it).
+         Old links to the homepage's #jellyfin and #quick-connect sections redirect here. -->
+    <title>Jellyfin streaming | RoboCrax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Private, ad-free Jellyfin streaming on dedicated hardware. Plans, setup and the Smart TV Quick Connect guide.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.robocrax.com/jellyfin">
+    <meta property="og:title" content="Jellyfin streaming | RoboCrax">
+    <meta property="og:description" content="Private, ad-free streaming for your household, with a free trial to start.">
+    <meta property="og:image" content="https://www.robocrax.com/og_image.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="robocrax.com">
+    <meta property="twitter:url" content="https://www.robocrax.com/jellyfin">
+    <meta name="twitter:title" content="Jellyfin streaming | RoboCrax">
+    <meta name="twitter:description" content="Private, ad-free streaming for your household, with a free trial to start.">
+    <meta name="twitter:image" content="https://www.robocrax.com/og_image.png">
+    <meta name="theme-color" content="#10153A">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="designs/signal/signal.css">
+    <link rel="modulepreload" href="vendor/three.module.min.js">
+</head>
+<body>
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <!-- the stage: one cloud of points that takes a new shape for every section (designs/signal/signal.js) -->
+    <div class="sky" id="stage" aria-hidden="true">
+        <canvas id="stage-canvas"></canvas>
+        <img class="sky-fallback" src="logo.svg" alt="" width="160" height="222">
+    </div>
+    <p class="stage-hint" id="stage-hint" aria-hidden="true">Move through the light, drag to turn it, click beside the text to send a pulse.</p>
+
+    <header class="site-head">
+        <div class="wrap">
+            <a class="brand" href="./" aria-label="RoboCrax home">
+                <img src="logo.svg" alt="" width="22" height="30">
+                <span>RoboCrax</span>
+            </a>
+            <nav class="site-nav" aria-label="Main">
+                <a class="nav-link" href="#plans" data-nav="plans">Plans</a>
+                <a class="nav-link nav-opt" href="#features" data-nav="features">Features</a>
+                <a class="nav-link nav-opt" href="#setup" data-nav="setup">Get started</a>
+                <a class="nav-link" href="#quick-connect" data-nav="quick-connect">TV setup</a>
+            </nav>
+            <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav">Request access</button>
+        </div>
+        <div class="progress" aria-hidden="true"><i></i></div>
+    </header>
+
+    <main id="main">
+
+        <!-- ================= INTRO ================= -->
+        <section id="jellyfin" class="scene hero" data-stage="jellyfin" data-marker="Jellyfin" data-title="Jellyfin streaming | RoboCrax" aria-labelledby="jf-title">
+            <div class="copy">
+                <p class="kicker"><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                <h1 id="jf-title">Private streaming for your household.</h1>
+                <p class="lede">An ad-free Jellyfin server that I run on dedicated hardware. It streams Full HD to your TV, phone and laptop, and every account starts with a free trial.</p>
+                <div class="actions">
+                    <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-hero">Request access</button>
+                    <a class="btn btn-quiet" href="#plans">See the plans</a>
+                </div>
+
+                <div class="profile">
+                    <div class="profile-top">
+                        <img src="logo.svg" alt="" width="30" height="42">
+                        <div>
+                            <p class="profile-name">RoboCrax Jellyfin</p>
+                            <p class="profile-role">app.robocrax.com</p>
+                        </div>
+                    </div>
+                    <dl class="glance">
+                        <div><dt class="tape">Picture</dt><dd>Full HD on every plan, with 4K requests on Peak</dd></div>
+                        <div><dt class="tape">Devices</dt><dd>TVs, phones, tablets, computers and any browser</dd></div>
+                        <div><dt class="tape">Ads</dt><dd>None</dd></div>
+                        <div><dt class="tape">To start</dt><dd>A free trial, then a yearly plan</dd></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PLANS ================= -->
+        <section id="plans" class="scene" data-stage="jf-plans" data-marker="Plans" data-title="Plans | Jellyfin | RoboCrax" aria-labelledby="plans-title">
+            <div class="copy">
+                <h2 class="title" id="plans-title">Two plans, paid yearly.</h2>
+                <p class="lede">Try it free first. When your trial ends, pick the plan that suits how your household watches.</p>
+
+                <div class="plans">
+                    <div class="plan main">
+                        <span class="badge">Most popular</span>
+                        <div class="plan-top">
+                            <div>
+                                <h4>Standard</h4>
+                                <p class="tier">For everyday watching</p>
+                            </div>
+                            <span class="price">$99<small>/ year</small></span>
+                        </div>
+                        <p class="desc">Everything most households need, on every device you own.</p>
+                        <ul>
+                            <li><span><strong>Full HD</strong> on TVs, phones, tablets and computers</span></li>
+                            <li><span>2 streams at the same time</span></li>
+                            <li><span>No ads</span></li>
+                            <li><span>Requests from inside the app</span></li>
+                            <li class="note"><span>On busy nights, Peak members get bandwidth first.</span></li>
+                        </ul>
+                        <button class="btn btn-primary" type="button" data-open-invite data-track="plan-standard">Start with Standard</button>
+                    </div>
+
+                    <div class="plan">
+                        <div class="plan-top">
+                            <div>
+                                <h4>Peak</h4>
+                                <p class="tier">For busy households and big weekends</p>
+                            </div>
+                            <span class="price">$349<small>/ year</small></span>
+                        </div>
+                        <ul>
+                            <li><span>Everything in Standard</span></li>
+                            <li><span><strong>Full speed</strong>, even at the busiest times</span></li>
+                            <li><span><strong>4K</strong> requests accepted</span></li>
+                        </ul>
+                        <div class="foot"><span>Limited spots</span><span>6 households in total</span></div>
+                        <a class="btn btn-quiet" data-track="whatsapp-peak" href="https://wa.me/+64204774826?text=Hi,%20is%20there%20a%20Peak%20spot%20available%20on%20RoboCrax%20Jellyfin%3F" target="_blank" rel="noopener">Ask about a Peak spot</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FEATURES ================= -->
+        <section id="features" class="scene left" data-stage="jf-features" data-marker="Features" data-title="What you get | Jellyfin | RoboCrax" aria-labelledby="features-title">
+            <div class="copy">
+                <h2 class="title" id="features-title">What you get</h2>
+                <p class="lede">Jellyfin is open-source media software. I run it, keep it updated and keep an eye on it, so all you do is press play.</p>
+                <div class="grid grid-2">
+                    <div class="item">
+                        <h3>Full HD picture</h3>
+                        <p>Streams play at full quality on any modern screen.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Apps for every screen</h3>
+                        <p>Android TV, Google TV, Fire TV, Apple TV, iPhone, Android, Windows, Mac and any browser.</p>
+                    </div>
+                    <div class="item">
+                        <h3>No ads</h3>
+                        <p>Nothing interrupts what you&rsquo;re watching.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Requests built in</h3>
+                        <p>Ask for something new from inside the app.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Sign in on a TV with a code</h3>
+                        <p>Quick Connect links your TV with a 6-digit code, so there&rsquo;s no typing passwords with a remote.</p>
+                    </div>
+                    <div class="item">
+                        <h3>Looked after properly</h3>
+                        <p>It runs on dedicated hardware that I monitor and maintain. If something&rsquo;s wrong, message me.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GET STARTED ================= -->
+        <section id="setup" class="scene" data-stage="jf-setup" data-marker="Get started" data-title="Get started | Jellyfin | RoboCrax" aria-labelledby="setup-title">
+            <div class="copy">
+                <h2 class="title" id="setup-title">Get started in three steps</h2>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h3>Request access</h3></div>
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Start with a free trial</h4>
+                            <p>Fill in the short form. I review every request within 24 hours; message me if you&rsquo;d like it sooner.</p>
+                        </div>
+                        <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open the request form</button>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h3>Install the app</h3></div>
+                    <div class="panel">
+                        <h4>Recommended for your device</h4>
+                        <div class="detect">
+                            <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
+                            <div class="detect-actions">
+                                <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download the app</a>
+                                <a class="btn btn-quiet" href="#quick-connect">Setting up a TV?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">3</span><h3>Sign in</h3></div>
+                    <div class="panel">
+                        <p>Open the app, add a server and enter this address:</p>
+                        <div class="address">https://app.robocrax.com</div>
+                        <p>Then sign in with your username and password.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SMART TV QUICK CONNECT ================= -->
+        <section id="quick-connect" class="scene left" data-stage="tv-setup" data-marker="TV setup" data-title="Smart TV Quick Connect | Jellyfin | RoboCrax" aria-labelledby="qc-title">
+            <div class="copy">
+                <h2 class="title" id="qc-title">Smart TV Quick Connect</h2>
+                <p class="lede">Sign in on a Smart TV, Android TV, Google TV, Fire TV or Apple TV in seconds, without typing a password with the remote.</p>
+
+                <ol class="steps">
+                    <li class="panel">
+                        <h4>Install the TV app</h4>
+                        <p>On Android TV, Google TV or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.</p>
+                    </li>
+                    <li class="panel">
+                        <h4>Enter the server address</h4>
+                        <p>Open the app and set the server address to:</p>
+                        <div class="address">https://app.robocrax.com</div>
+                    </li>
+                    <li class="panel">
+                        <h4>Choose Quick Connect</h4>
+                        <p>Select <strong>Quick Connect</strong> on the TV. It shows a temporary <strong>6-digit code</strong>.</p>
+                    </li>
+                    <li class="panel">
+                        <h4>Approve it on your phone or computer</h4>
+                        <p>Sign in on your phone or in a browser, go to <strong>User Profile &rarr; Quick Connect</strong>, enter the code and select Authorise.</p>
+                    </li>
+                </ol>
+
+                <div class="actions">
+                    <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need help? Message me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" class="scene center site-foot" data-stage="contact" data-marker="Contact" data-title="Questions | Jellyfin | RoboCrax" aria-labelledby="contact-title">
+            <div class="copy">
+                <h2 id="contact-title">Questions before you sign up?</h2>
+                <p class="meta">Message me on WhatsApp at +64 20 477 4826 and I&rsquo;ll get back to you.</p>
+                <div class="foot-actions">
+                    <a class="btn btn-primary" data-track="whatsapp-jellyfin-footer" href="https://wa.me/+64204774826?text=Hi,%20I%27m%20asking%20about%20RoboCrax%20Jellyfin" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg>
+                        Message me
+                    </a>
+                    <button class="btn btn-quiet" type="button" data-open-invite data-track="request-access-footer">Request access</button>
+                </div>
+                <p class="fine">Here for website hosting, IT support or automations? That&rsquo;s all on the main <a href="./">RoboCrax site</a>.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= REQUEST ACCESS MODAL ================= -->
+    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
+        <div class="modal-card">
+            <div class="modal-head">
+                <div>
+                    <h2 id="invite-title">Request access</h2>
+                    <p>I review every request by hand, usually within 24 hours. Message me if you&rsquo;d like it sooner.</p>
+                </div>
+                <button class="modal-close" type="button" data-close-invite aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request access form"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="designs/shared/site.js"></script>
+    <script type="module" src="designs/signal/signal.js"></script>
+</body>
+</html>

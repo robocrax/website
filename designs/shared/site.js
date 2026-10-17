@@ -1,5 +1,5 @@
-/* site.js — what every design preview shares: the analytics hook, which section is current, the Jellyfin
-   client picker and the request-access form. Each design's own script draws its stage and listens for
+/* site.js — what every design preview shares: the analytics hook, which section is current, and, on the
+   Jellyfin page, the client picker and the request-access form. Each design's own script draws its stage and listens for
    'site:frame' (every scroll frame: the current section, the next one and how far the page is between them)
    and 'site:section' (when the current section changes). */
 (() => {
@@ -17,12 +17,10 @@
     // ---------- the current section ----------
     const scenes = Array.from(document.querySelectorAll('main [data-stage]'));
     const navRequest = document.getElementById('nav-request-btn');
-    const navContact = document.getElementById('nav-contact-btn');
     // header links that stay lit while you read the sections they lead into
     const SUB = {
         services: ['wordpress', 'it-support', 'automations', 'how'],
-        tools: ['respond', 'nzquiz', 'atem', 'dashboards', 'heartbeats', 'magento'],
-        jellyfin: ['tv-setup'],
+        tools: ['respond', 'nzquiz', 'atem', 'heartbeats', 'magento'],
     };
 
     const Site = window.Site = {
@@ -53,11 +51,6 @@
         Site.index = i;
         const s = scenes[i];
         if (s.dataset.title) document.title = s.dataset.title;
-
-        // "Request access" in the header only around the streaming sections
-        const streaming = s.id === 'jellyfin' || s.id === 'tv-setup';
-        if (navRequest) navRequest.hidden = !streaming;
-        if (navContact) navContact.hidden = streaming;
 
         document.querySelectorAll('[data-nav]').forEach((a) => {
             const key = a.dataset.nav;
