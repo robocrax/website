@@ -817,7 +817,9 @@ async function start() {
             uniforms.uMix.value = intro;
         } else {
             if (a !== pairA || b !== pairB) setPair(a, b);
-            uniforms.uMix.value = reduced ? (m < .5 ? 0 : 1) : m;
+            // the points always travel from one shape to the next as you scroll, so the move is yours and stops when you
+            // do; with reduced motion they go straight there, without the burst, the swirl or the idle drift
+            uniforms.uMix.value = m;
         }
         const mm = m * m * (3 - 2 * m);
         uniforms.uTime.value = time;
@@ -889,8 +891,11 @@ async function start() {
     if (window.Site) window.Site.update();
     wake();
 
-    // build the rest of the shapes while the browser is idle, so scrolling never waits for one
-    const queue = Object.keys(SHAPES).filter((k) => k !== 'code');
+    // build the shapes this page uses while the browser is idle, nearest section first (the next one before the
+    // previous one), so a morph never stops to build its shape and no time goes on shapes the page never shows
+    const here = Math.max(0, window.Site ? window.Site.index : 0);
+    const near = scenes.map((_, k) => k).sort((x, y) => Math.abs(x - here) - Math.abs(y - here) || y - x);
+    const queue = [...new Set(near.map(shapeAt))].filter((k) => k !== 'code' && !clouds[k]);
     const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 60));
     const work = (dl) => {
         while (queue.length && dl.timeRemaining() > 4) cloud(queue.shift());

@@ -5,7 +5,7 @@
     <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Pritam Bhuva">
-    <script>/* old links to the Jellyfin section now open its own page */ if (/^#(jellyfin|quick-connect)$/.test(location.hash)) location.replace('jellyfin' + (location.hash === '#quick-connect' ? '#quick-connect' : ''));</script>
+    <script>/* the first Jellyfin site's #quick-connect links open the Quick Connect guide on the Jellyfin page */ if (location.hash === '#quick-connect') location.replace('jellyfin#quick-connect');</script>
     <meta name="description" content="RoboCrax: Auckland-based website hosting, IT support, data automations, a community streaming server and free open-source tools.">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -58,6 +58,7 @@
             <a id="nav-contact-btn" class="btn btn-primary btn-small" data-track="whatsapp-nav"
                href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg><span class="btn-label">Message me</span></a>
+            <button id="nav-request-btn" class="btn btn-primary btn-small" type="button" data-track="request-access-nav" hidden>Request access</button>
         </div>
         <div class="progress" aria-hidden="true"><i></i></div>
     </header>
@@ -214,7 +215,7 @@
                         <p class="service-meta">Built in Go, Python and Node.js</p>
                     </article>
                     <article class="service">
-                        <h3><a href="jellyfin">Cheap-as Streaming Service</a></h3>
+                        <h3><a href="#jellyfin">Cheap-as Streaming Service</a></h3>
                         <p>A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
                         <p class="service-meta"><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
                     </article>
@@ -605,6 +606,45 @@ services:
             </div>
         </section>
 
+        <!-- ================= STREAMING (JELLYFIN) ================= -->
+        <section id="jellyfin" class="scene" data-stage="jellyfin" data-marker="Jellyfin" data-title="Jellyfin | RoboCrax" aria-labelledby="jellyfin-title">
+            <div class="copy">
+                <p class="kicker"><span class="tape">JELLYFIN</span><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                <h2 class="title" id="jellyfin-title">A community-based streaming platform</h2>
+                <p class="lede">Full HD Streaming, on all your devices</p>
+                <p class="lede">A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h3>Request Access</h3></div>
+                    <div class="panel row-cta">
+                        <div>
+                            <h4>Start with a Free Account</h4>
+                            <p>Applications are reviewed within 24 hours. Submit your access request below.</p>
+                        </div>
+                        <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open Request Form</button>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h3>Setup Your Devices</h3></div>
+                    <div class="panel">
+                        <h4>Recommended for Your Device</h4>
+                        <div class="detect">
+                            <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
+                            <div class="detect-actions">
+                                <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
+                                <a class="btn btn-quiet" href="#tv-setup">TV Setup Guide</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a class="btn btn-quiet" data-track="jellyfin-page-plans" href="jellyfin">Plans and pricing</a>
+                </div>
+            </div>
+        </section>
+
         <!-- ================= TV SETUP ================= -->
         <section id="tv-setup" class="scene left" data-stage="tv-setup" data-marker="TV setup" data-title="Smart TV setup | RoboCrax" aria-labelledby="tv-title">
             <div class="copy">
@@ -633,7 +673,7 @@ services:
                 </ol>
 
                 <div class="actions">
-                    <a class="btn btn-primary" data-track="jellyfin-page-tv" href="jellyfin">Sign up and plans</a>
+                    <a class="btn btn-primary" href="#jellyfin">Back to Jellyfin Setup</a>
                     <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need Help? Contact Me</a>
                 </div>
             </div>
@@ -644,7 +684,7 @@ services:
             <div class="copy">
                 <h2 id="contact-title">Need something set up, fixed or automated?</h2>
                 <p class="meta">RoboCrax, Auckland, New Zealand. Run by me, Pritam Bhuva, a sole developer and infrastructure engineer. Message me on WhatsApp at +64 20 477 4826.</p>
-                <p class="meta"><strong>Why RoboCrax?</strong> It's the embarrassing name I chose at uni, and I've stuck with it. Yes, I will consider changing it (later, at some stage, wink wink).</p>
+                <p class="meta"><strong>Why RoboCrax?</strong> It's the embarrassing name I chose at uni, and I've stuck with it so far. Yes, I may consider changing it (at a later stage).</p>
                 <div class="foot-actions">
                     <a class="btn btn-primary" data-track="whatsapp-footer" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">Message me</a>
                     <a class="btn btn-quiet" href="#home">Back to the top</a>
@@ -655,6 +695,23 @@ services:
 
     </main>
 
+    <!-- ================= REQUEST ACCESS MODAL ================= -->
+    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
+        <div class="modal-card">
+            <div class="modal-head">
+                <div>
+                    <h2 id="invite-title">Request Access</h2>
+                    <p>Applications are manually reviewed within 24 hours.<br>Contact me to speed up this process.</p>
+                </div>
+                <button class="modal-close" type="button" data-close-invite aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request Access Form"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script src="designs/shared/site.js"></script>
     <script type="module" src="designs/signal/signal.js"></script>
