@@ -2,7 +2,7 @@
 // Every page gets the same <main> and request modal as rack.html; only the edits listed in RULES differ.
 // jellyfin.html is not built here: it is its own page, in the Signal design only, edited by hand.
 // Edit the copy in rack.html, then run from the repo root: node designs/build/build.mjs [design ...]
-// It writes index.html (Signal), craft.html and island.html from the tpl-*.html templates beside it.
+// It writes index.html (Signal) and island.html from the tpl-*.html templates beside it.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,10 +30,6 @@ const RULES = {
     signal: [
         [RACK_SERVICES, 'Scroll on to see them one at a time.'],
         [RACK_FINE, 'Every shape on this page is drawn by the same cloud of light. Move your pointer through it, drag to turn it, or click beside the text to send a pulse through it.'],
-    ],
-    craft: [
-        [RACK_SERVICES, 'Scroll on to see them one at a time.'],
-        [RACK_FINE, 'The ruler down the right-hand side is this page. Hover it to see every chapter, click or drag it to jump, and watch the counter roll as you read.'],
     ],
     island: [
         [RACK_SERVICES, 'Each one has its own spot on the island; scroll on to visit them one at a time.'],

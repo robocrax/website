@@ -1,22 +1,32 @@
-/* switcher.js — the small floating control for flipping between the site's designs.
+/* switcher.js — a small toggle for flipping between the site's designs: Dots, Rack and 3D.
    It keeps your place: the section you're reading opens in the design you switch to.
-   Position it per page with data attributes on the script tag: data-corner="bl|br|tl|tr", data-x, data-y (px). */
+   It floats in a corner on wider screens; on phones it sits at the end of the footer instead.
+   Set it per page with data attributes on the script tag: data-corner="bl|br|tl|tr", data-x, data-y (px), and
+   data-phone (px): the widest screen that gets the design's phone layout. */
 (() => {
     'use strict';
+    // a scatter of points, then Lucide's server and box (ISC licence)
+    const ICON = {
+        dots: '<circle cx="12" cy="12" r="2.6"/><circle cx="12" cy="4.4" r="1.7"/><circle cx="12" cy="19.6" r="1.7"/><circle cx="4.4" cy="12" r="1.7"/><circle cx="19.6" cy="12" r="1.7"/><circle cx="6.4" cy="6.4" r="1.15"/><circle cx="17.6" cy="6.4" r="1.15"/><circle cx="6.4" cy="17.6" r="1.15"/><circle cx="17.6" cy="17.6" r="1.15"/>',
+        rack: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></g>',
+        cube: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></g>',
+    };
     const DESIGNS = [
-        { file: 'index.html', name: 'Signal', note: 'Particle sculptures' },
-        { file: 'craft.html', name: 'Craft', note: 'A ruler down the right' },
-        { file: 'rack.html', name: 'Rack', note: 'The 3D server rack' },
-        { file: 'island.html', name: 'Island', note: 'A low-poly world' },
+        { file: 'index.html', name: 'Dots', icon: ICON.dots },
+        { file: 'rack.html', name: 'Rack', icon: ICON.rack },
+        { file: 'island.html', name: '3D', icon: ICON.cube },
     ];
     const script = document.currentScript;
-    // GitHub Pages serves craft.html at /craft too, so match with or without the extension
+    // Cloudflare serves rack.html at /rack too, so match with or without the extension
     const here = (location.pathname.split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '');
-    const active = DESIGNS.find((d) => d.file.replace(/\.html$/, '') === here) || DESIGNS[0];
+    const at = Math.max(0, DESIGNS.findIndex((d) => d.file.replace(/\.html$/, '') === here));
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const corner = (script && script.dataset.corner) || 'bl';
-    const offX = parseFloat((script && script.dataset.x) || '14');
-    const offY = parseFloat((script && script.dataset.y) || '14');
+    const opt = (k, fallback) => (script && script.dataset[k]) || fallback;
+    const corner = opt('corner', 'bl');
+    const offX = parseFloat(opt('x', '14'));
+    const offY = parseFloat(opt('y', '14'));
+    const phone = `(max-width: ${parseFloat(opt('phone', '959.98'))}px)`;
 
     // the section you're reading: the last one whose top has passed a third of the way down the screen
     function place() {
@@ -26,64 +36,84 @@
         return id && id !== 'home' ? `#${id}` : '';
     }
 
-    const host = document.createElement('div');
-    host.setAttribute('data-design-switcher', '');
-    const root = host.attachShadow({ mode: 'open' });
+    // the toggle itself: one link per design and a thumb that slides to the one you pick
+    const TOGGLE = `
+<nav class="seg" aria-label="Design" style="--n:${DESIGNS.length};--i:${at}">
+    <span class="thumb" aria-hidden="true"></span>
+    ${DESIGNS.map((d, k) => `<a href="${d.file}"${k === at ? ' class="on" aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d.icon}</svg><span class="lbl">${d.name}</span></a>`).join('')}
+</nav>`;
+    const BASE = `
+    .seg { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 3px; border-radius: 999px; }
+    .thumb { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n)); border-radius: 999px; transform: translateX(calc(var(--i) * 100%)); }
+    a { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border-radius: 999px;
+        color: inherit; text-decoration: none; font-weight: 600; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+    a:focus-visible { outline: 2px solid #8fb4ff; outline-offset: 1px; }
+    svg { width: 16px; height: 16px; flex: none; }
+    @media (prefers-reduced-motion: no-preference) {
+        .thumb { transition: transform .22s cubic-bezier(.3, .7, .3, 1); }
+        a { transition: color .22s, opacity .22s; }
+    }
+    @media print { :host { display: none !important; } }`;
+
+    function mount(css, html) {
+        const host = document.createElement('div');
+        host.setAttribute('data-design-switcher', '');
+        const root = host.attachShadow({ mode: 'open' });
+        root.innerHTML = `<style>${BASE}${css}</style>${html}`;
+        const seg = root.querySelector('.seg');
+        const links = [...root.querySelectorAll('a')];
+        const select = (k) => {
+            seg.style.setProperty('--i', k);
+            links.forEach((a, j) => a.classList.toggle('on', j === k));
+        };
+        links.forEach((a, k) => a.addEventListener('click', (e) => {
+            if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // a new tab or window: the browser's
+            e.preventDefault();
+            if (k === at) return;
+            select(k);
+            // the thumb gets to its new place, then the page follows
+            const go = () => { location.href = DESIGNS[k].file + place(); };
+            if (reduced) go(); else setTimeout(go, 200);
+        }));
+        // the Back button can bring this page back exactly as it was left, mid-switch
+        window.addEventListener('pageshow', (e) => { if (e.persisted) select(at); });
+        return host;
+    }
+
+    // ---------- wider screens: floating in a corner ----------
     const v = corner[0] === 't' ? 'top' : 'bottom';
     const h = corner[1] === 'r' ? 'right' : 'left';
-    root.innerHTML = `
-<style>
+    const foot = document.querySelector('.site-foot .copy');
+    const floating = mount(`
     :host { all: initial; }
-    .sw { position: fixed; ${v}: calc(${offY}px + env(safe-area-inset-${v}, 0px)); ${h}: ${offX}px; z-index: 2147483000;
-          display: flex; flex-direction: ${v === 'bottom' ? 'column-reverse' : 'column'}; align-items: ${h === 'right' ? 'flex-end' : 'flex-start'}; gap: 8px;
-          font: 500 13px/1.25 system-ui, -apple-system, "Segoe UI", sans-serif; color: #f4f5f7; -webkit-font-smoothing: antialiased; }
-    button { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 13px 0 10px; border: 0; border-radius: 17px; cursor: pointer;
-             font: inherit; font-weight: 600; color: inherit; background: #15171c; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 6px 18px -6px rgba(0,0,0,.55); }
-    button:hover { background: #23262e; }
-    button:focus-visible, a:focus-visible { outline: 2px solid #8fb4ff; outline-offset: 2px; }
-    .dots { display: inline-grid; grid-template-columns: repeat(2, 6px); gap: 2px; }
-    .dots i { width: 6px; height: 6px; border-radius: 1.5px; }
-    .menu { min-width: 236px; padding: 6px; border-radius: 14px; background: #15171c; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 18px 40px -12px rgba(0,0,0,.6); }
-    .menu[hidden] { display: none; }
-    .ttl { margin: 6px 10px 6px; font-size: 12px; font-weight: 500; color: #9aa0ad; }
-    a { display: grid; grid-template-columns: 1fr auto; gap: 1px 10px; padding: 8px 10px; border-radius: 9px; color: inherit; text-decoration: none; }
-    a:hover { background: #23262e; }
-    a b { font-weight: 600; }
-    a span { grid-column: 1; font-size: 12px; color: #9aa0ad; }
-    a em { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-style: normal; font-size: 11px; color: #15171c; background: #8fb4ff; padding: 2px 7px; border-radius: 9px; }
-    @media (prefers-reduced-motion: no-preference) { .menu:not([hidden]) { animation: pop .14s ease-out; } }
-    @keyframes pop { from { opacity: 0; transform: translateY(${v === 'bottom' ? 6 : -6}px); } to { opacity: 1; transform: none; } }
-    @media print { .sw { display: none; } }
-</style>
-<div class="sw">
-    <button type="button" aria-expanded="false" aria-controls="m" title="Switch design">
-        <span class="dots" aria-hidden="true"><i style="background:#E94335"></i><i style="background:#FABB05"></i><i style="background:#34A851"></i><i style="background:#4285F4"></i></span>
-        <span>Design: ${active.name}</span>
-    </button>
-    <div class="menu" id="m" hidden>
-        <p class="ttl">Switch design</p>
-        ${DESIGNS.map((d) => `<a href="${d.file}" data-file="${d.file}"${d === active ? ' aria-current="page"' : ''}><b>${d.name}</b><span>${d.note}</span>${d === active ? '<em>Viewing</em>' : ''}</a>`).join('')}
-    </div>
-</div>`;
+    .float { position: fixed; ${v}: calc(${offY}px + env(safe-area-inset-${v}, 0px)); ${h}: ${offX}px; z-index: 2147483000;
+             font: 600 13px/1 system-ui, -apple-system, "Segoe UI", sans-serif; color: #9aa0ad; -webkit-font-smoothing: antialiased; }
+    ${foot ? `@media ${phone} { .float { display: none; } }` : ''}
+    .seg { background: #15171c; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 6px 18px -6px rgba(0,0,0,.55); }
+    .thumb { background: #f4f5f7; }
+    a { height: 30px; }
+    a:hover { color: #f4f5f7; }
+    a.on { color: #15171c; }
+    /* with a mouse there's room for a tip, so each design is just its icon until you point at it */
+    @media (hover: hover) and (pointer: fine) {
+        a { width: 34px; padding: 0; }
+        .lbl { position: absolute; ${v}: calc(100% + 10px); left: 50%; translate: -50% 0; padding: 6px 9px; border-radius: 7px;
+               color: #f4f5f7; background: #15171c; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 6px 18px -6px rgba(0,0,0,.55);
+               opacity: 0; pointer-events: none; transition: opacity .12s; }
+        a:hover .lbl, a:focus-visible .lbl { opacity: 1; }
+    }`, `<div class="float">${TOGGLE}</div>`);
+    document.body.appendChild(floating);
 
-    const btn = root.querySelector('button');
-    const menu = root.querySelector('.menu');
-    const setOpen = (on) => {
-        menu.hidden = !on;
-        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
-        if (on) (menu.querySelector('a[aria-current]') || menu.querySelector('a')).focus();
-    };
-    btn.addEventListener('click', () => setOpen(menu.hidden));
-    root.querySelectorAll('a').forEach((a) => a.addEventListener('click', (e) => {
-        e.preventDefault();
-        const file = a.dataset.file;
-        if (file === active.file) { setOpen(false); return; }
-        location.href = file + place();
-    }));
-    // close on Escape, or on any click outside
-    root.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setOpen(false); btn.focus(); } });
-    document.addEventListener('pointerdown', (e) => { if (!menu.hidden && !e.composedPath().includes(host)) setOpen(false); });
-
-    const mount = () => document.body.appendChild(host);
-    if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+    // ---------- phones: at the end of the footer, in the design's own type and colours ----------
+    if (foot) {
+        foot.appendChild(mount(`
+    :host { display: block; margin-top: 22px; }
+    @media not all and ${phone} { :host { display: none; } }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    .row > span { font-size: 14px; opacity: .7; }
+    .seg { background: color-mix(in srgb, currentColor 6%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent); }
+    .thumb { background: color-mix(in srgb, currentColor 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 24%, transparent); }
+    a { height: 40px; padding: 0 15px; font-size: 15px; opacity: .68; }
+    a.on { opacity: 1; }`, `<div class="row"><span aria-hidden="true">Design</span>${TOGGLE}</div>`));
+    }
 })();

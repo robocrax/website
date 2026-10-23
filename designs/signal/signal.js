@@ -686,6 +686,9 @@ async function start() {
         renderer.setSize(W, H, false);
         camera.aspect = W / H;
         uniforms.uScaleP.value = renderer.getPixelRatio() * H / (2 * Math.tan(FOV * Math.PI / 360));
+        // the shapes' quarter lines hold until the frame changes size, which a phone's address bar doesn't do
+        const sig = `${W} ${H} ${headH} ${win}`;
+        if (sig !== quarterFor) { quarter = {}; quarterFor = sig; }
         wake();
     }
 
@@ -710,11 +713,51 @@ async function start() {
         }
     }
 
+    // ---------- on a phone, a shape shows only through the window above each section's sheet, so the morph into
+    // the next shape waits until three quarters of the current one is out from under the sheet above, then plays
+    // out as you scroll, finishing as the window lines up under the header ----------
+    // where the sheet's edge leaves that much of a shape's points below it, px down the screen, with a little to
+    // spare: taken as the shape turns, at its highest, so it holds whichever way the shape is facing
+    let quarter = {}, quarterFor = '';
+    function shapeQuarter(shape) {
+        const f = frameFor(0), pose = POSE[shape];
+        if (!clouds[shape]) return f.cy - f.fh * pose.fill / 4;     // near enough until the shape is built
+        if (quarter[shape] == null) {
+            const cl = clouds[shape], D = fitDist(shape, f), px = H / (2 * D * Math.tan(FOV * Math.PI / 360));
+            const ct = Math.cos(pose.tilt), st = Math.sin(pose.tilt), step = 7, n = Math.floor(CORE / step), ys = new Float32Array(n);
+            let q = Infinity;
+            for (let a = 0; a < 16; a++) {
+                const ca = Math.cos(a * TAU / 16), sa = Math.sin(a * TAU / 16);
+                for (let j = 0; j < n; j++) {
+                    const k = j * step * 3, y = cl.pos[k + 1];
+                    const z = cl.pos[k + 2] * ca - cl.pos[k] * sa;         // turned about its upright, then tipped toward you
+                    ys[j] = f.cy - (y * ct - z * st) * px * D / (D - (y * st + z * ct));
+                }
+                ys.sort();
+                q = Math.min(q, ys[Math.floor(n * .22)]);
+            }
+            quarter[shape] = q;
+        }
+        return quarter[shape];
+    }
+    function phoneStage(y) {
+        const tops = window.Site.tops;
+        let s = 0;
+        for (let k = 1; k < scenes.length; k++) {
+            const top = tops[k] - y;                     // the top of section k's window: the sheet above ends here
+            if (top <= headH) { s = k; continue; }       // that window is open: its morph is done
+            const start = shapeQuarter(shapeAt(k - 1));  // three quarters of the shape is below it
+            if (!(top <= start)) break;
+            s = k - 1 + Math.min(1, (start - top) / Math.max(1, start - headH));
+        }
+        return s;
+    }
+
     // ---------- scroll ----------
     let sTarget = 0, sCur = -1;
     window.addEventListener('site:frame', (e) => {
         const d = e.detail;
-        sTarget = d.i + d.t;
+        sTarget = mobile ? phoneStage(d.y) : d.i + d.t;
         if (progressEl) progressEl.style.transform = `scaleX(${d.progress.toFixed(4)})`;
         checkCovered(d.y, d.i);
         wake();
@@ -898,7 +941,11 @@ async function start() {
     const queue = [...new Set(near.map(shapeAt))].filter((k) => k !== 'code' && !clouds[k]);
     const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 60));
     const work = (dl) => {
-        while (queue.length && dl.timeRemaining() > 4) cloud(queue.shift());
+        while (queue.length && dl.timeRemaining() > 4) {
+            const k = queue.shift();
+            cloud(k);
+            if (mobile) shapeQuarter(k);
+        }
         if (queue.length) idle(work);
     };
     idle(work);
