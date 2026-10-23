@@ -682,8 +682,10 @@ async function start() {
     }
     function layout() {
         W = canvas.clientWidth || innerWidth; H = canvas.clientHeight || innerHeight;
-        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75));
-        renderer.setSize(W, H, false);
+        // setting a canvas's size wipes its picture and remakes its buffer, even when the size is the one it has, so
+        // only when it changes: a phone's address bar coming and going on every change of scroll direction doesn't
+        const ratio = Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75), size = renderer.getDrawingBufferSize(new THREE.Vector2());
+        if (size.x !== Math.floor(W * ratio) || size.y !== Math.floor(H * ratio) || ratio !== renderer.getPixelRatio()) renderer.setDrawingBufferSize(W, H, ratio);
         camera.aspect = W / H;
         uniforms.uScaleP.value = renderer.getPixelRatio() * H / (2 * Math.tan(FOV * Math.PI / 360));
         // the shapes' quarter lines hold until the frame changes size, which a phone's address bar doesn't do
@@ -693,15 +695,16 @@ async function start() {
     }
 
     // ---------- on a phone, stop drawing while a section's sheet covers the window ----------
-    let sheets = [], covered = false;
+    let sheets = [], bandBottom = 0, covered = false;
     function measureSheets() {
         const y = scrollY;
         sheets = scenes.map((s) => { const r = s.querySelector('.copy')?.getBoundingClientRect(); return r ? [r.top + y, r.bottom + y] : [0, 0]; });
+        // the stage is pinned to the top, so where it ends only moves with the layout, not with every scroll
+        bandBottom = Math.min(stageEl.getBoundingClientRect().bottom, innerHeight);
     }
     function checkCovered(y, i) {
         let c = false;
         if (mobile) {
-            const bandBottom = Math.min(stageEl.getBoundingClientRect().bottom, innerHeight);
             for (let k = Math.max(0, i - 1); k <= Math.min(scenes.length - 1, i + 1); k++) {
                 if (sheets[k] && sheets[k][0] <= y + headH && sheets[k][1] >= y + bandBottom) c = true;
             }
@@ -851,6 +854,9 @@ async function start() {
         sCur += (sTarget - sCur) * (1 - Math.exp(-dt * 6));
         if (Math.abs(sTarget - sCur) < 1e-4) sCur = sTarget;
         let i = Math.min(Math.floor(sCur), scenes.length - 1), m = Math.min(1, sCur - i);
+        // resting on a section's shape, the pair that ends on it draws the same picture as the pair that starts from it:
+        // keep whichever is loaded, so scrolling either side of that point doesn't send every point to the GPU again
+        if (m === 0 && i > 0 && pairA === shapeAt(i - 1) && pairB === shapeAt(i)) { i -= 1; m = 1; }
         let a = shapeAt(i), b = shapeAt(i + 1);
         if (intro < 1) {
             // the opening: dust gathers into the shape of whichever section the page opened on
@@ -925,7 +931,8 @@ async function start() {
         if (settling || (!reduced && now - lastActive < HOLD_MS)) raf = requestAnimationFrame(tick);
     }
     document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else wake(); });
-    window.addEventListener('resize', () => { measure(); layout(); });
+    // site.js measures on resize and sends site:measure; without it, measure here
+    if (!window.Site) window.addEventListener('resize', () => { measure(); layout(); });
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); document.documentElement.classList.add('no-stage'); visible = false; });
 
     measure();
@@ -935,22 +942,33 @@ async function start() {
     wake();
 
     // build the shapes this page uses while the browser is idle, nearest section first (the next one before the
-    // previous one), so a morph never stops to build its shape and no time goes on shapes the page never shows
+    // previous one), so a morph never stops to build its shape and no time goes on shapes the page never shows.
+    // A shape takes a few frames to build, so it's one at a time, in a pause in the scrolling; it waits for one at most
+    // a second, so it's ready before its morph. Safari has no requestIdleCallback, so there it's a timer
     const here = Math.max(0, window.Site ? window.Site.index : 0);
     const near = scenes.map((_, k) => k).sort((x, y) => Math.abs(x - here) - Math.abs(y - here) || y - x);
     const queue = [...new Set(near.map(shapeAt))].filter((k) => k !== 'code' && !clouds[k]);
-    const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 60));
-    const work = (dl) => {
-        while (queue.length && dl.timeRemaining() > 4) {
+    const later = window.requestIdleCallback ? (f) => requestIdleCallback(f, { timeout: 500 }) : (f) => setTimeout(f, 50);
+    let scrolled = 0, waiting = performance.now(), busy = false;
+    window.addEventListener('scroll', () => { scrolled = performance.now(); }, { passive: true });
+    const work = () => {
+        busy = false;
+        const now = performance.now();
+        if (queue.length && (now - scrolled > 150 || now - waiting > 1000)) {
             const k = queue.shift();
-            cloud(k);
-            if (mobile) shapeQuarter(k);
+            if (!clouds[k]) { cloud(k); if (mobile) shapeQuarter(k); }
+            waiting = performance.now();
         }
-        if (queue.length) idle(work);
+        if (queue.length) { busy = true; later(work); }
     };
-    idle(work);
+    const build = (k) => {
+        if (!queue.length) waiting = performance.now();
+        queue.push(k);
+        if (!busy) { busy = true; later(work); }
+    };
+    if (queue.length) { busy = true; later(work); }
     // the Quick Connect code needs its typeface first
-    (document.fonts ? document.fonts.load('700 84px Unbounded') : Promise.resolve()).catch(() => {}).then(() => idle(() => cloud('code')));
+    (document.fonts ? document.fonts.load('700 84px Unbounded') : Promise.resolve()).catch(() => {}).then(() => build('code'));
 }
 
 if (!canvas || !hasWebGL()) {

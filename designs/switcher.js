@@ -1,5 +1,5 @@
 /* switcher.js — a small toggle for flipping between the site's designs: Dots, Rack and 3D.
-   It keeps your place: the section you're reading opens in the design you switch to.
+   The design you switch to always opens at the top, so it starts from the beginning.
    It floats in a corner on wider screens; on phones it sits at the end of the footer instead.
    Set it per page with data attributes on the script tag: data-corner="bl|br|tl|tr", data-x, data-y (px), and
    data-phone (px): the widest screen that gets the design's phone layout. */
@@ -27,14 +27,6 @@
     const offX = parseFloat(opt('x', '14'));
     const offY = parseFloat(opt('y', '14'));
     const phone = `(max-width: ${parseFloat(opt('phone', '959.98'))}px)`;
-
-    // the section you're reading: the last one whose top has passed a third of the way down the screen
-    function place() {
-        let id = '';
-        const line = window.innerHeight * 0.35;
-        document.querySelectorAll('main section[id]').forEach((s) => { if (s.getBoundingClientRect().top <= line) id = s.id; });
-        return id && id !== 'home' ? `#${id}` : '';
-    }
 
     // the toggle itself: one link per design and a thumb that slides to the one you pick
     const TOGGLE = `
@@ -72,7 +64,7 @@
             if (k === at) return;
             select(k);
             // the thumb gets to its new place, then the page follows
-            const go = () => { location.href = DESIGNS[k].file + place(); };
+            const go = () => { location.href = DESIGNS[k].file; };
             if (reduced) go(); else setTimeout(go, 200);
         }));
         // the Back button can bring this page back exactly as it was left, mid-switch
