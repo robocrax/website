@@ -428,17 +428,18 @@ main { display: block; }
     .b-tools .service > .ic + h3 ~ .service-meta { position: absolute; top: var(--pad); right: var(--pad); padding: 0; }
     .b-tools .service-more h3 { margin-top: auto; }
     /* the type is set for tiles this size, and like a keynote slide it scales with the window's height too */
-    :root { --pad: clamp(18px, min(2vw, 3.4vh), 32px); --top: clamp(70px, 8.6vh, 80px); }
+    /* --foot leaves room under each box for the design switcher, bottom right as on the other designs */
+    :root { --pad: clamp(18px, min(2vw, 3vh), 32px); --top: clamp(68px, 8.4vh, 80px); --foot: 62px; }
     .tile h3, .tile h4 { font-size: clamp(18px, min(1.7vw, 2.7vh), 24px); }
     .service h3 { font-size: clamp(19px, min(1.75vw, 2.8vh), 25px); }
-    .tile p { font-size: clamp(14.5px, min(1.2vw, 1.95vh), 17px); }
-    .service p, .item p, .panel p { font-size: clamp(14px, min(1.15vw, 1.85vh), 16.5px); }
-    .t-list .item h4, .tile.grid .item h4, .steps > li h4, .steps-map h5 { font-size: clamp(15.5px, min(1.4vw, 2.2vh), 20px); }
-    .t-list .item p, .tile.grid .item p, .steps > li p, .steps-map p { font-size: clamp(13.5px, min(1.1vw, 1.75vh), 15.5px); }
-    .t-head h2, .t-head h3.title { font-size: clamp(28px, min(3.7vw, 6.2vh), 64px); }
-    .t-head .lede, .t-hero .lede { font-size: clamp(15.5px, min(1.45vw, 2.4vh), 23px); }
-    .t-hero h1 { font-size: clamp(40px, min(5vw, 8.6vh), 88px); max-width: 18ch; }
-    .steps-map li { padding: clamp(6px, 1.3vh, 11px) 0; }
+    .tile p { font-size: clamp(14.5px, min(1.2vw, 1.85vh), 17px); }
+    .service p, .item p, .panel p { font-size: clamp(14px, min(1.15vw, 1.75vh), 16.5px); }
+    .t-list .item h4, .tile.grid .item h4, .steps > li h4, .steps-map h5 { font-size: clamp(15.5px, min(1.4vw, 2.1vh), 20px); }
+    .t-list .item p, .tile.grid .item p, .steps > li p, .steps-map p { font-size: clamp(13.5px, min(1.1vw, 1.65vh), 15.5px); }
+    .t-head h2, .t-head h3.title { font-size: clamp(28px, min(3.7vw, 5.8vh), 64px); }
+    .t-head .lede, .t-hero .lede { font-size: clamp(15.5px, min(1.45vw, 2.25vh), 23px); }
+    .t-hero h1 { font-size: clamp(40px, min(5vw, 8vh), 88px); max-width: 18ch; }
+    .steps-map li { padding: clamp(5px, 1vh, 11px) 0; }
     .t-glance dd { font-size: clamp(16px, min(1.5vw, 2.4vh), 22px); }
     .t-me .profile-name { font-size: clamp(24px, min(2.3vw, 3.7vh), 34px); }
     .t-me img { width: clamp(44px, 6vh, 64px); }
@@ -459,7 +460,7 @@ main { display: block; }
     /* a screenshot fills whatever its tile has left over, so it never makes a row taller */
     .site .frame { flex: 1 1 0; }
     .site .frame img, .t-shot img { contain: size; }
-    .t-shot { min-height: clamp(180px, 36vh, 440px); }
+    .t-shot { min-height: clamp(170px, 30vh, 440px); }
 }
 /* ---------- phones and tablets: the tiles stack, as on Apple's own pages ---------- */
 @media (max-width: 1023.98px) {
