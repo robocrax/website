@@ -278,6 +278,13 @@ main { position: relative; z-index: 1; }
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'/%3E%3C/svg%3E"); }
 .plan .foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 10px; font-size: 14.5px; color: var(--mist); }
+/* Peak's spots: how many are free, and a bar with a lit segment for each free one */
+.plan .foot.seats { flex-direction: column; gap: 10px; }
+.seats-row { display: flex; justify-content: space-between; gap: 10px; }
+.seats-row strong { color: var(--ink); font-weight: 600; }
+.seat-bar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
+.seat-bar i { height: 8px; border-radius: 999px; background: rgba(238, 240, 251, .06); box-shadow: inset 0 0 0 1px var(--line-hi); }
+.seat-bar i.open { background: var(--green); box-shadow: 0 0 12px -3px rgba(52, 168, 81, .8); }
 .plan .btn { width: 100%; margin-top: auto; }
 .callout { margin-top: 14px; padding: 18px 20px; border-radius: 14px; background: rgba(233, 67, 53, .11); border: 1px solid rgba(233, 67, 53, .38); color: #FFB8AE; }
 .callout h4 { font-size: 1.08rem; color: #FFD2CC; }
