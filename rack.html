@@ -391,7 +391,7 @@
         /* ---------- the timeline: one clip per chapter, a playhead that follows the scroll, and the tour's play button ---------- */
         .timeline {
             position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; height: var(--tl-h);
-            display: flex; align-items: center; gap: 14px; padding: 0 12px 0 16px;
+            display: flex; align-items: center; gap: 14px; padding: 0 136px 0 16px;   /* the right end is kept for the design switcher */
             background: var(--paper); border-top: 1px solid var(--line);
         }
         .tl-play {
@@ -1468,6 +1468,6 @@ services:
         // keep working: each former page is a section with the same id on this one. #quick-connect opens the Jellyfin page.
     </script>
     <script type="module" src="rack.js"></script>
-    <script src="designs/switcher.js" data-corner="br" data-y="70" defer></script>
+    <script src="designs/switcher.js" data-corner="br" defer></script>
 </body>
 </html>
