@@ -3,8 +3,10 @@
    browser can composite them without painting a backing store; only the faceplates carry detail. */
 
 .stage-lens { position: absolute; inset: 0; }
-.stage-persp { position: absolute; inset: 0; perspective-origin: 50% 50%; }
+.stage-persp { position: absolute; inset: 0; }
 .world, .world .g { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+/* the camera's lens, from the start; rack.js sets its strength to suit the stage */
+.world { transform: perspective(1000px); }
 .world .g { left: 0; top: 0; }
 .world .p { position: absolute; left: 0; top: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
 .world .p2 { backface-visibility: visible; -webkit-backface-visibility: visible; }

@@ -484,7 +484,10 @@ function init() {
         const W = stage.clientWidth, Hs = stage.clientHeight;
         const f = frame || { top: 0, height: Hs };
         P = (Math.min(f.height, W * 1.05) / 2) / Math.tan(15 * Math.PI / 180);
-        persp.style.perspective = `${P.toFixed(1)}px`;
+        // the lens is part of the world's own transform rather than a `perspective` on its parent: WebKit, which
+        // every iPhone browser uses, ignores a `perspective` set after the page first draws, and drew the rack
+        // flat and far too close
+        world.style.transform = `perspective(${P.toFixed(1)}px)`;
         lens.style.transform = `translateY(${(f.top + f.height / 2 - Hs / 2).toFixed(1)}px)`;
         wake();
     }
