@@ -1,11 +1,13 @@
 // Builds the other designs' pages from rack.html, which holds the site's copy.
-// Every page gets the same <main> and request modal as rack.html; only the edits listed in RULES differ.
+// Every page gets the same <main> and request modal as rack.html; only the edits listed in RULES differ,
+// except Bento, which then regroups <main> into bento boxes of tiles (bento.mjs) with the same copy.
 // jellyfin.html is not built here: it is its own page, in the Signal design only, edited by hand.
 // Edit the copy in rack.html, then run from the repo root: node designs/build/build.mjs [design ...]
-// It writes index.html (Signal) and island.html from the tpl-*.html templates beside it.
+// It writes index.html (Signal) and bento.html from the tpl-*.html templates beside it.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { bentoMain } from './bento.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..');
@@ -31,22 +33,13 @@ const RULES = {
         [RACK_SERVICES, 'Scroll on to see them one at a time.'],
         [RACK_FINE, 'Every shape on this page is drawn by the same cloud of light. Move your pointer through it, drag to turn it, or click beside the text to send a pulse through it.'],
     ],
-    island: [
-        [RACK_SERVICES, 'Each one has its own spot on the island; scroll on to visit them one at a time.'],
-        [RACK_FINE, 'The island on this page is a map of the work: websites on the high street, hosting in the server shed, IT help at the house, automations in the factory, tools in the workshop and the hall, dashboards at the office, and the streaming server at the drive-in.'],
-        { section: 'wordpress', find: '<span class="tape">WEB-01</span>', replace: '<span class="tape">Server shed</span>' },
-        { section: 'it-support', find: '<span class="tape">KVM</span>', replace: '<span class="tape">The house</span>' },
-        { section: 'automations', find: '<span class="tape">AUTO-01</span>', replace: '<span class="tape">The factory</span>' },
-        { section: 'respond', find: '<span class="tape">TOOLS-01</span>', replace: '<span class="tape">The hall</span>' },
-        { section: 'nzquiz', find: '<span class="tape">TOOLS-01</span>', replace: '<span class="tape">The ring road</span>' },
-        { section: 'atem', find: '<span class="tape">ATEM-CTL</span>', replace: '<span class="tape">The hall</span>' },
-        { section: 'dashboards', find: '<span class="tape">DASH-01</span>', replace: '<span class="tape">The office</span>' },
-        { section: 'heartbeats', find: '<span class="tape">PING-SIDECAR</span>', replace: '<span class="tape">The radio mast</span>' },
-        { section: 'magento', find: '<span class="tape">TOOLS-01</span>', replace: '<span class="tape">The warehouse</span>' },
-        { section: 'jellyfin', find: '<span class="tape">JELLYFIN</span>', replace: '<span class="tape">The drive-in</span>' },
-        { section: 'tv-setup', find: '<span class="tape">JELLYFIN</span>', replace: '<span class="tape">The drive-in</span>' },
+    bento: [
+        [RACK_SERVICES, 'Each one has a box of its own; scroll on to open them one at a time.'],
+        [RACK_FINE, 'Every section on this page is one bento box of tiles, in the style of Apple\'s keynote slides: each opens on its main card, which zooms out as the rest slide in around it.'],
     ],
 };
+// designs whose <main> is regrouped after the rules
+const TRANSFORM = { bento: bentoMain };
 
 function sectionBounds(html, id) {
     const a = html.indexOf(`<section id="${id}"`);
@@ -77,6 +70,7 @@ for (const design of Object.keys(RULES)) {
     if (!fs.existsSync(tplPath)) { console.log(`skip ${design} (no template)`); continue; }
     const tpl = fs.readFileSync(tplPath, 'utf8').replace(/\r\n/g, '\n');
     let main = applyRules(MAIN, RULES[design], design);
+    if (TRANSFORM[design]) main = TRANSFORM[design](main);
     // a template may splice extra markup into a section: <!--@INTO:id:position-->...<!--@END-->
     const extras = [...tpl.matchAll(/<!--@INTO:([\w-]+):(start|end)-->\n?([\s\S]*?)<!--@END-->\n?/g)];
     for (const [, id, where, markup] of extras) {

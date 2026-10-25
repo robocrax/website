@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en-NZ" data-design="bento">
+<head>
+    <meta charset="utf-8">
+    <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Pritam Bhuva">
+    <script>/* the first Jellyfin site's #quick-connect links open the Quick Connect guide on the Jellyfin page */ if (location.hash === '#quick-connect') location.replace('jellyfin#quick-connect');</script>
+    <meta name="description" content="RoboCrax: Auckland-based website hosting, IT support, data automations, a community streaming server and free open-source tools.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.robocrax.com/">
+    <meta property="og:title" content="RoboCrax">
+    <meta property="og:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
+    <meta property="og:image" content="https://www.robocrax.com/og_image.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="robocrax.com">
+    <meta property="twitter:url" content="https://www.robocrax.com/">
+    <meta name="twitter:title" content="RoboCrax">
+    <meta name="twitter:description" content="Hosting, IT help and automations from someone you can actually text. Based in Auckland.">
+    <meta name="twitter:image" content="https://www.robocrax.com/og_image.png">
+    <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="designs/bento/bento.css">
+</head>
+<body>
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <!-- the island: one dot per box (one per chapter on phones) for how far through the site you are, the way to
+         message me beside it, and a map of every chapter when you open it (designs/bento/bento.js) -->
+    <header class="island" id="island">
+        <a class="i-brand" href="#home" aria-label="RoboCrax home"><img src="logo.svg" alt="" width="22" height="30"></a>
+        <button class="i-track" id="i-track" type="button" aria-expanded="false" aria-controls="i-map">
+            <span class="i-name" id="i-name">Intro</span>
+            <span class="i-dots" id="i-dots" aria-hidden="true"></span>
+            <span class="i-dots i-chapters" id="i-chapters" aria-hidden="true"></span>
+            <span class="sr-only">Sections</span>
+        </button>
+        <a id="nav-contact-btn" class="i-cta" data-track="whatsapp-nav"
+           href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg><span class="btn-label">Message me</span></a>
+        <button id="nav-request-btn" class="i-cta" type="button" data-track="request-access-nav" hidden>Request access</button>
+        <nav class="i-map" id="i-map" aria-label="Sections" hidden></nav>
+    </header>
+
+    <main id="main">
+
+        <!-- ================= INTRO ================= -->
+        <section id="home" class="bs" data-stage="home" data-marker="Intro" data-title="RoboCrax | Hosting, IT help and automations in Auckland" aria-labelledby="home-title">
+            <div class="slide">
+                <div class="bento b-home">
+                    <div class="tile c8 r2 t-hero">
+                        <p class="kicker"><span class="status"><span class="led led-green" aria-hidden="true"></span><span id="boot-status">Taking new work</span></span></p>
+                        <h1 id="home-title">I keep small businesses online, secure and running smoothly.</h1>
+                        <p class="lede">I'm an Auckland-based infrastructure engineer. I build and host websites, fix the IT problems that stall your day, and automate the busywork between your systems. Harnessing the power of Opus with a little prompt engineering.</p>
+                        <div class="actions">
+                            <a class="btn btn-primary" data-track="whatsapp-hero" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.69-1.42 1.32-1.96 1.37-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.35z"/></svg>
+                                Message me on WhatsApp
+                            </a>
+                            <a class="btn btn-quiet" href="#portfolio">See my work</a>
+                        </div>
+                    </div>
+                    <div class="profile-top tile c4 t-me">
+                        <img src="logo.svg" alt="" width="30" height="42">
+                        <div>
+                            <p class="profile-name">RoboCrax</p>
+                            <p class="profile-role">Run by Pritam Bhuva, infrastructure engineer, Auckland</p>
+                        </div>
+                    </div>
+                    <div class="tile c2 m1 t-glance g-focus">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+                        <dl>
+                            <div><dt class="tape">Focus</dt><dd>Websites, IT support and automation</dd></div>
+                        </dl>
+                    </div>
+                    <div class="tile c2 m1 t-glance g-clients">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                        <dl>
+                            <div><dt class="tape">Clients</dt><dd>Businesses across New Zealand and Australia</dd></div>
+                        </dl>
+                    </div>
+                    <div class="tile c4 t-glance g-contact">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <dl>
+                            <div><dt class="tape">Contact</dt><dd>Direct on WhatsApp, 24/7</dd></div>
+                        </dl>
+                    </div>
+                    <div class="tile c8 t-glance g-toolbox">
+                        <dl>
+                            <div><dt class="tape">Toolbox</dt><dd><ul class="chips"><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z"/></svg>Linux</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#E57000" aria-hidden="true"><path d="M4.928 1.825c-1.09.553-1.09.64-.07 1.78 5.655 6.295 7.004 7.782 7.107 7.782.139.017 7.971-8.542 8.058-8.801.034-.07-.208-.312-.519-.536-.415-.312-.864-.433-1.712-.467-1.59-.104-2.144.242-4.115 2.455-.899 1.003-1.66 1.833-1.66 1.833-.017 0-.76-.813-1.642-1.798S8.473 2.1 8.127 1.91c-.796-.45-2.421-.484-3.2-.086zM1.297 4.367C.45 4.695 0 5.007 0 5.248c0 .121 1.331 1.678 2.94 3.459 1.625 1.78 2.939 3.268 2.939 3.302 0 .035-1.331 1.522-2.94 3.303C1.314 17.11.017 18.683.035 18.822c.086.467 1.504 1.055 2.541 1.055 1.678-.018 2.058-.312 5.603-4.202 1.78-1.954 3.233-3.614 3.233-3.666 0-.069-1.435-1.694-3.199-3.63-2.3-2.508-3.423-3.632-3.96-3.874-.812-.398-2.126-.467-2.956-.138zm18.467.12c-.502.26-1.764 1.505-3.943 3.891-1.763 1.937-3.199 3.562-3.199 3.631 0 .07 1.453 1.712 3.234 3.666 3.544 3.89 3.925 4.184 5.602 4.202 1.038 0 2.455-.588 2.542-1.055.017-.156-1.28-1.712-2.905-3.493-1.608-1.78-2.94-3.285-2.94-3.32 0-.034 1.332-1.539 2.94-3.32C22.72 6.91 24.017 5.352 24 5.214c-.087-.45-1.366-.968-2.473-1.038-.795-.034-1.21.035-1.763.312zM7.954 16.973c-2.144 2.369-3.908 4.374-3.943 4.46-.034.07.208.312.52.537.414.311.864.432 1.711.467 1.574.103 2.161-.26 4.15-2.508.864-.968 1.608-1.78 1.625-1.78s.761.812 1.643 1.798c2.023 2.248 2.559 2.576 4.132 2.49.848-.035 1.297-.156 1.712-.467.311-.225.553-.467.519-.536-.087-.26-7.92-8.819-8.058-8.801-.069 0-1.867 1.954-4.011 4.34z"/></svg>Proxmox</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#2496ED" aria-hidden="true"><path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"/></svg>Docker</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#F38020" aria-hidden="true"><path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/></svg>Cloudflare</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#21759B" aria-hidden="true"><path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0"/></svg>WordPress</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#00ADD8" aria-hidden="true"><path d="M1.811 10.231c-.047 0-.058-.023-.035-.059l.246-.315c.023-.035.081-.058.128-.058h4.172c.046 0 .058.035.035.07l-.199.303c-.023.036-.082.07-.117.07zM.047 11.306c-.047 0-.059-.023-.035-.058l.245-.316c.023-.035.082-.058.129-.058h5.328c.047 0 .07.035.058.07l-.093.28c-.012.047-.058.07-.105.07zm2.828 1.075c-.047 0-.059-.035-.035-.07l.163-.292c.023-.035.07-.07.117-.07h2.337c.047 0 .07.035.07.082l-.023.28c0 .047-.047.082-.082.082zm12.129-2.36c-.736.187-1.239.327-1.963.514-.176.046-.187.058-.34-.117-.174-.199-.303-.327-.548-.444-.737-.362-1.45-.257-2.115.175-.795.514-1.204 1.274-1.192 2.22.011.935.654 1.706 1.577 1.835.795.105 1.46-.175 1.987-.77.105-.13.198-.27.315-.434H10.47c-.245 0-.304-.152-.222-.35.152-.362.432-.97.596-1.274a.315.315 0 01.292-.187h4.253c-.023.316-.023.631-.07.947a4.983 4.983 0 01-.958 2.29c-.841 1.11-1.94 1.8-3.33 1.986-1.145.152-2.209-.07-3.143-.77-.865-.655-1.356-1.52-1.484-2.595-.152-1.274.222-2.419.993-3.424.83-1.086 1.928-1.776 3.272-2.02 1.098-.2 2.15-.07 3.096.571.62.41 1.063.97 1.356 1.648.07.105.023.164-.117.2m3.868 6.461c-1.064-.024-2.034-.328-2.852-1.029a3.665 3.665 0 01-1.262-2.255c-.21-1.32.152-2.489.947-3.529.853-1.122 1.881-1.706 3.272-1.95 1.192-.21 2.314-.095 3.33.595.923.63 1.496 1.484 1.648 2.605.198 1.578-.257 2.863-1.344 3.962-.771.783-1.718 1.273-2.805 1.495-.315.06-.63.07-.934.106zm2.78-4.72c-.011-.153-.011-.27-.034-.387-.21-1.157-1.274-1.81-2.384-1.554-1.087.245-1.788.935-2.045 2.033-.21.912.234 1.835 1.075 2.21.643.28 1.285.244 1.905-.07.923-.48 1.425-1.228 1.484-2.233z"/></svg>Go</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#3776AB" aria-hidden="true"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>Python</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#5FA04E" aria-hidden="true"><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg>Node.js</li><li><svg class="ic" viewBox="0 0 24 24" fill="currentColor" style="color:#D97757" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</li></ul></dd></div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WORK ================= -->
+        <section id="portfolio" class="bs" data-stage="portfolio" data-marker="Work" data-title="Websites I've worked on | RoboCrax" aria-labelledby="portfolio-title">
+            <div class="slide">
+                <div class="bento b-work">
+                    <div class="tile c4 r2 t-head">
+                        <h2 class="title" id="portfolio-title">Websites I've worked on</h2>
+                        <p class="lede">A selection of New Zealand and Australian businesses whose websites I've built, rebuilt or looked after, from adidas distributors to a mobile car detailer.</p>
+                    </div>
+                    <article class="site site-lg tile c4">
+                        <div class="frame"><span class="frame-url">kitchenmaker.co.nz</span><img src="work/kitchenmaker.webp" alt="Kitchenmaker homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.kitchenmaker.co.nz/" target="_blank" rel="noopener" data-track="work-kitchenmaker">Kitchenmaker</a></h3>
+                        <p>Custom kitchens and cabinetry from an Auckland maker with over 30 years of craftsmanship.</p>
+                    </article>
+                    <article class="site site-lg tile c4">
+                        <div class="frame"><span class="frame-url">haritinyhomes.co.nz</span><img src="work/haritinyhomes.webp" alt="Hari Tiny Homes homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.haritinyhomes.co.nz/" target="_blank" rel="noopener" data-track="work-haritinyhomes">Hari Tiny Homes</a></h3>
+                        <p>Affordable tiny homes and granny flats, with plans, pricing and custom-build estimates online.</p>
+                    </article>
+                    <article class="site site-lg tile c4">
+                        <div class="frame"><span class="frame-url">teamsports.co.nz</span><img src="work/teamsports.webp" alt="Teamsports homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.teamsports.co.nz/" target="_blank" rel="noopener" data-track="work-teamsports">Teamsports</a></h3>
+                        <p>New Zealand distributor of adidas sportswear and team gear, with a full online store.</p>
+                    </article>
+                    <article class="site site-lg tile c4">
+                        <div class="frame"><span class="frame-url">footballhq.co.nz</span><img src="work/footballhq.webp" alt="Football HQ homepage" width="960" height="600" loading="lazy"></div>
+                        <h3><a href="https://www.footballhq.co.nz/" target="_blank" rel="noopener" data-track="work-footballhq">Football HQ</a></h3>
+                        <p>Exclusive adidas teamwear distributor for the Oceania football region, for clubs, trade and the public.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio-2" class="bs" data-stage="portfolio" data-marker="Work" data-title="Websites I've worked on | RoboCrax" aria-label="Websites I've worked on, continued">
+            <div class="slide">
+                <div class="bento b-work">
+                    <article class="site tile c3">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz</span><img src="work/ssmb.webp" alt="SSMB Auckland homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/" target="_blank" rel="noopener" data-track="work-ssmb">SSMB Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Shree Swaminarayan Mandir Bhuj, a Hindu temple and community in Clevedon, Auckland. A non-profit where I also do community service.</p>
+                    </article>
+                    <article class="site tile c3">
+                        <div class="frame"><span class="frame-url">ssmb.org.nz/vaishnavs</span><img src="work/vaishnavs.webp" alt="Vaishnav's Auckland website" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.ssmb.org.nz/vaishnavs/" target="_blank" rel="noopener" data-track="work-vaishnavs">Vaishnav's Auckland</a> <span class="tag">Non-profit</span></h3>
+                        <p>Pure vegetarian sweets, snacks and catering. An entity of SSMB Auckland.</p>
+                    </article>
+                    <article class="site tile c6 r2 t-feature">
+                        <div class="frame"><span class="frame-url">kiwiscrewpiles.co.nz</span><img src="work/kiwiscrewpiles.webp" alt="Kiwi Screw Piles homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.kiwiscrewpiles.co.nz/" target="_blank" rel="noopener" data-track="work-kiwiscrewpiles">Kiwi Screw Piles</a></h3>
+                        <p>Steel screw pile foundations for houses, decks and tiny homes, installed in a day.</p>
+                    </article>
+                    <article class="site tile c3">
+                        <div class="frame"><span class="frame-url">kkdecor.co.nz</span><img src="work/kkdecor.webp" alt="KK Decor homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.kkdecor.co.nz/" target="_blank" rel="noopener" data-track="work-kkdecor">KK Decor</a></h3>
+                        <p>Stylish indoor and outdoor blinds.</p>
+                    </article>
+                    <article class="site tile c3">
+                        <div class="frame"><span class="frame-url">swetafurnishing.co.nz</span><img src="work/swetafurnishing.webp" alt="Sweta Furnishing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.swetafurnishing.co.nz/" target="_blank" rel="noopener" data-track="work-swetafurnishing">Sweta Furnishing</a></h3>
+                        <p>Made-to-measure curtains and blinds in Papatoetoe, Auckland.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio-3" class="bs" data-stage="portfolio" data-marker="Work" data-title="Websites I've worked on | RoboCrax" aria-label="Websites I've worked on, continued">
+            <div class="slide">
+                <div class="bento b-work">
+                    <article class="site tile c4">
+                        <div class="frame"><span class="frame-url">krishnasolutions.co.nz</span><img src="work/krishnasolutions.webp" alt="Krishna Solutions homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://krishnasolutions.co.nz/" target="_blank" rel="noopener" data-track="work-krishnasolutions">Krishna Solutions</a></h3>
+                        <p>IT support, websites and digital marketing for Auckland homes and businesses.</p>
+                    </article>
+                    <article class="site tile c4">
+                        <div class="frame"><span class="frame-url">arconsupplies.com.au</span><img src="work/arconsupplies.webp" alt="Arcon Supplies homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.arconsupplies.com.au/" target="_blank" rel="noopener" data-track="work-arconsupplies">Arcon Supplies</a></h3>
+                        <p>Reinforcing mesh, bar and accessories for builders in Mount Druitt, NSW.</p>
+                    </article>
+                    <article class="site tile c4">
+                        <div class="frame"><span class="frame-url">iprovidecare.com.au</span><img src="work/iprovidecare.webp" alt="iProvideCare homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.iprovidecare.com.au/" target="_blank" rel="noopener" data-track="work-iprovidecare">iProvideCare</a></h3>
+                        <p>Specialist community nursing at home across Sydney.</p>
+                    </article>
+                    <article class="site tile c4">
+                        <div class="frame"><span class="frame-url">conceptualise.co.nz</span><img src="work/conceptualise.webp" alt="Conceptualise homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.conceptualise.co.nz/" target="_blank" rel="noopener" data-track="work-conceptualise">Conceptualise</a></h3>
+                        <p>Affordable web design that gets NZ small businesses online.</p>
+                    </article>
+                    <article class="site tile c4">
+                        <div class="frame"><span class="frame-url">exlan.co.nz</span><img src="work/exlan.webp" alt="Exlan Auto Detailing homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://www.exlan.co.nz/" target="_blank" rel="noopener" data-track="work-exlan">Exlan Auto Detailing</a></h3>
+                        <p>Mobile car detailing across Auckland.</p>
+                    </article>
+                    <!-- Ready to publish once confirmed: remove these comment markers to show ASAS.
+                    <article class="site">
+                        <div class="frame"><span class="frame-url">asas.co.nz</span><img src="work/asas.webp" alt="ASAS homepage" width="640" height="400" loading="lazy"></div>
+                        <h3><a href="https://asas.co.nz/" target="_blank" rel="noopener" data-track="work-asas">ASAS</a></h3>
+                        <p>Free ACC advocacy for people across New Zealand.</p>
+                    </article>
+                    -->
+                    <div class="panel row-cta tile c4 t-more">
+                        <div>
+                            <h3>And more</h3>
+                            <p>These are just some of the sites I've worked on. If you want yours built, rebuilt or simply looked after, let's talk.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-portfolio" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20website" target="_blank" rel="noopener">Talk to me about a website</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WHAT I DO ================= -->
+        <section id="services" class="bs" data-stage="services" data-marker="Services" data-title="What I do | RoboCrax" aria-labelledby="services-title">
+            <div class="slide">
+                <div class="bento b-services">
+                    <div class="tile c4 r2 t-head">
+                        <h2 class="title" id="services-title">What I do</h2>
+                        <p class="lede">Three services for small businesses, plus a streaming server for the community. Each one has a box of its own; scroll on to open them one at a time.</p>
+                    </div>
+                    <article class="service tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                        <h3><a href="#wordpress">Website hosting</a></h3>
+                        <p>Fully managed hosting from Auckland. Setup, updates, security and backups are handled for you, and changes happen whenever you message.</p>
+                        <p class="service-meta">Most sites around $200 a year</p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg>
+                        <h3><a href="#it-support">IT support</a></h3>
+                        <p>Remote help for the problems a chatbot can't fix: dying laptops, full drives, stubborn printers and stuck email. You watch the whole session.</p>
+                        <p class="service-meta">AnyDesk, TeamViewer, RustDesk or Quick Assist</p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
+                        <h3><a href="#automations">Data and automation</a></h3>
+                        <p>Small, dependable programs that move your data so you don't have to: scrapers, webhook relays and database syncs that run 24/7.</p>
+                        <p class="service-meta">Built in Go, Python and Node.js</p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+                        <h3><a href="#jellyfin">Cheap-as Streaming Service</a></h3>
+                        <p>A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= WEBSITE HOSTING ================= -->
+        <section id="wordpress" class="bs" data-stage="wordpress" data-marker="Hosting" data-title="Website hosting | RoboCrax" aria-labelledby="hosting-title">
+            <div class="slide">
+                <div class="bento b-hosting">
+                    <div class="tile c8 t-head">
+                        <p class="kicker"><span class="tape">WEB-01</span>Website hosting</p>
+                        <h2 class="title" id="hosting-title">Website hosting, handled.</h2>
+                        <p class="lede">You run your business; I keep your website up, fast and secure. Hosting is based here in Auckland and managed end to end, with a direct line to me whenever something needs to change.</p>
+                    </div>
+                    <div class="item tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                        <h3>Local and affordable</h3>
+                        <p>Auckland-based hosting with straightforward pricing and none of the big-provider markups or upsells.</p>
+                    </div>
+                    <div class="item tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <h3>Managed for you</h3>
+                        <p>Setup, upgrades, security, backups and custom tweaks are all on me. No control panels to learn.</p>
+                    </div>
+                    <div class="item tile c4">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <h3>A real person, any time</h3>
+                        <p>Message or call me on WhatsApp whenever you need a change or have a question. No ticket queue, no bots.</p>
+                    </div>
+                    <div class="panel row-cta tile c4 t-price">
+                        <div>
+                            <h3>What it costs</h3>
+                            <p>Most standard sites come in around <strong>$200 a year</strong>. Larger or custom setups get a quote that fits what you actually need.</p>
+                        </div>
+                        <div class="btns">
+                            <a class="btn btn-primary" data-track="whatsapp-hosting" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20Enterprise%20Website%20Hosting" target="_blank" rel="noopener">Talk to me about hosting</a>
+                            <a class="btn btn-quiet" href="#portfolio">See websites I've worked on</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= IT SUPPORT ================= -->
+        <section id="it-support" class="bs" data-stage="it-support" data-marker="IT support" data-title="IT support | RoboCrax" aria-labelledby="it-title">
+            <div class="slide">
+                <div class="bento b-it">
+                    <div class="tile c7 t-head">
+                        <p class="kicker"><span class="tape">KVM</span>IT support</p>
+                        <h2 class="title" id="it-title">IT support from a real person.</h2>
+                        <p class="lede">AI is great for explaining things. It can't clear your drive, coax a printer back online or rescue a laptop that won't boot. I can, over a secure remote session that you watch from start to finish.</p>
+                        <div class="actions">
+                            <a class="btn btn-primary" data-track="whatsapp-it" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20some%20IT%20support%20with%20my%20device" target="_blank" rel="noopener">Message me about IT help</a>
+                        </div>
+                    </div>
+                    <div class="block tile c5 r2 t-list">
+                        <h3 class="h">What I usually fix</h3>
+                        <div class="grid grid-4">
+                            <div class="item">
+                                <h4>Slow or crashing laptops</h4>
+                                <p>Sluggish machines, blue screens, startup freezes and malware clean-up.</p>
+                            </div>
+                            <div class="item">
+                                <h4>Running out of space</h4>
+                                <p>Finding hidden bloat and old caches, and safely moving files to win back gigabytes.</p>
+                            </div>
+                            <div class="item">
+                                <h4>Printers and peripherals</h4>
+                                <p>Offline wireless printers, driver conflicts, scanners and external monitors.</p>
+                            </div>
+                            <div class="item">
+                                <h4>Email and accounts</h4>
+                                <p>Outlook and Gmail sync errors, broken email domains, password recovery and migrations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block tile c7 t-steps">
+                        <h3 class="h">How a session works</h3>
+                        <ol class="steps">
+                            <li>
+                                <h4>Tell me what's wrong</h4>
+                                <p>Send a WhatsApp message describing the problem. A screenshot helps.</p>
+                            </li>
+                            <li>
+                                <h4>Open a remote session</h4>
+                                <p>Use whatever you're comfortable with: AnyDesk, TeamViewer, RustDesk or Windows Quick Assist.</p>
+                            </li>
+                            <li>
+                                <h4>Watch it get fixed</h4>
+                                <p>Everything happens on your screen in real time, and you can end the session whenever you like.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= AUTOMATIONS ================= -->
+        <section id="automations" class="bs" data-stage="automations" data-marker="Automation" data-title="Data and automation | RoboCrax" aria-labelledby="auto-title">
+            <div class="slide">
+                <div class="bento b-auto">
+                    <div class="tile c6 r2 t-head">
+                        <p class="kicker"><span class="tape">AUTO-01</span>Data and automation</p>
+                        <h2 class="title" id="auto-title">Automations that keep running when you stop watching.</h2>
+                        <p class="lede">If someone on your team copies data between systems by hand, or a Zapier chain breaks every few weeks, that's a job for a small, purpose-built program. I write them in Go, Python and Node.js, and they run on a schedule or the moment something happens.</p>
+                        <div class="actions">
+                            <a class="btn btn-primary" data-track="whatsapp-automations" href="https://wa.me/+64204774826?text=Hi,%20I%20want%20to%20scope%20a%20custom%20data%20automation" target="_blank" rel="noopener">Scope an automation with me</a>
+                        </div>
+                    </div>
+                    <div class="panel tile c3">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+                        <h3>Pull data from websites</h3>
+                        <p>Headless-browser scrapers built with Playwright or Puppeteer that handle JavaScript-heavy pages, extract prices, stock levels or listings, and write clean JSON straight into your database.</p>
+                    </div>
+                    <div class="panel tile c3">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+                        <h3>Catch and route webhooks</h3>
+                        <p>Relays that receive events from Stripe, Shopify or your CRM, keep a raw log of every payload, and deliver them onward with automatic retries when the other end is down.</p>
+                    </div>
+                    <div class="block tile c6 t-self">
+                        <svg class="ic g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 12a9 3 0 0 0 5 2.69"/><path d="M21 9.3V5"/><path d="M3 5v14a9 3 0 0 0 6.47 2.88"/><path d="M12 12v4h4"/><path d="M13 20a5 5 0 0 0 9-3 4.5 4.5 0 0 0-4.5-4.5c-1.33 0-2.54.54-3.41 1.41L12 16"/></svg>
+                        <h3 class="h">Built to look after themselves</h3>
+                        <p>Each automation retries failed work with backoff, logs what it did, and tells you when something needs a human. Database syncs run on their own and pick up where they left off after an outage, so nothing gets lost or doubled up.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HOW I WORK ================= -->
+        <section id="how" class="bs" data-stage="how" data-marker="How I work" data-title="How I work | RoboCrax" aria-labelledby="how-title">
+            <div class="slide">
+                <div class="bento b-how">
+                    <div class="tile c4 r2 t-head">
+                        <h2 class="title" id="how-title">How I work</h2>
+                        <img class="mark" src="logo.svg" alt="" width="120" height="166">
+                    </div>
+                    <div class="item tile c8 t-lead">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/><path d="m18 15-2-2"/><path d="m15 18-2-2"/></svg>
+                        <h3>You deal with me</h3>
+                        <p>RoboCrax is just me, Pritam Bhuva. Every job is handled by me personally, from the first message to the ongoing support afterwards.</p>
+                    </div>
+                    <div class="item tile c4">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                        <h3>Local and fairly priced</h3>
+                        <p>Based in Auckland, with straightforward pricing and none of the big-provider markups or upsells.</p>
+                    </div>
+                    <div class="item tile c4">
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <h3>Built to look after itself</h3>
+                        <p>I build systems that retry, recover and report on their own, so fewer problems ever reach you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: LIVE QUIZ APP (SSMB) ================= -->
+        <section id="tools" class="bs" data-stage="tools" data-marker="Tools" data-title="Tools I've built | RoboCrax" aria-labelledby="tools-title">
+            <div class="slide">
+                <div class="bento b-tools">
+                    <div class="tile c4 r2 t-head">
+                        <h2 class="title" id="tools-title">Tools I've built</h2>
+                        <p class="lede">Things I've built because they needed to exist: a live quiz app and a live stream controller for SSMB Auckland, the non-profit where I do community service, dashboards that pull a business's data into one place, a free practice test for learner drivers, a monitoring sidecar for the devices nobody can put an agent on, and many Magento 2 modules for my work. The list keeps growing.</p>
+                    </div>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+                        <h3><a href="#respond">Live quiz app for SSMB Auckland</a></h3>
+                        <p>A Kahoot-style quiz and polling app built from scratch. The audience joins on their phones, answers live questions and races up the leaderboard.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+                        <h3><a href="#nzquiz">NZ Road Code Practice Quiz</a></h3>
+                        <p>A free take on the NZTA learner theory test. No 10-question limit, no in-app purchases, full mock exams and endless practice in your browser.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Free to use</span></p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+                        <h3><a href="#atem">Live stream control</a></h3>
+                        <p>Everything the AV desk does, on one page, on any phone, iPad or PC: tap a camera and it's live. Built for the volunteers who run SSMB Auckland's services.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                        <h3><a href="#dashboards">Dashboards and directories</a></h3>
+                        <p>Live dashboards that bring a business's data into one place, and a searchable directory of every site, store and tool a team runs.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+                        <h3><a href="#heartbeats">Device Ping Heartbeats</a></h3>
+                        <p>A tiny Go sidecar that pings devices on your network and reports to Healthchecks.io only while they're healthy.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Open source</span></p>
+                    </article>
+                    <article class="service tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="currentColor" style="color:#EE672F" aria-hidden="true"><path d="M12 24l-4.455-2.572v-12l2.97-1.715v12.001l1.485.902 1.485-.902V7.713l2.971 1.715v12L12 24zM22.391 6v12l-2.969 1.714V7.713L12 3.43 4.574 7.713v12.001L1.609 18V6L12 0l10.391 6z"/></svg>
+                        <h3><a href="#magento">Magento 2 modules</a></h3>
+                        <p>Many custom Magento 2 modules, each written from scratch for my work rather than bolted on from the marketplace.</p>
+                        <p class="service-meta"><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                    </article>
+                    <article class="service service-more tile c4">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        <h3><a data-track="whatsapp-tools" href="https://wa.me/+64204774826?text=Hi,%20I%20have%20something%20that%20needs%20building" target="_blank" rel="noopener">Something that needs building?</a></h3>
+                        <p>If a tool doesn't exist yet, I'll make it. Message me with what you're trying to do.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section id="respond" class="bs" data-stage="respond" data-marker="Tools" data-title="Live quiz app for SSMB Auckland | RoboCrax" aria-labelledby="respond-title">
+            <div class="slide">
+                <div class="bento b-respond">
+                    <div class="tile c5 t-head">
+                        <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                        <h3 class="title" id="respond-title">Live quizzes for SSMB Auckland</h3>
+                        <p class="lede">A Kahoot-style quiz and polling app I built from scratch for SSMB Auckland's events. Everyone plays on their own phone while the host runs the session from a console.</p>
+                        <p class="where">respond.ssmb.org.nz</p>
+                    </div>
+                    <div class="tile c3 r2 t-phone">
+                        <figure class="phone">
+                            <img src="work/respond.webp" alt="The quiz app on a phone, showing a live fill-in-the-blank question" width="390" height="780" loading="lazy">
+                        </figure>
+                    </div>
+                    <div class="grid grid-2 tile c4 r2 t-list">
+                        <div class="item">
+                            <h4>Join in seconds</h4>
+                            <p>Open the link and pick a nickname. No app to install and no account to create.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Questions arrive on their own</h4>
+                            <p>Phones stay in sync with the host and reconnect by themselves if the signal drops.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Quizzes, polls and open answers</h4>
+                            <p>Timed quiz rounds with one or more right answers, quick polls, and typed responses.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Points and a leaderboard</h4>
+                            <p>Correct answers score points, and the leaderboard keeps the room competitive between rounds.</p>
+                        </div>
+                    </div>
+                    <div class="panel row-cta tile c5 t-cta">
+                        <div>
+                            <h4>Want one for your event or classroom?</h4>
+                            <p>I can build a quiz or polling app around your branding and the way your sessions run.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-respond" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20a%20live%20quiz%20app%20like%20the%20SSMB%20one" target="_blank" rel="noopener">Message me about a quiz app</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: NZ ROAD CODE QUIZ ================= -->
+        <section id="nzquiz" class="bs" data-stage="nzquiz" data-marker="Tools" data-title="NZ Road Code Practice Quiz | RoboCrax" aria-labelledby="quiz-title">
+            <div class="slide">
+                <div class="bento b-quiz">
+                    <div class="tile c6 t-head">
+                        <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Free to use</span></p>
+                        <h3 class="title" id="quiz-title">NZ Road Code Practice Quiz</h3>
+                        <p class="lede">Free, unlimited practice for the NZTA learner theory test. The official app stops you at 10 questions and puts the rest behind a paywall; this one lets you keep going until every rule sticks.</p>
+                        <p class="where"><a href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">nzroadcodequiz.robocrax.com</a></p>
+                    </div>
+                    <div class="item tile c3 m1">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+                        <h4>Unlimited quiz mode</h4>
+                        <p>No 10-question cap. Practise until you know every rule.</p>
+                    </div>
+                    <div class="item tile c3 m1">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <h4>Full mock exams</h4>
+                        <p>The real 35-question format with the same pass mark as the NZTA test.</p>
+                    </div>
+                    <div class="item tile c3 m1">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+                        <h4>Topic drills</h4>
+                        <p>Focus on intersections, signs, general road safety or parking.</p>
+                    </div>
+                    <div class="item tile c3 m1">
+                        <svg class="ic b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
+                        <h4>Works in any browser</h4>
+                        <p>Phone, tablet or computer, with nothing to install.</p>
+                    </div>
+                    <div class="panel row-cta tile c6 t-cta">
+                        <div>
+                            <h4>Free, with no catch</h4>
+                            <p>No subscriptions, no ads and no in-app purchases. Built to help Kiwis pass their learner licence on the first try.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="launch-quiz-page" href="https://nzroadcodequiz.robocrax.com/" target="_blank" rel="noopener">Launch the quiz</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: LIVE STREAM CONTROL (SSMB ATEM) ================= -->
+        <section id="atem" class="bs" data-stage="atem" data-marker="Tools" data-title="Live stream control | RoboCrax" aria-labelledby="atem-title">
+            <div class="slide">
+                <div class="bento b-atem">
+                    <div class="tile c5 t-head">
+                        <p class="kicker"><span class="tape">ATEM-CTL</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build, in service</span></p>
+                        <h3 class="title" id="atem-title">I can sort your live stream layout</h3>
+                        <p class="lede">As part of my community service at SSMB Auckland, a non-profit, I turned its video switcher into one simple page that runs on any phone, iPad or PC. Volunteers tap a camera and it's live, with no desk training needed.</p>
+                    </div>
+                    <figure class="frame shot tile c7 t-shot"><span class="frame-url">Cameras on the left, what's live on the right</span><img src="work/atem/overview.webp" alt="The live stream controller on a desktop: live camera tiles on the left, the picture on air on the right, and a toolbar along the bottom" width="1280" height="800" loading="lazy"></figure>
+                    <div class="block tile c7 t-map">
+                        <h4 class="h">What changed for the volunteers</h4>
+                        <ul class="steps-map">
+                            <li><span class="was">3 steps at the desk</span><h5>Go live with one tap</h5><p>Tap a camera and it cuts straight to air.</p></li>
+                            <li><span class="was">16 windows to search</span><h5>Only working cameras show</h5><p>Blank inputs hide themselves until they have a picture.</p></li>
+                            <li><span class="was">3 steps, every time</span><h5>Logos and overlays look after themselves</h5><p>The logo finds a clear corner and steps aside when something moves in.</p></li>
+                            <li><span class="was">One desk</span><h5>Run it from anywhere</h5><p>At the venue or away, from a phone, tablet or PC, behind a secure login.</p></li>
+                        </ul>
+                    </div>
+                    <div class="panel row-cta tile c5 t-cta">
+                        <div>
+                            <h4>Run live video somewhere?</h4>
+                            <p>If your hall, church, club or studio has a switcher and a rota of volunteers, I can build and improve your workflow and I can also run live streams for you.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-atem" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20going%20live" target="_blank" rel="noopener">Message me about going live</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: DASHBOARDS ================= -->
+        <section id="dashboards" class="bs" data-stage="dashboards" data-marker="Tools" data-title="Dashboards | RoboCrax" aria-labelledby="dash-title">
+            <div class="slide">
+                <div class="bento b-dash">
+                    <div class="tile c4 r2 t-head">
+                        <p class="kicker"><span class="tape">DASH-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Custom build</span></p>
+                        <h3 class="title" id="dash-title">Dashboards built around your data</h3>
+                        <p class="lede">I can build advanced dashboards according to your needs, linking data from literally any digital, internet-connected place: your online store, invoices, spreadsheets, booking system, CRM or the devices on your network.</p>
+                    </div>
+                    <figure class="frame shot tile c4 t-shot"><span class="frame-url">Sales at a glance, shown here with sample data</span><img src="work/dashboards/sales.webp" alt="A web sales dashboard filled with sample data: totals for the period, a sales line for each club shop and a ranking of clubs" width="1280" height="800" loading="lazy"></figure>
+                    <figure class="frame shot tile c4 t-shot"><span class="frame-url">Every website and tool a team runs, in one search</span><img src="work/dashboards/directory.webp" alt="A staff directory with a search box, shortcuts to tools and lists of club websites with their status" width="1280" height="800" loading="lazy"></figure>
+                    <div class="grid grid-2 tile c4 t-list">
+                        <div class="item">
+                            <h4>Every source in one place</h4>
+                            <p>Stores, invoices, spreadsheets and other systems, joined up and kept in sync.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Up to date on its own</h4>
+                            <p>Data refreshes by itself, so nobody exports reports by hand.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Search everything</h4>
+                            <p>Find any customer, order or website in seconds from one box.</p>
+                        </div>
+                        <div class="item">
+                            <h4>Private to your team</h4>
+                            <p>Behind a secure sign-in, on any phone, tablet or PC.</p>
+                        </div>
+                    </div>
+                    <div class="panel row-cta tile c4 t-cta">
+                        <div>
+                            <h4>Want your numbers on one screen?</h4>
+                            <p>Tell me where your data lives and what you need to see, and I'll build the dashboard around it.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-dashboards" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20dashboard" target="_blank" rel="noopener">Message me about a dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: HEARTBEATS ================= -->
+        <section id="heartbeats" class="bs" data-stage="heartbeats" data-marker="Tools" data-title="Device Ping Heartbeats | RoboCrax" aria-labelledby="hb-title">
+            <div class="slide">
+                <div class="bento b-beats">
+                    <div class="tile c7 r2 t-head">
+                        <p class="kicker"><span class="tape">PING-SIDECAR</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Open source</span></p>
+                        <h3 class="title" id="hb-title">Device Ping Heartbeats</h3>
+                        <p class="lede"><code>heartbeats-ping-sidecar</code> is a tiny Go container for watching devices you can't install monitoring agents on: IoT gateways, home automation hubs, isolated database servers. It checks them with ICMP or TCP and sends a heartbeat to Healthchecks.io or BetterStack only when every check passes, so silence means something's wrong.</p>
+                        <p class="where"><a href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">github.com/robocrax/heartbeats-ping-sidecar</a></p>
+                        <div class="actions">
+                            <a class="btn btn-primary" data-track="github-heartbeats-page" href="https://github.com/robocrax/heartbeats-ping-sidecar" target="_blank" rel="noopener">View on GitHub</a>
+                        </div>
+                    </div>
+                    <div class="block tile c5 t-code">
+                        <h4 class="h">Docker Compose example</h4>
+                        <div class="code"><pre>version: '3.8'
+services:
+  sidecar:
+    image: ghcr.io/robocrax/heartbeats-ping-sidecar:latest
+    restart: always
+    environment:
+      - TARGET_HOST=192.168.1.50
+      - HEARTBEAT_URL=https://hc-ping.com/your-uuid-token
+      - PING_INTERVAL_SEC=30</pre></div>
+                    </div>
+                    <div class="tile c5 t-pulse" aria-hidden="true">
+                        <svg class="pulse-line" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70h120l12-26 16 52 20-92 18 106 14-58 12 18h188"/></svg>
+                        <ul class="pulse-leds" aria-hidden="true"><li></li><li></li><li></li><li class="quiet"></li></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOLS: MAGENTO 2 MODULES ================= -->
+        <section id="magento" class="bs" data-stage="magento" data-marker="Tools" data-title="Magento 2 modules | RoboCrax" aria-labelledby="magento-title">
+            <div class="slide">
+                <div class="bento b-magento">
+                    <div class="tile c7 t-head">
+                        <p class="kicker"><span class="tape">TOOLS-01</span><span class="status"><span class="led led-blue" aria-hidden="true"></span>Commercial work</span></p>
+                        <h3 class="title" id="magento-title">Magento 2 modules, built from scratch</h3>
+                        <p class="lede">I've built many Magento 2 modules from scratch for my work. Each one is written from the ground up for a specific job a store needed done, rather than bolted on from the marketplace.</p>
+                    </div>
+                    <div class="tile c5 r2 t-bricks" aria-hidden="true">
+                        <svg class="ic big" viewBox="0 0 24 24" fill="currentColor" style="color:#EE672F" aria-hidden="true"><path d="M12 24l-4.455-2.572v-12l2.97-1.715v12.001l1.485.902 1.485-.902V7.713l2.971 1.715v12L12 24zM22.391 6v12l-2.969 1.714V7.713L12 3.43 4.574 7.713v12.001L1.609 18V6L12 0l10.391 6z"/></svg>
+                        <ul class="bricks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+                    </div>
+                    <div class="panel row-cta tile c7 t-cta">
+                        <div>
+                            <h4>Need something built for your store?</h4>
+                            <p>Tell me what the store has to do that it can't today, and I'll scope a module for it.</p>
+                        </div>
+                        <a class="btn btn-primary" data-track="whatsapp-magento" href="https://wa.me/+64204774826?text=Hi,%20I'd%20like%20to%20talk%20about%20a%20Magento%202%20module" target="_blank" rel="noopener">Message me about a module</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STREAMING (JELLYFIN) ================= -->
+        <section id="jellyfin" class="bs" data-stage="jellyfin" data-marker="Jellyfin" data-title="Jellyfin | RoboCrax" aria-labelledby="jellyfin-title">
+            <div class="slide">
+                <div class="bento b-jellyfin">
+                    <div class="tile c7 r2 t-head t-cinema">
+                        <p class="kicker"><span class="tape">JELLYFIN</span><span class="status"><span class="led led-amber" aria-hidden="true"></span>Invite only</span></p>
+                        <h2 class="title" id="jellyfin-title">A community-based streaming platform</h2>
+                        <p class="lede">Full HD Streaming, on all your devices</p>
+                        <p class="lede">A private, ad-free streaming environment built on dedicated hardware. Native Full HD streaming directly tailored for your living room and personal devices.</p>
+                        <div class="actions">
+                            <a class="btn btn-quiet" data-track="jellyfin-page-plans" href="jellyfin">Plans and pricing</a>
+                        </div>
+                    </div>
+                    <div class="stage tile c5">
+                        <div class="stage-head"><span class="stage-num" aria-hidden="true">1</span><h3>Request Access</h3></div>
+                        <div class="panel row-cta">
+                            <div>
+                                <h4>Start with a Free Account</h4>
+                                <p>Applications are reviewed within 24 hours. Submit your access request below.</p>
+                            </div>
+                            <button class="btn btn-primary" type="button" data-open-invite data-track="request-access-step1">Open Request Form</button>
+                        </div>
+                    </div>
+                    <div class="stage tile c5">
+                        <div class="stage-head"><span class="stage-num" aria-hidden="true">2</span><h3>Setup Your Devices</h3></div>
+                        <div class="panel">
+                            <h4>Recommended for Your Device</h4>
+                            <div class="detect">
+                                <p id="jellyfin-detected-client-desc">Detecting your operating system...</p>
+                                <div class="detect-actions">
+                                    <a id="jellyfin-detected-client-btn" class="btn btn-primary" data-track="client-download-jellyfin" href="https://jellyfin.org/downloads/clients/" target="_blank" rel="noopener">Download Client</a>
+                                    <a class="btn btn-quiet" href="#tv-setup">TV Setup Guide</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TV SETUP ================= -->
+        <section id="tv-setup" class="bs" data-stage="tv-setup" data-marker="TV setup" data-title="Smart TV setup | RoboCrax" aria-labelledby="tv-title">
+            <div class="slide">
+                <div class="bento b-tv">
+                    <div class="tile c6 r2 t-head">
+                        <p class="kicker"><span class="tape">JELLYFIN</span>Smart TV</p>
+                        <h2 class="title" id="tv-title">Smart TV Quick Connect Guide</h2>
+                        <p class="lede">Authenticate your Smart TV, Android TV, Google TV, or Apple TV in seconds without typing passwords with your TV remote.</p>
+                        <div class="actions">
+                            <a class="btn btn-primary" href="#jellyfin">Back to Jellyfin Setup</a>
+                            <a class="btn btn-quiet" data-track="whatsapp-tv" href="https://wa.me/+64204774826?text=Hi,%20I%20need%20help%20setting%20up%20my%20Smart%20TV" target="_blank" rel="noopener">Need Help? Contact Me</a>
+                        </div>
+                    </div>
+                    <ol class="steps sub c6 r2">
+                        <li class="panel tile">
+                            <h4>Install the TV App</h4>
+                            <p>On Android TV, Google TV, or Fire TV, download <strong>Fladder</strong> or <strong>Findroid</strong>. On Apple TV, download the official <strong>Jellyfin</strong> app from the App Store.</p>
+                        </li>
+                        <li class="panel tile">
+                            <h4>Enter Server Address</h4>
+                            <p>Launch the app and set the host server URL to:</p>
+                            <div class="address">https://app.robocrax.com</div>
+                        </li>
+                        <li class="panel tile">
+                            <h4>Select Quick Connect</h4>
+                            <p>Click the <strong>Quick Connect</strong> button on your TV screen. The app will generate and display a temporary <strong>6-digit code</strong>.</p>
+                        </li>
+                        <li class="panel tile">
+                            <h4>Authorize on Mobile or PC</h4>
+                            <p>Log into your phone or browser, navigate to <strong>User Profile → Quick Connect</strong>, enter the 6-digit code, and click Authorize.</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" class="bs site-foot" data-stage="contact" data-marker="Contact" data-title="Contact | RoboCrax" aria-labelledby="contact-title">
+            <div class="slide">
+                <div class="bento b-contact">
+                    <div class="tile c8 t-head">
+                        <h2 id="contact-title">Need something set up, fixed or automated?</h2>
+                        <p class="meta">RoboCrax, Auckland, New Zealand. Run by me, Pritam Bhuva, a sole developer and infrastructure engineer. Message me on WhatsApp at +64 20 477 4826.</p>
+                        <div class="foot-actions">
+                            <a class="btn btn-primary" data-track="whatsapp-footer" href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">Message me</a>
+                            <a class="btn btn-quiet" href="#home">Back to the top</a>
+                        </div>
+                    </div>
+                    <div class="tile c4 t-why">
+                        <img class="mark" src="logo.svg" alt="" width="120" height="166">
+                        <p class="meta"><strong>Why RoboCrax?</strong> It's the embarrassing name I chose at uni, and I've stuck with it so far. Yes, I may consider changing it (at a later stage).</p>
+                    </div>
+                    <div class="tile c12 copy t-fine">
+                        <p class="fine">Every section on this page is one bento box of tiles, in the style of Apple's keynote slides: each opens on its main card, which zooms out as the rest slide in around it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= REQUEST ACCESS MODAL ================= -->
+    <div id="invite-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invite-title" hidden>
+        <div class="modal-card">
+            <div class="modal-head">
+                <div>
+                    <h2 id="invite-title">Request Access</h2>
+                    <p>Applications are manually reviewed within 24 hours.<br>Contact me to speed up this process.</p>
+                </div>
+                <button class="modal-close" type="button" data-close-invite aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe data-src="https://accounts.robocrax.com/invite/oJ7eNTiEX3zUSwqxzuqaJg" scrolling="no" title="Request Access Form"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="designs/shared/site.js"></script>
+    <script src="designs/bento/bento.js"></script>
+    <script src="designs/switcher.js" data-corner="tr" data-x="18" data-y="20" data-phone="1023.98" defer></script>
+</body>
+</html>

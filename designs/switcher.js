@@ -1,25 +1,26 @@
-/* switcher.js — a small toggle for flipping between the site's designs: Dots, Rack and 3D.
-   The design you switch to always opens at the top, so it starts from the beginning.
+/* switcher.js — a small toggle for flipping between the site's designs: Dots, Rack and Bento.
+   The design you switch to always opens at the top, so it starts from the beginning. On a page that isn't in the
+   toggle, no design is lit.
    It floats in a corner on wider screens; on phones it sits at the end of the footer instead.
    Set it per page with data attributes on the script tag: data-corner="bl|br|tl|tr", data-x, data-y (px), and
    data-phone (px): the widest screen that gets the design's phone layout. */
 (() => {
     'use strict';
-    // a scatter of points, then Lucide's server and box (ISC licence)
+    // a scatter of points, Lucide's server (ISC licence) and the Apple logo (Simple Icons, CC0) for Bento
     const ICON = {
         dots: '<circle cx="12" cy="12" r="2.6"/><circle cx="12" cy="4.4" r="1.7"/><circle cx="12" cy="19.6" r="1.7"/><circle cx="4.4" cy="12" r="1.7"/><circle cx="19.6" cy="12" r="1.7"/><circle cx="6.4" cy="6.4" r="1.15"/><circle cx="17.6" cy="6.4" r="1.15"/><circle cx="6.4" cy="17.6" r="1.15"/><circle cx="17.6" cy="17.6" r="1.15"/>',
         rack: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></g>',
-        cube: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></g>',
+        apple: '<path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>',
     };
     const DESIGNS = [
         { file: 'index.html', name: 'Dots', icon: ICON.dots },
         { file: 'rack.html', name: 'Rack', icon: ICON.rack },
-        { file: 'island.html', name: '3D', icon: ICON.cube },
+        { file: 'bento.html', name: 'Bento', icon: ICON.apple },
     ];
     const script = document.currentScript;
     // Cloudflare serves rack.html at /rack too, so match with or without the extension
     const here = (location.pathname.split('/').pop() || 'index').toLowerCase().replace(/\.html$/, '');
-    const at = Math.max(0, DESIGNS.findIndex((d) => d.file.replace(/\.html$/, '') === here));
+    const at = DESIGNS.findIndex((d) => d.file.replace(/\.html$/, '') === here);   // -1 on a page that isn't in the toggle
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const opt = (k, fallback) => (script && script.dataset[k]) || fallback;
@@ -30,7 +31,7 @@
 
     // the toggle itself: one link per design and a thumb that slides to the one you pick
     const TOGGLE = `
-<nav class="seg" aria-label="Design" style="--n:${DESIGNS.length};--i:${at}">
+<nav class="seg${at < 0 ? ' none' : ''}" aria-label="Design" style="--n:${DESIGNS.length};--i:${Math.max(0, at)}">
     <span class="thumb" aria-hidden="true"></span>
     ${DESIGNS.map((d, k) => `<a href="${d.file}"${k === at ? ' class="on" aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d.icon}</svg><span class="lbl">${d.name}</span></a>`).join('')}
 </nav>`;
@@ -40,6 +41,7 @@
     a { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border-radius: 999px;
         color: inherit; text-decoration: none; font-weight: 600; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
     a:focus-visible { outline: 2px solid #8fb4ff; outline-offset: 1px; }
+    .none .thumb { display: none; }
     svg { width: 16px; height: 16px; flex: none; }
     @media (prefers-reduced-motion: no-preference) {
         .thumb { transition: transform .22s cubic-bezier(.3, .7, .3, 1); }
@@ -55,7 +57,8 @@
         const seg = root.querySelector('.seg');
         const links = [...root.querySelectorAll('a')];
         const select = (k) => {
-            seg.style.setProperty('--i', k);
+            seg.classList.toggle('none', k < 0);
+            seg.style.setProperty('--i', Math.max(0, k));
             links.forEach((a, j) => a.classList.toggle('on', j === k));
         };
         links.forEach((a, k) => a.addEventListener('click', (e) => {

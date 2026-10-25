@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-NZ" data-design="bento">
+<head>
+    <meta charset="utf-8">
+    <title>RoboCrax | Hosting, IT help and automations in Auckland</title>
+<!--@META-->
+    <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="designs/bento/bento.css">
+</head>
+<body>
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <!-- the island: one dot per box (one per chapter on phones) for how far through the site you are, the way to
+         message me beside it, and a map of every chapter when you open it (designs/bento/bento.js) -->
+    <header class="island" id="island">
+        <a class="i-brand" href="#home" aria-label="RoboCrax home"><img src="logo.svg" alt="" width="22" height="30"></a>
+        <button class="i-track" id="i-track" type="button" aria-expanded="false" aria-controls="i-map">
+            <span class="i-name" id="i-name">Intro</span>
+            <span class="i-dots" id="i-dots" aria-hidden="true"></span>
+            <span class="i-dots i-chapters" id="i-chapters" aria-hidden="true"></span>
+            <span class="sr-only">Sections</span>
+        </button>
+        <a id="nav-contact-btn" class="i-cta" data-track="whatsapp-nav"
+           href="https://wa.me/+64204774826?text=Hi,%20I'm%20inquiring%20about%20RoboCrax" target="_blank" rel="noopener">
+            <!--@WA--><span class="btn-label">Message me</span></a>
+        <button id="nav-request-btn" class="i-cta" type="button" data-track="request-access-nav" hidden>Request access</button>
+        <nav class="i-map" id="i-map" aria-label="Sections" hidden></nav>
+    </header>
+
+<!--@MAIN-->
+
+<!--@MODAL-->
+
+    <script src="designs/shared/site.js"></script>
+    <script src="designs/bento/bento.js"></script>
+    <script src="designs/switcher.js" data-corner="tr" data-x="18" data-y="20" data-phone="1023.98" defer></script>
+</body>
+</html>
