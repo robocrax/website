@@ -471,9 +471,13 @@ function init() {
     function retarget() {
         const A = KF[blend.a] || KF.home, B = KF[blend.b] || A;
         for (const k in DEFAULTS) target[k] = A[k] + (B[k] - A[k]) * blend.t;
-        // a phone's window onto the rack is a short strip, so the camera stands further back there:
-        // close-ups pull back the most (about half again), wide shots only a little
-        if (mobile) target.r *= 1.15 + .35 * clamp01((3.2 - target.r) / 1.7);
+        // a phone's window onto the rack is a short strip, so the camera stands back far enough to keep the whole
+        // cabinet in it and aims nearer its middle: a close-up shows the unit in its place, not a crop of it
+        if (mobile) {
+            target.r = Math.max(target.r * 1.12, 2.75);
+            target.ty += (.54 - target.ty) * .6;
+            target.tx *= .8;
+        }
     }
 
     function layout() {
