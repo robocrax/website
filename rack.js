@@ -635,7 +635,7 @@ function init() {
         }
         const bt = time - bootT0;
         if (bt >= 0.35 && world.classList.contains('off')) { world.classList.remove('off'); if (bt < 2) world.classList.add('post'); }
-        if (bt < 0.4) bootText('Powering on'); else if (bt < 1.5) bootText('Self-test'); else if (bt < 2.8) bootText('Opening the cabinet'); else if (!bootDone) { bootDone = true; bootText('Taking new work', true); }
+        if (bt < 0.4) bootText('Powering on'); else if (bt < 1.5) bootText('Self-test'); else if (bt < 2.8) bootText('Opening the cabinet'); else if (!bootDone) { bootDone = true; bootText('Accepting new projects', true); }
 
         retarget();
         const snap = snapFrames > 0;
