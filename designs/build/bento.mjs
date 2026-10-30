@@ -126,6 +126,11 @@ const CARD_ICON = {
     '#heartbeats': ['lu:activity', 'b'], '#magento': ['si:magento', 'b'],
 };
 const GLANCE_ICON = { Focus: 'lu:layers', Clients: 'lu:map-pin', Contact: 'lu:phone' };
+const MODULE_ICON = {
+    'Product pages': 'lu:layers', Search: 'lu:search', 'Wholesale ordering': 'lu:users', 'Stock and accounting sync': 'lu:arrow-right-left',
+    'Multi-store management': 'lu:network', 'Partner rebates': 'lu:heart-handshake', 'Orders and paperwork': 'lu:mail', 'Back office': 'lu:activity',
+    'Google and marketing': 'lu:chart-column', 'Security and reliability': 'lu:shield-check',
+};
 const CHIP_ICON = { Linux: 'si:linux', Proxmox: 'si:proxmox', Docker: 'si:docker', Cloudflare: 'si:cloudflare', WordPress: 'si:wordpress', Go: 'si:go', Python: 'si:python', 'Node.js': 'si:nodedotjs', Claude: 'si:claude' };
 
 function cardIcon(n) {
@@ -298,7 +303,17 @@ const RECIPES = {
         const head = tile(c.head(), { span: 'c7', cls: 't-head' });
         const bricks = tile([MODULES], { span: 'c5 r2', cls: 't-bricks', attrs: ' aria-hidden="true"' });
         const cta = asTile(panelOf(c.take('.block')), 'c7', 't-cta');
-        return [{ layout: 'magento', tiles: [head, bricks, cta] }];
+        // what the modules cover: a box of six cards, then a box of the rest
+        const areas = kids(c.take('.grid'));
+        const cards = (group) => {
+            const spans = rows(group.length, 3);
+            return group.map((n, k) => asTile(n, spans[k], '', icon(MODULE_ICON[text(find(n, 'h4'))] || 'lu:wrench', 'b')));
+        };
+        return [
+            { layout: 'magento', tiles: [head, bricks, cta] },
+            { id: 'magento-2', label: 'What the Magento 2 modules cover', layout: 'modules', tiles: cards(areas.slice(0, 6)) },
+            { id: 'magento-3', label: 'What the Magento 2 modules cover, continued', layout: 'modules', tiles: cards(areas.slice(6)) },
+        ];
     },
 
     jellyfin(c) {

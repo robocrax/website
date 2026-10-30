@@ -182,7 +182,7 @@ main { display: block; }
     background: var(--bg);
 }
 /* the main card's background while it zooms: it fills the screen, then shrinks back into its tile */
-.zoom-bg { position: absolute; z-index: 1; transform-origin: 0 0; pointer-events: none; }
+.zoom-bg { position: absolute; z-index: 1; transform-origin: 0 0; pointer-events: none; will-change: transform; }
 /* rows fit their tiles, then share out whatever height is left, so a box fills the screen and only grows past it
    when its tiles really need the room */
 .bento { display: grid; gap: var(--gap); width: 100%; max-width: 1320px; margin: 0 auto; min-height: calc(100vh - var(--top) - var(--foot)); min-height: calc(100svh - var(--top) - var(--foot)); }
@@ -195,6 +195,8 @@ main { display: block; }
 /* zooming, the main card's words ride above everything, on the zoom card's background */
 .tile.zooming { z-index: 3; transform-origin: 0 0; background: none !important; box-shadow: none !important; }
 .tile.away { pointer-events: none; }
+/* on their own layers only while they move, so the GPU slides them and nothing repaints */
+.tile.moving { will-change: transform, opacity; }
 .tile > .ic { flex: none; width: 34px; height: 34px; margin-bottom: 6px; color: var(--ink); }
 .ic.g { color: var(--g-ink); }
 .ic.b { color: var(--b-ink); }
@@ -288,6 +290,9 @@ main { display: block; }
 /* item tiles and lists of items */
 .item h3, .item h4 { font-size: 21px; }
 .item p { font-size: 15.5px; line-height: 1.42; }
+.feats { list-style: none; margin: 2px 0 0; padding: 0; display: grid; gap: 4px; color: var(--ink-2); font-size: 15px; line-height: 1.35; }
+.feats li { display: flex; gap: 9px; }
+.feats li::before { content: ""; flex: none; width: 5px; height: 5px; margin-top: .52em; border-radius: 50%; background: currentColor; }
 .panel h3, .panel h4 { font-size: 22px; }
 .panel p { font-size: 16px; line-height: 1.45; }
 .row-cta { justify-content: space-between; gap: 16px; }
@@ -435,7 +440,7 @@ main { display: block; }
     .tile p { font-size: clamp(14.5px, min(1.2vw, 1.85vh), 17px); }
     .service p, .item p, .panel p { font-size: clamp(14px, min(1.15vw, 1.75vh), 16.5px); }
     .t-list .item h4, .tile.grid .item h4, .steps > li h4, .steps-map h5 { font-size: clamp(15.5px, min(1.4vw, 2.1vh), 20px); }
-    .t-list .item p, .tile.grid .item p, .steps > li p, .steps-map p { font-size: clamp(13.5px, min(1.1vw, 1.65vh), 15.5px); }
+    .t-list .item p, .tile.grid .item p, .steps > li p, .steps-map p, .feats { font-size: clamp(13.5px, min(1.1vw, 1.65vh), 15.5px); }
     .t-head h2, .t-head h3.title { font-size: clamp(28px, min(3.7vw, 5.8vh), 64px); }
     .t-head .lede, .t-hero .lede { font-size: clamp(15.5px, min(1.45vw, 2.25vh), 23px); }
     .t-hero h1 { font-size: clamp(40px, min(5vw, 8vh), 88px); max-width: 18ch; }

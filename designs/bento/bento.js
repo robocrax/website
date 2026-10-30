@@ -128,9 +128,10 @@
                 if (q >= 1) {
                     t.el.style.transform = '';
                     t.el.style.opacity = '';
-                    t.el.classList.remove('away');
+                    t.el.classList.remove('away', 'moving');
                     continue;
                 }
+                t.el.classList.add('moving');
                 const off = (1 - q) * (t.zoomIn ? far : 44);
                 const ox = t.zoomIn ? t.dx * off : 0, oy = t.zoomIn ? t.dy * off : off;
                 t.el.style.transform = `translate(${ox.toFixed(1)}px, ${oy.toFixed(1)}px) scale(${(0.92 + 0.08 * q).toFixed(4)})`;
@@ -145,7 +146,7 @@
     let lastY = window.scrollY, dir = 0, settleTimer = 0;
     const go = (top) => window.scrollTo({ top, behavior: 'smooth' });
     function settle() {
-        if (!root.classList.contains('deck') || reduced.matches) return;
+        if (glider || !root.classList.contains('deck') || reduced.matches) return;
         const y = window.scrollY;
         for (let i = 0; i < boxes.length; i++) {
             const b = boxes[i], n = boxes[i + 1];
@@ -165,23 +166,59 @@
         }
     }
 
-    // Page Down, Page Up and the space bar step from stop to stop: each big card, each box open, a tall box's foot
+    // ---------- the keys: a glide from stop to stop, drawn here so the page and its cards move in the same frame ----------
+    // The browser's own smooth scroll won't do: Windows with animation effects off turns it off, and that setting also
+    // reports reduced motion, so a key press would jump. A glide is a cubic from where the page is, at the speed it's
+    // going, so a second press joins on without a jolt. The zoom has an ease of its own, so a glide along it keeps some
+    // speed at both ends; two full eases would multiply into a snap in the middle.
+    const GLIDE = 950, GLIDE_ZOOM = 1050, FLOW = 260;
+    let glider = null;
+    function stopGlide() {
+        if (!glider) return;
+        cancelAnimationFrame(glider.raf);
+        glider = null;
+    }
+    function glide(to) {
+        const from = window.scrollY, d = to - from, v = glider ? glider.v : null;
+        const zoom = boxes.some((b) => b.z && Math.min(from, to) >= b.top - 2 && Math.max(from, to) <= b.top + b.z + 2);
+        const ms = zoom ? GLIDE_ZOOM : GLIDE, end = zoom ? d * 0.7 : 0, start = v === null ? end : v * ms;
+        stopGlide();
+        const g = glider = { to, ms, t0: performance.now(), v: 0, raf: 0 };
+        const tick = (now) => {
+            const s = clamp((now - g.t0) / ms), s2 = s * s, s3 = s2 * s;
+            g.v = (d * (6 * s - 6 * s2) + start * (3 * s2 - 4 * s + 1) + end * (3 * s2 - 2 * s)) / ms;
+            window.scrollTo({ top: from + d * (3 * s2 - 2 * s3) + start * (s3 - 2 * s2 + s) + end * (s3 - s2), behavior: 'instant' });
+            frame();
+            if (s < 1) g.raf = requestAnimationFrame(tick);
+            else glider = null;
+        };
+        g.raf = requestAnimationFrame(tick);
+    }
+    ['wheel', 'touchstart', 'pointerdown'].forEach((ev) => window.addEventListener(ev, stopGlide, { passive: true }));
+
+    // the arrow keys, Page Down, Page Up and the space bar step from stop to stop: each big card, each box open, a tall
+    // box's foot. Held down, the next step joins on just before this one ends, so the page flows on through the stops
     document.addEventListener('keydown', (e) => {
         if (!root.classList.contains('deck') || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-        const space = e.key === ' ';
-        const down = e.key === 'PageDown' || (space && !e.shiftKey), up = e.key === 'PageUp' || (space && e.shiftKey);
-        if (!down && !up) return;
+        const space = e.key === ' ', arrow = e.key === 'ArrowDown' || e.key === 'ArrowUp';
+        if (arrow && e.shiftKey) return;
+        const down = e.key === 'PageDown' || e.key === 'ArrowDown' || (space && !e.shiftKey);
+        const up = e.key === 'PageUp' || e.key === 'ArrowUp' || (space && e.shiftKey);
+        if (!down && !up) { if (e.key !== 'Shift') stopGlide(); return; }
         const t = e.target;
         if (t.closest && t.closest(space ? 'input, textarea, select, button, summary, [contenteditable]' : 'input, textarea, select, [contenteditable]')) return;
         const modal = document.getElementById('invite-modal');
         if (modal && !modal.hidden) return;
+        if (e.repeat && glider && performance.now() - glider.t0 < glider.ms - FLOW) { e.preventDefault(); return; }
         const stops = [];
         boxes.forEach((b) => { if (b.z) stops.push(b.top); stops.push(b.top + b.z); if (b.h > V) stops.push(b.top + b.z + b.h - V); });
         const y = window.scrollY;
-        const to = down ? stops.find((s) => s > y + 2) : stops.reverse().find((s) => s < y - 2);
-        if (to == null) return;
+        // pressed again the way it's going, the step after the one it's heading for; the other way, back from here
+        const from = glider && (glider.to > y) === down ? glider.to : y;
+        const to = down ? stops.find((s) => s > from + 2) : stops.reverse().find((s) => s < from - 2);
+        if (to == null) { if (glider) e.preventDefault(); return; }
         e.preventDefault();
-        window.scrollTo({ top: to, behavior: reduced.matches ? 'instant' : 'smooth' });
+        glide(to);
     });
 
     let ticking = false;
